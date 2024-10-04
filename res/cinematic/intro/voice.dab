@@ -1,0 +1,12 @@
+RessourceFile=@"voice.ogg"
+
+[Slices
+  [S00
+    Index = 0
+    ActiveEnd = 6
+    EndIndex = 0 + ActiveEnd
+    Volume = 100
+    Position = 10, 0, 0
+  ]
+]
+

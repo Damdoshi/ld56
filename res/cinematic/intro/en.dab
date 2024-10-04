@@ -1,0 +1,6 @@
+
+Texte = [Text($,EOF)
+  This is a text.
+  Yes! Yes! I assure you...!
+EOF]
+

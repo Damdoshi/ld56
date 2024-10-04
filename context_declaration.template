@@ -1,0 +1,3 @@
+bunny_declare_context(main_menu);
+bunny_declare_context(cinematic);
+bunny_declare_context(ingame);

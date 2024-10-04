@@ -1,0 +1,11 @@
+BoxSize = 300, 60
+RessourceFile = @"little_font.png"
+Position = 10, 170
+GlyphSize = 5, 7
+Interglyph = 1, 1
+OutlineSize = 1
+HorizontalAlign = "Left"
+VerticalAlign = "Top"
+OutlineColor = 0, 128, 0, 128
+Color = 128, 255, 128
+

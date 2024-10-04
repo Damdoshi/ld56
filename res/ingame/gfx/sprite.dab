@@ -1,0 +1,33 @@
+RessourceFile = @"./sprite.png"
+Scale = 5, 5
+Frequency = 20
+
+Origin = 25, 25
+
+[Clip
+  Size = 50, 50
+]
+
+[Animations
+  [Idle
+    Position = 0, 2 * [.].Clip.Size[1]
+    Frame = 3
+    Browsing = "BackAndForth"
+    FramePlay = 30, 2, 2, 2, 2, 0
+    Loop
+  ]
+  [StartRunning
+    Position = 0, 0 * [.].Clip.Size[1]
+    Frame = 1
+    Browsing = "LeftToRight"
+    NextAnimation = "Running"
+  ]
+  [Running
+    Position = 0, 1 * [.].Clip.Size[1]
+    Frame = 10
+    Browsing = "LeftToRight"
+    Loop
+  ]
+]
+
+InitialAnimation = "Idle"

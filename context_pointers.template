@@ -1,0 +1,6 @@
+  program.main_menu.program = &program;
+  data[MAIN_MENU] = &program.main_menu;
+  program.cinematic.program = &program;
+  data[CINEMATIC] = &program.cinematic;
+  program.ingame.program = &program;
+  data[INGAME] = &program.ingame;

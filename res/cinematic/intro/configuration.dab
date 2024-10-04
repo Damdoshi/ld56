@@ -1,0 +1,58 @@
+
+Size = 320, 240
+
+[Volumes
+  Music = 0.1
+  Voice = 0.7
+  Effect = 0.5
+]
+
+[Pictures
+  MMX = @"mmx.dab"
+]
+
+[Musics
+  Music = @"music.ogg"
+]
+
+[Effects
+  Effect = @"medshot.wav"
+]
+
+[Voices
+  Voice = @"./voice.dab"
+]
+
+[Fonts
+  Font = @"./font.dab"
+]
+
+[Texts
+  [FR
+    @insert "fr.dab"
+  ]
+  [EN
+    @insert "en.dab"
+  ]
+]
+
+Animation = [Sequence
+  backcolor     0, 0, 0
+  sleep         1.0
+  playeffect    Effect
+  sleep         1.0
+  display       MMX
+  sleep         1.0
+  text          Font, 30.0, Texte, Voice:S00
+  '
+  sleep         1.0
+  start_move:
+  move          MMX, 0, 120, 160, async
+  skipif        picture, MMX, x, 0
+  go            start_move
+
+  fadeout       0.5, picture, MMX
+  hide          MMX
+  sleep         1.0
+]
+
