@@ -15,7 +15,7 @@ static bool		check_fall(t_unit			*unit,
   if (env->map_composant[npos] != AIR)
     nb_pixel += 1;
   i = 1;
-  while (i <= side_size)
+  while (i < side_size)
     {
       if (env->map_composant[npos + i] != AIR)
 	nb_pixel += 1;
@@ -23,7 +23,7 @@ static bool		check_fall(t_unit			*unit,
 	nb_pixel += 1;
       i += 1;
     }
-  if (nb_pixel >= MIN_PIXEL_TO_HOLD)
+  if (nb_pixel < MIN_PIXEL_TO_HOLD)
     {
       unit->area.y += 1;
       return (true);
@@ -37,7 +37,7 @@ static int		check_remaining_front(t_unit		*unit,
 					      int		i)
 {
   while (i < unit->area.h
-	 && env->map_composant[npos - (env->map->clipable.buffer.width * i)] != AIR)
+	 && env->map_composant[npos - (env->map->clipable.buffer.width * i)] == AIR)
     i += 1;
   if (i == unit->area.h)
     return(1);
@@ -54,11 +54,11 @@ static void		move_toward(t_unit			*unit,
   int			i;
 
   direction = (unit->area.x < target_pos.x) ? 1 : -1;
-  // + 1 pour passer l'origine + 1 pour check devant le personnage
+  // 1 pour check devant le personnage
   if (direction == 1)
-      npos += (unit->area.w / 2) + 2;
+      npos += (unit->area.w / 2) + 1;
   else
-    npos -= (unit->area.w / 2) + 2;
+    npos -= (unit->area.w / 2) + 1;
   max_climbing_height = unit->area.h / COEF_CLIMBING_HEIGHT;
   i = 0;
   while (i < max_climbing_height

@@ -9,7 +9,7 @@
 #include		"ingame.h"
 
 t_bunny_response	ingame_event_response(const t_bunny_event	*event,
-					       t_ingame		*ingame)
+					      t_ingame		*ingame)
 {
   (void)event;
   (void)ingame;
