@@ -17,6 +17,36 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
 					    t_bunny_keysym	sym,
 					    t_ingame		*ingame)
 {
+  if (state == GO_UP)
+    return (GO_ON);
+  if (sym == BKS_1)
+    {
+      ingame->cursor_type = SELECTION;
+      bunny_sprite_set_animation_name(ingame->cursor, "Selection");
+      return (GO_ON);
+    }
+  if (sym == BKS_2)
+    {
+      ingame->cursor_type = ATTACK;
+      bunny_sprite_set_animation_name(ingame->cursor, "Attack");
+      return (GO_ON);
+    }
+  if (sym == BKS_3)
+    {
+      ingame->cursor_type = CONSTRUCTION;
+      bunny_sprite_set_animation_name(ingame->cursor, "Construction");
+      return (GO_ON);
+    }
+
+
+  if (sym == BKS_F1)
+    {
+      ingame_get_hurt(ingame, 0.1);
+      return (GO_ON);
+    }
+
+
+  /*
   if (sym == BKS_LEFT)
     {
       if (state == GO_DOWN)
@@ -37,5 +67,6 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
       else
 	bunny_sprite_set_animation_name(ingame->mmx, "Idle");
     }
+  */
   return (GO_ON);
 }

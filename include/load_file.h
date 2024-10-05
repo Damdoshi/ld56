@@ -27,4 +27,5 @@ void			pixel_explosif(t_map			*map,
 				       t_bunny_position		pos,
 				       int64_t			r);
 
+
 #endif//		__LOAD_FILE_H__

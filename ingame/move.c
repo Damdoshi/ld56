@@ -12,7 +12,7 @@ t_bunny_response		ingame_move(const t_bunny_position	*relative,
 					     t_ingame			*ingame)
 {
   (void)relative;
-  (void)ingame;
+  ingame_move_select(ingame);
   return (GO_ON);
 }
 
