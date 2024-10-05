@@ -16,6 +16,8 @@ typedef enum			e_context
   {
     FIRST_CONTEXT,
     BUNNY_SPLASH		= FIRST_CONTEXT,
+    MENU_GAME,
+    GAME,
 # include			"context_enumeration.template"
     LAST_CONTEXT
   }				t_context;
@@ -43,6 +45,9 @@ int				fire(t_bunny_pixelarray		*px,
 				     bool			underfire);
 void				set_fire_pixel(int		x,
 					       int		y);
+
+t_bunny_position		get_real_mouse_position(t_bunny_picture         *screen);
+
 
 #endif	//			__PROGRAM_H__
 

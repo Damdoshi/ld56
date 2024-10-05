@@ -9,6 +9,10 @@
 #ifndef				__ingame_H__
 # define			__ingame_H__
 
+#include			"load_file.h"
+#include			"movement.h"
+#include			"butcher.h"
+
 typedef enum			e_action
   {
     SELECTION,
@@ -38,11 +42,13 @@ typedef struct			s_ingame
   struct s_program		*program;
   t_bunny_sprite		*sprites[4096];
   size_t			last_sprite;
-
+  t_map				*map;
+  int				 frames;
+  
   // Nombre de vies
   int				life;
   t_bunny_sprite		*skull;
-  
+
   double			health;
   double			health_target;
   t_bunny_sprite		*health_track;
@@ -61,6 +67,7 @@ typedef struct			s_ingame
   size_t			last_selection;
 
   t_bunny_pixelarray		*fire;
+  t_deletelist			list;
   
   t_bunny_accurate_area		camera;
   t_bunny_accurate_area		select;

@@ -11,6 +11,9 @@
 void			main_menu_leaving(t_bunny_response	response,
 					t_main_menu		*main_menu)
 {
+  bunny_delete_clipable(main_menu->menu);
+  bunny_delete_clipable(&main_menu->text_menu[0]->clipable);
+  bunny_delete_clipable(&main_menu->text_menu[1]->clipable);
   (void)response;
   (void)main_menu;
 }
