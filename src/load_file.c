@@ -1,15 +1,14 @@
 #include		"load_file.h"
 
-t_map			*load_map(t_bunny_pixelarray		*_map)
+t_map			*load_map(t_bunny_pixelarray		*map)
 {
   t_element		*map_elem;
   t_map			*map_property;
-  t_bunny_pixelarray	*map = _map;
-  int64_t		largeur = map->clipable.buffer.width;
-  int64_t		hauteur = map->clipable.buffer.height;
-  int64_t		size = largeur * hauteur;
+  int			size;
   t_bunny_color		color_pix;
+  int			i;
 
+  size = map->clipable.buffer.width * map->clipable.buffer.height;
   if ((map_property = malloc(sizeof(t_map))) == NULL)
     {
       puts("echec de malloc : load_file.c");
@@ -23,9 +22,9 @@ t_map			*load_map(t_bunny_pixelarray		*_map)
   map_property->map = map;
   map_property->map_composant = map_elem;
   map_property->size = size;
-  for (int64_t i = 0; i < size; i ++)
+  for (i = 0; i < size; i ++)
     {
-      color_pix.full = ((uint32_t*)(map->pixels))[i];
+      color_pix.full = ((unsigned int*)(map->pixels))[i];
       if (color_pix.argb[3] == 0)
 	map_elem[i] = AIR;
       else if (color_pix.full == GREEN)

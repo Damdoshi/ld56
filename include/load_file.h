@@ -19,4 +19,6 @@ typedef struct		s_map
   int64_t		size;
 }			t_map;
 
+t_map			*load_map(t_bunny_pixelarray	*map)
+
 #endif//		__LOAD_FILE_H__
