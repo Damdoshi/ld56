@@ -7,11 +7,12 @@ Frequency = 16
 
 InitialAnimation = "Bubble"
 
-[Animation
+[Animations
   [Bubble
     Position = 0, 0
     Frame = 4
     Browsing = "LeftToRight"
+    Loop
   ]
 ]
 

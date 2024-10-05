@@ -8,15 +8,15 @@ bool			ingame_load_map(t_ingame		*ing,
 
   if (!(color_map = bunny_load_pixelarray(file)))
     return (false);
-  size_t		size = ing->map_size.x * ing->map_size.y;
-
   ing->map_size.x = color_map->clipable.buffer.width;
   ing->map_size.y = color_map->clipable.buffer.height;
+  size_t		size = ing->map_size.x * ing->map_size.y;
+
   if ((ing->physic_map = malloc(sizeof(t_element) * size)) == NULL)
     {
       puts("echec de malloc : " __FILE__);
       return (false);
-    }  
+    }
   t_bunny_color		color_pix;
   size_t		i;
 
@@ -38,7 +38,7 @@ bool			ingame_load_map(t_ingame		*ing,
 	ing->physic_map[i] = SAND;
       else if (color_pix.full == PINK2)
 	ing->physic_map[i] = FIRE;
-      else if (color_pix.full == TEAL)
+      else if (color_pix.full == TEAL && ing->player == NULL)
 	{
 	  if (ing->last_unit >= NBRCELL(ing->units))
 	    return (false);
@@ -46,8 +46,9 @@ bool			ingame_load_map(t_ingame		*ing,
 	  ing->player->type = HERO;
 	  ing->player->area.w = 50;
 	  ing->player->area.h = 50;
-	  ing->player->area.x = 0;
-	  ing->player->area.y = 0;
+	  ing->player->area.x = i % ing->map_size.x;
+	  ing->player->area.y = i / ing->map_size.x;
+	  printf("Position %f %f\n", ing->player->area.x, ing->player->area.y);
 	}
     }
   if (ing->player == NULL)

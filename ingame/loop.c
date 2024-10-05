@@ -20,6 +20,7 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
   ingame->camera.x = ingame->player->area.x - ingame->program->screen->buffer.width / 2;
   ingame->camera.y = ingame->player->area.y - ingame->program->screen->buffer.height / 2;
 
+  /*
   ingame->layer[1]->clipable.clip_x_position = ingame->camera.x;
   ingame->layer[1]->clipable.clip_y_position = ingame->camera.y;
   ingame->layer[1]->clipable.clip_width = ingame->layer[1]->clipable.buffer.width;
@@ -28,13 +29,14 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
   if (ingame->layer[1]->clipable.clip_x_position < 0)
     {
       ingame->layer[1]->clipable.clip_width += ingame->layer[1]->clipable.clip_x_position;
-      ingame->layer[1]->clipable.clip_x_position *= -1;
+      ingame->layer[1]->clipable.clip_x_position = 0;
     }
   if (ingame->layer[1]->clipable.clip_y_position < 0)
     {
       ingame->layer[1]->clipable.clip_height += ingame->layer[1]->clipable.clip_y_position;
-      ingame->layer[1]->clipable.clip_y_position *= -1;
+      ingame->layer[1]->clipable.clip_y_position = 0;
     }
+  */
 
   /// MISC
 

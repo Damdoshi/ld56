@@ -73,7 +73,7 @@ static void		move_toward(t_ingame			*ing,
 void			pixel_move(t_ingame			*ingame,
 				   t_unit			*unit,
 				   t_bunny_accurate_position	target_pos)
-{
+{  
   int			npos;
   
   // + 1 pour check sous le personnage

@@ -16,8 +16,9 @@ int			main(int		argc,
   
   (void)argc;
   tekinit();
+  memset(&program, 0, sizeof(program)); // Normalement ca sert pas.... mais bon.
   bunny_enable_full_blit(true);
-  bunny_set_error_descriptor(2);
+  // bunny_set_error_descriptor(2);
   memset(&program, 0, sizeof(program));
   bunny_join_binary_directory(*argv);
   if (!(program.configuration = bunny_open_configuration("./res/configuration.dab", NULL)))

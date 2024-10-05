@@ -12,21 +12,27 @@
 
 t_bunny_response	ingame_display(t_ingame	*ingame)
 {
-  fire(ingame->fire, true);
-  bunny_clear(&ingame->program->screen->buffer, BLACK);
+  fire(ingame->fire, false);
+  bunny_clear(&ingame->program->screen->buffer, GRAY(64));
 
-  set_fire_pixel(0, 0);
+  for (int j = 0; j < ingame->fire->clipable.buffer.height; ++j)
+    for (int i = 0; i < ingame->fire->clipable.buffer.width; ++i)
+      if (((unsigned int*)ingame->layer[1]->pixels)[i + j * ingame->layer[1]->clipable.buffer.width] == RED)
+	set_fire_pixel(i, j);
 
+  ingame->layer[1]->clipable.position.x = -ingame->camera.x;
+  ingame->layer[1]->clipable.position.y = -ingame->camera.y;
+  ingame->fire->clipable.position.x = -ingame->camera.x;
+  ingame->fire->clipable.position.y = -ingame->camera.y;
   for (size_t i = 0; i < 3; i += 1)
     {
       if (!ingame->layer[i])
 	continue;
-      printf("Clip position : x: %d y: %d\n", ingame->layer[i]->clipable.clip_x_position, ingame->layer[i]->clipable.clip_y_position);
       bunny_blit(&ingame->program->screen->buffer, &ingame->layer[i]->clipable, NULL);
       if (i == 1)
 	{
-	  ingame->player->sprite->clipable.position.x = ingame->player->area.x - ingame->camera.x - ingame->layer[i]->clipable.position.x;
-	  ingame->player->sprite->clipable.position.y = ingame->player->area.y - ingame->camera.y - ingame->layer[i]->clipable.position.y;
+	  ingame->player->sprite->clipable.position.x = ingame->player->area.x - ingame->camera.x;
+	  ingame->player->sprite->clipable.position.y = ingame->player->area.y - ingame->camera.y;
 	  bunny_blit(&ingame->program->screen->buffer, &ingame->player->sprite->clipable, NULL);
 	  bunny_blit(&ingame->program->screen->buffer, &ingame->fire->clipable, NULL);
 	}

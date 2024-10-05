@@ -10,15 +10,14 @@
 t_bunny_response	ingame_entering(t_ingame		*ingame)
 {
   bunny_clear(&ingame->program->window->buffer, BLACK);
+  assert(ingame_load_map(ingame, "./res/ingame/TestPhysiqueMap.png"));
+
   ingame_load_sprite(ingame, "./res/ingame/gfx/cursor.dab", &ingame->cursor);
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_track.dab", &ingame->health_track);
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_bar.dab", &ingame->health_bar);
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_renderer.dab", &ingame->health_renderer);
   ingame_load_sprite(ingame, "./res/ingame/gfx/skull.dab", &ingame->skull);
   ingame_load_sprite(ingame, "./res/ingame/gfx/hero.dab", &ingame->player->sprite);
-  
-  assert(ingame_load_map(ingame, "./res/ingame/TestPhysiqueMap.png"));
-
 
   ingame->layer[0] = NULL; // Car pas encore la ressource
   ingame->layer[1] = bunny_load_pixelarray("./res/ingame/TestPhysiqueMap.png");
