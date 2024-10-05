@@ -13,6 +13,7 @@ t_bunny_context		gl_context[LAST_CONTEXT] =
   {
     [INGAME] = { bunny_fill_context(ingame) },
     [MAIN_MENU] = { bunny_fill_context(main_menu) },
-    [CINEMATIC] = { bunny_fill_context(cinematic) }
+    [CINEMATIC] = { bunny_fill_context(cinematic) },
+    [CREDIT] = { bunny_fill_context(credit) }
   };
 

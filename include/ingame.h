@@ -66,6 +66,7 @@ typedef struct			s_ingame
   t_unit			*selection[4096];
   size_t			last_selection;
 
+  t_bunny_pixelarray		*fire;
   t_deletelist			list;
   
   t_bunny_accurate_area		camera;
@@ -77,7 +78,6 @@ void				ingame_get_hurt(t_ingame		*ing,
 						double			damage);
 bool				ingame_progress_health(t_ingame		*ing);
 
-void				ingame_display_selection(t_ingame	*ing);
 void				ingame_end_select(t_ingame		*ing);
 void				ingame_start_select(t_ingame		*ing);
 void				ingame_move_select(t_ingame		*ing);
@@ -87,5 +87,9 @@ void				ingame_load_sprite(t_ingame		*ingame,
 						   t_bunny_sprite	**sprite);
 void				ingame_free_sprite(t_ingame		*ingame,
 						   t_bunny_sprite	**sprite);
+void				ingame_display_health_bar(t_ingame	*ingame);
+void				ingame_display_life(t_ingame		*ingame);
+void				ingame_display_mouse(t_ingame		*ingame);
+void				ingame_display_selection(t_ingame	*ing);
 
 #endif	/*			__ingame_H__			*/
