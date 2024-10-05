@@ -12,9 +12,12 @@ t_bunny_response		ingame_click(t_bunny_event_state	state,
 					      t_bunny_mouse_button	but,
 					      t_ingame			*ingame)
 {
-  (void)state;
-  (void)but;
-  (void)ingame;
+  if (but != BMB_LEFT)
+    return (GO_ON);
+  if (state == GO_DOWN)
+    ingame_start_select(ingame);
+  else
+    ingame_end_select(ingame);
   return (GO_ON);
 }
 

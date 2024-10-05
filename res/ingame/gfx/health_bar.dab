@@ -1,0 +1,17 @@
+
+RessourceFile = @"health_bar.png"
+Frequency = 16
+[Clip
+  Size = 30, 10
+]
+
+InitialAnimation = "Bubble"
+
+[Animation
+  [Bubble
+    Position = 0, 0
+    Frame = 4
+    Browsing = "LeftToRight"
+  ]
+]
+

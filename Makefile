@@ -8,7 +8,7 @@
 ## Configuration --------------------------------------------------------------
 
 PRODUCT	= game.exe
-COMMAND = bcc */*.c -o $(PRODUCT) -Wall -Wextra -I./ -I./include/ -g -g3 -ggdb
+COMMAND = bcc */*.c */*/*.c -o $(PRODUCT) -Wall -Wextra -I./ -I./include/ -g -g3 -ggdb
 
 all:
 	$(COMMAND)
