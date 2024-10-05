@@ -11,8 +11,8 @@ static void		draw_rect(t_ingame		*ing,
   t_bunny_position	lines[5] = {
     [0] = {.x = area->x, .y = area->y},
     [1] = {.x = area->x + area->w, .y = area->y},
-    [2] = {.x = area->x + area->w, .y = area->y + area->w},
-    [3] = {.x = area->x, .y = area->y + area->w},
+    [2] = {.x = area->x + area->w, .y = area->y + area->h},
+    [3] = {.x = area->x, .y = area->y + area->h},
     [4] = {.x = area->x, .y = area->y}
   };
 

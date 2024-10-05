@@ -10,6 +10,18 @@ void			ingame_end_select(t_ingame	*ing)
   // On détermine via la dernière position de la souris la vraie selection.
   ingame_move_select(ing);
 
+  // On conclu le rectangle final
+  if (ing->select.w < 0)
+    {
+      ing->select.x += ing->select.w;
+      ing->select.w *= 1;
+    }
+  if (ing->select.h < 0)
+    {
+      ing->select.y += ing->select.h;
+      ing->select.h *= 1;
+    }
+
   // La politique de selection - si c'est une nouvelle, on détruit l'ancienne
   if (!bunny_get_keyboard()[BKS_LSHIFT] && !bunny_get_keyboard()[BKS_RSHIFT])
     {
