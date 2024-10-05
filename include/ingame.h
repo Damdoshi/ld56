@@ -9,6 +9,8 @@
 #ifndef				__ingame_H__
 # define			__ingame_H__
 
+# include			"load_file.h"
+
 typedef enum			e_action
   {
     SELECTION,
@@ -56,10 +58,16 @@ typedef struct			s_ingame
 
   t_unit			*selection[4096];
   size_t			last_selection;
+
+  t_bunny_pixelarray		*layer[3];
   
   t_bunny_accurate_area		camera;
   t_bunny_accurate_area		select;
   bool				select_on;
+
+  t_map				*map;
+  t_unit			player;
+  t_bunny_picture		*player_pic;
 }				t_ingame;
 
 void				ingame_get_hurt(t_ingame		*ing,
