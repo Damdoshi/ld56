@@ -8,6 +8,8 @@ t_map			*load_map(t_bunny_pixelarray		*map)
   t_bunny_color		color_pix;
   int			i;
 
+  if (!map)
+    return(NULL);
   size = map->clipable.buffer.width * map->clipable.buffer.height;
   if ((map_property = malloc(sizeof(t_map))) == NULL)
     {

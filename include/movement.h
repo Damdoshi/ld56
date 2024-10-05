@@ -9,6 +9,7 @@
 # include			<lapin.h>
 
 # include			"load_file.h"
+# include			"ingame.h"
 
 struct				s_unit;
 void				pixel_move(struct s_unit			*unit,

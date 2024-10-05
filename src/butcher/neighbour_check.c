@@ -21,6 +21,7 @@ void pixel_neighbour_check(t_map *map,t_bunny_position pos)
   if (game->map[(pos.x-1) * pos.y] == NULL)
     N++;
   else
+
   npos.x -= 1;*/
   if (N == 3 && map->map_composant[pos.x * pos.y] != EAU)
     {

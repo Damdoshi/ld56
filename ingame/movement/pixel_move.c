@@ -3,7 +3,6 @@
 #include		<stdbool.h>
 
 static bool		check_fall(t_unit			*unit,
-				   t_bunny_accurate_position	target_pos,
 				   t_map			*env,
 				   int				npos)
 {
@@ -12,6 +11,7 @@ static bool		check_fall(t_unit			*unit,
   int			side_size;
 
   side_size = unit->area.w / 2;
+  nb_pixel = 0;
   if (env->map_composant[npos] != AIR)
     nb_pixel += 1;
   i = 1;
@@ -76,11 +76,10 @@ void			pixel_move(t_unit			*unit,
 				   t_map			*env)
 {
   int			npos;
-  int			side;
   
   // + 1 pour check sous le personnage
   npos = (unit->area.y + 1) * env->map->clipable.buffer.width + unit->area.x;
-  if (check_fall(unit, target_pos, env, npos))
+  if (check_fall(unit, env, npos))
     return;
   if (unit->area.x == target_pos.x)
     return;

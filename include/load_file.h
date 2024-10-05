@@ -21,7 +21,7 @@ typedef struct		s_map
   int64_t		size;
 }			t_map;
 
-t_map			*load_map(t_bunny_pixelarray		*_map);
+t_map			*load_map(t_bunny_pixelarray	*map);
 
 void			pixel_neighbour_check(t_map		*map,
 					      t_bunny_position	pos);
