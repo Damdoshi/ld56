@@ -52,7 +52,7 @@ int			main(int		argc,
   const char		*scale = "Stretch";
 
   bunny_configuration_getf(program.configuration, &program.keep_pixel_ratio, "KeepPixelRatio");
-  bunny_configuration_getf(program.configuration, &program.scale_mode, "Scale");
+  bunny_configuration_getf(program.configuration, &scale, "Scale");
   if (strcasecmp(scale, "contain") == 0)
     program.scale_mode = BST_CONTAIN;
   else if (strcasecmp(scale, "cover") == 0)

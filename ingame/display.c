@@ -10,10 +10,12 @@
 
 t_bunny_response	ingame_display(t_ingame	*ingame)
 {
+  t_bunny_position	pos = ingame_get_real_mouse_position(ingame);
+  
   bunny_clear(&ingame->program->screen->buffer, BLACK);
-  ingame->mmx->clipable.position.x = ingame->program->screen->buffer.width / 2;
-  ingame->mmx->clipable.position.y = ingame->program->screen->buffer.height / 2;
-  bunny_blit(&ingame->program->screen->buffer, &ingame->mmx->clipable, NULL);
+
+  ingame_display_selection(ingame);
+  bunny_blit(&ingame->program->screen->buffer, &ingame->cursor->clipable, &pos);
 
   bunny_clear(&ingame->program->window->buffer, BLACK);
   bunny_blit(&ingame->program->window->buffer, ingame->program->screen, NULL);

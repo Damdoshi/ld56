@@ -10,7 +10,7 @@
 
 t_bunny_response	ingame_entering(t_ingame		*ingame)
 {
-  assert((ingame->mmx = bunny_load_sprite("./res/ingame/gfx/sprite.dab")));
+  ingame_load_sprite(ingame, "./res/ingame/gfx/cursor.dab", &ingame->cursor);
   return (GO_ON);
 }
 

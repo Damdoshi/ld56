@@ -1,0 +1,20 @@
+RessourceFile = @"./cursor.png"
+Scale = 1, 1
+Frequency = 12
+Origin = 10, 10
+
+[Clip
+  Size = 20, 20
+]
+
+[Animations
+  [Attack
+    Position = 0, 0 * [.].Clip.Size[1]
+    Frame = 4
+    Browsing = "BackAndForth"
+    FramePlay = 4, 1, 1, 1, 1, 1, 1, 0
+    Loop
+  ]
+]
+
+InitialAnimation = "Attack"
