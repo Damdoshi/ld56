@@ -1,4 +1,4 @@
-#include		"movement.h"
+#include		"program.h"
 
 #include		<stdbool.h>
 
@@ -7,7 +7,7 @@ static bool		check_fall(t_unit			*unit,
 				   int				npos)
 {
   int			i;
-  int			nb_pixel;
+  int			nb_pixel = 0;
   int			side_size;
 
   side_size = unit->area.w / 2;

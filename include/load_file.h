@@ -9,7 +9,9 @@ typedef enum		e_element
     TERRE,		//GREEN
     ROCHE,		//BLACK
     EAU,		//BLUE
-    EXPLOSIF		//RED
+    EXPLOSIF,		//RED
+    SAND,		//YELLOW
+    FIRE		//PINK2
   }			t_element;
 
 typedef struct		s_map
@@ -20,5 +22,15 @@ typedef struct		s_map
 }			t_map;
 
 t_map			*load_map(t_bunny_pixelarray	*map);
+
+void			pixel_neighbour_check(t_map		*map,
+					      t_bunny_position	pos);
+
+void			pixel_delete(t_map			*map,
+				     t_bunny_position		pos);
+
+void			pixel_explosif(t_map			*map,
+				       t_bunny_position		pos,
+				       int64_t			r);
 
 #endif//		__LOAD_FILE_H__

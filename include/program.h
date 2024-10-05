@@ -9,12 +9,15 @@
 # define			__PROGRAM_H__
 # include			<lapin.h>
 # include			<assert.h>
+# include			"tekfunction.h"
 # include			"context_headers.template"
 
 typedef enum			e_context
   {
     FIRST_CONTEXT,
     BUNNY_SPLASH		= FIRST_CONTEXT,
+    MENU_GAME,
+    GAME,
 # include			"context_enumeration.template"
     LAST_CONTEXT
   }				t_context;
@@ -37,6 +40,14 @@ typedef struct			s_program
   t_bunny_splash_screen		bunny_splash;
 # include			"context_attribute.template"
 }				t_program;
+
+int				fire(t_bunny_pixelarray		*px,
+				     bool			underfire);
+void				set_fire_pixel(int		x,
+					       int		y);
+
+t_bunny_position		get_real_mouse_position(t_bunny_picture         *screen);
+
 
 #endif	//			__PROGRAM_H__
 

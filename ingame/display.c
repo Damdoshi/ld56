@@ -12,30 +12,14 @@
 
 t_bunny_response	ingame_display(t_ingame	*ingame)
 {
-  t_bunny_position	pos;
-  int			i;
-  
-  bunny_clear(&ingame->program->screen->buffer, GREEN);
+  fire(ingame->fire, true);
+  bunny_clear(&ingame->program->screen->buffer, BLACK);
 
-  ingame_display_selection(ingame);
+  set_fire_pixel(0, 0);
+  // Il faut placer correctement le feu... comme les autres calques de niveau
+  bunny_blit(&ingame->program->screen->buffer, &ingame->fire->clipable, NULL);
 
-  pos.x = 0;
-  bunny_clear(&ingame->health_renderer->buffer, 0);
-  bunny_blit(&ingame->health_renderer->buffer, &ingame->health_bar->clipable, NULL);
-  
-  pos = ingame_get_real_mouse_position(ingame);
-  bunny_blit(&ingame->program->screen->buffer, &ingame->cursor->clipable, &pos);
 
-  if (bunny_time_alive(ingame->end_damage))
-    {
-      // Hurt my feeling
-      bunny_clear(&ingame->program->window->buffer, RED);
-      // Shake that screen
-      ingame->program->screen->rotation = (rand() % 2000 / 1000.0) - 1;
-    }
-  else
-    bunny_clear(&ingame->program->window->buffer, ALPHA(32, WHITE));
-  
   for (i = 0; i < 3; i += 1)
     {
       if (!ingame->layer[i])
@@ -48,8 +32,33 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	  ingame->player_pic->position.y = ingame->player.area.y - ingame->camera.y - ingame->layer[i]->clipable.position.y;
 	  bunny_blit(&ingame->program->screen->buffer, ingame->player_pic, NULL);
 	}
-     
     }
+
+  
+  ///////////////// GUI /////////////////
+  ingame_display_health_bar(ingame);
+  ingame_display_selection(ingame);
+  ingame_display_life(ingame);
+  ingame_display_mouse(ingame);
+  
+  //// MOUVEMENT DE L'ECRAN
+  if (ingame->program->screen->color_mask.argb[BLUE_CMP] < 255)
+    ingame->program->screen->color_mask.argb[BLUE_CMP] += 1;
+  if (ingame->program->screen->color_mask.argb[GREEN_CMP] < 255)
+    ingame->program->screen->color_mask.argb[GREEN_CMP] += 1;
+
+  if (fabs(ingame->health_target - ingame->health) > 0.01)
+    {
+      bunny_clear(&ingame->program->window->buffer, RED);
+      ingame->program->screen->rotation = (rand() % 4000 / 1000.0) - 2;
+    }
+  else
+    {
+      bunny_fill(&ingame->program->window->buffer, ALPHA(32, BLACK));
+      if (fabs(ingame->program->screen->rotation *= 0.95) < 0.01)
+	ingame->program->screen->rotation = 0;
+    }
+
   bunny_blit(&ingame->program->window->buffer, ingame->program->screen, NULL);
   bunny_display(ingame->program->window);
   return (GO_ON);

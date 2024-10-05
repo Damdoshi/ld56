@@ -1,0 +1,26 @@
+
+RessourceFile=@"font.png"
+Size=300,240
+Position=10,5
+GlyphSize=10,14
+HorizontalAlign="Middle"
+VerticalAlign="Top"
+Interglyph=5,5
+Text=
+"- DEVS -\n",
+"Elessiah\n",
+"SuperGuidat\n",
+"Karotser\n",
+"Damdoshi\n",
+"- MUSIC & SFX -\n",
+"Ticrum\n",
+"- GFX -\n",
+"Antakle\n",
+"Damdoshi\n",
+"-\n",
+"Thank you"
+
+OutlineSize=1
+OutlineColor=0,0,0,64
+
+Color=0, 0, 0, 0

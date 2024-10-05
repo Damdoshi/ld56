@@ -11,14 +11,14 @@
 
 t_bunny_response	ingame_entering(t_ingame		*ingame)
 {
+  bunny_clear(&ingame->program->window->buffer, BLACK);
   ingame_load_sprite(ingame, "./res/ingame/gfx/cursor.dab", &ingame->cursor);
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_track.dab", &ingame->health_track);
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_bar.dab", &ingame->health_bar);
-  assert((ingame->health_renderer = bunny_new_picture
-	  (ingame->health_track->clipable.buffer.width - ingame->health_track->clipable.position.x * 2,
-	   ingame->health_track->clipable.buffer.height)
-	  ));
   ingame->player_pic = bunny_load_picture("./res/ingame/gfx/hero.dab");
+  ingame_load_sprite(ingame, "./res/ingame/gfx/health_renderer.dab", &ingame->health_renderer);
+  ingame_load_sprite(ingame, "./res/ingame/gfx/skull.dab", &ingame->skull);
+
 
   ingame->map = load_map(bunny_load_pixelarray("./res/ingame/TestPhysiqueMap.png"));
   if (!ingame->map)
@@ -32,6 +32,10 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
   ingame->player.area.x = 0;
   ingame->player.area.y = 0;
   bunny_clear(&ingame->program->window->buffer, BLACK);
+
+  ingame->health = ingame->health_target = 1;
+  assert((ingame->fire = bunny_new_pixelarray(1, 1)));
+
   return (GO_ON);
 }
 
