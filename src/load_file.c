@@ -8,6 +8,8 @@ t_map			*load_map(t_bunny_pixelarray		*map)
   t_bunny_color		color_pix;
   int			i;
 
+  if (!map)
+    return(NULL);
   size = map->clipable.buffer.width * map->clipable.buffer.height;
   if ((map_property = malloc(sizeof(t_map))) == NULL)
     {
@@ -35,6 +37,10 @@ t_map			*load_map(t_bunny_pixelarray		*map)
 	map_elem[i] = EAU;
       else if (color_pix.full == RED)
 	map_elem[i] = EXPLOSIF;
+      else if (color_pix.full == YELLOW)
+	map_elem[i] = SAND;
+      else if (color_pix.full == PINK2)
+	map_elem[i] = FIRE;
     }
   return (map_property);
 }
