@@ -13,7 +13,12 @@ void			ingame_leaving(t_bunny_response	response,
 {
   if (response == EXIT_ON_ERROR || response == EXIT_ON_SUCCESS)
     return ;
+  if (response == SWITCH_CONTEXT && ingame->program->context == INGAME)
+    return ;
   ingame_free_sprite(ingame, &ingame->cursor);
   ingame_free_sprite(ingame, &ingame->health_track);
+  ingame_free_sprite(ingame, &ingame->health_bar);
+  ingame_free_sprite(ingame, &ingame->health_renderer);
+  ingame_free_sprite(ingame, &ingame->skull);
 }
 

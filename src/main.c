@@ -104,7 +104,9 @@ int			main(int		argc,
   program.bunny_splash.head.subcontext.leaving_context = subcontext_leaving;
   program.bunny_splash.head.screen = &program.hdscreen->buffer;
   data[BUNNY_SPLASH] = &program.bunny_splash;
-  
+
+  program.ingame.life = 3;
+
   do
     {
       bunny_set_context(&gl_context[program.context]);
