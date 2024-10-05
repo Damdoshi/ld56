@@ -1,5 +1,7 @@
 #ifndef				__BUTCHER_H__
-#define				__BUTCHER_H_
+#define				__BUTCHER_H__
+
+#include			"ingame.h"
 
 typedef struct s_deltimer
 {
@@ -12,4 +14,7 @@ typedef struct s_deletelist
   t_deltimer *list;
 }t_deletelist;
 
-#endif	/*			__BUTCHER_H__		*/
+void butcher_add(t_deltimer pix, t_deletelist list);
+void butcher(t_ingame *game);
+
+#endif//			__BUTCHER_H__

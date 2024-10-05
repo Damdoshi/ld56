@@ -13,6 +13,9 @@ struct				s_program;
 typedef struct			s_main_menu
 {
   struct s_program		*program;
+  t_bunny_picture		*menu;
+  t_bunny_font			*text_menu[2];
+  t_bunny_area			pos_txt[2];
   //
 }				t_main_menu;
 

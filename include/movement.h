@@ -11,7 +11,8 @@
 # include			"load_file.h"
 # include			"ingame.h"
 
-void				pixel_move(t_unit			*unit,
+struct				s_unit;
+void				pixel_move(struct s_unit			*unit,
 					   t_bunny_accurate_position	target_pos,
 					   t_map			*env);
 

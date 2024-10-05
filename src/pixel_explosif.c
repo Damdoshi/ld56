@@ -1,14 +1,11 @@
-#include		"load_file.h"
+#include		"program.h"
 
 void			pixel_explosif(t_map		*map,
 				       t_bunny_position	pos,
 				       int64_t		r)
 {
-  int64_t		r_max = r;
   t_bunny_position	poss;
   t_bunny_position	pose[2];
-  int64_t		largeur = map->map->clipable.buffer.width;
-  int64_t		hauteur = map->map->clipable.buffer.height;
 
   pose[0].x = pos.x - r;
   pose[0].y = pos.y - r;
@@ -28,9 +25,9 @@ void			pixel_explosif(t_map		*map,
 		    || poss.x == pose[1].x - 1
 		    || poss.y == pose[0].y
 		    || poss.y == pose[1].y - 1)
-		  pixel_neighboor_check(map, pos_a_detruire[l]);
+		  pixel_neighbour_check(map, poss);
 		else
-		  pixel_delete(map, pos_a_detruire[l]);
+		  pixel_delete(map, poss);
 	      }
 	  }
       r --;

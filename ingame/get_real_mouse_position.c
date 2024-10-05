@@ -14,7 +14,7 @@ t_bunny_position		ingame_get_real_mouse_position(t_ingame		*ing)
     ing->program->screen->buffer.height * ing->program->screen->scale.y
   };
   t_bunny_position		final;
-  
+
   if (pos.x < top_left.x)
     final.x = 0;
   if (pos.x > top_left.x + top_left.w)

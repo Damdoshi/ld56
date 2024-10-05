@@ -23,6 +23,12 @@ typedef struct		s_map
 
 t_map			*load_map(t_bunny_pixelarray	*map);
 
+void			pixel_neighbour_check(t_map		*map,
+					      t_bunny_position	pos);
+
+void			pixel_delete(t_map			*map,
+				     t_bunny_position		pos);
+
 void			pixel_explosif(t_map			*map,
 				       t_bunny_position		pos,
 				       int64_t			r);
