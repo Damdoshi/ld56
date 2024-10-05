@@ -55,6 +55,7 @@ typedef struct			s_unit
 {
   t_unit_type			type;
   t_bunny_accurate_area		area;
+  t_bunny_sprite		*sprite;
   bool				selected;
 }				t_unit;
 
@@ -86,6 +87,8 @@ typedef struct			s_ingame
   t_unit			*selection[4096];
   size_t			last_selection;
 
+  t_unit			*player;
+  
   //// NIVEAU
   t_bunny_pixelarray		*layer[3];
   t_bunny_pixelarray		*fire;
@@ -98,9 +101,6 @@ typedef struct			s_ingame
   t_bunny_accurate_area		camera;
   t_bunny_accurate_area		select;
   bool				select_on;
-
-  t_unit			player;
-  t_bunny_picture		*player_pic;
 }				t_ingame;
 
 void				ingame_get_hurt(t_ingame		*ing,
@@ -110,7 +110,6 @@ bool				ingame_progress_health(t_ingame		*ing);
 void				ingame_end_select(t_ingame		*ing);
 void				ingame_start_select(t_ingame		*ing);
 void				ingame_move_select(t_ingame		*ing);
-t_bunny_position		ingame_get_real_mouse_position(t_ingame *ing);
 void				ingame_load_sprite(t_ingame		*ingame,
 						   const char		*file,
 						   t_bunny_sprite	**sprite);
@@ -142,10 +141,9 @@ void				ingame_pixel_delete(t_ingame		*ing,
 void				ingame_pixel_explosif(t_ingame		*ing,
 						      t_bunny_position	pos,
 						      double		r);
+void				pixel_move(t_ingame			*ing,
+					   t_unit			*unit,
+					   t_bunny_accurate_position	target_pos);
 
-void				pixel_move(t_unit			*unit,
-					   t_bunny_accurate_position	target_pos,
-					   t_ingame			*env);
+#endif	/*			__ingame_H__				*/
 
-
-#endif	/*			__ingame_H__			*/

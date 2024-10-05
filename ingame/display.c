@@ -16,11 +16,8 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
   bunny_clear(&ingame->program->screen->buffer, BLACK);
 
   set_fire_pixel(0, 0);
-  // Il faut placer correctement le feu... comme les autres calques de niveau
-  bunny_blit(&ingame->program->screen->buffer, &ingame->fire->clipable, NULL);
 
-
-  for (i = 0; i < 3; i += 1)
+  for (size_t i = 0; i < 3; i += 1)
     {
       if (!ingame->layer[i])
 	continue;
@@ -28,12 +25,12 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
       bunny_blit(&ingame->program->screen->buffer, &ingame->layer[i]->clipable, NULL);
       if (i == 1)
 	{
-	  ingame->player_pic->position.x = ingame->player.area.x - ingame->camera.x - ingame->layer[i]->clipable.position.x;
-	  ingame->player_pic->position.y = ingame->player.area.y - ingame->camera.y - ingame->layer[i]->clipable.position.y;
-	  bunny_blit(&ingame->program->screen->buffer, ingame->player_pic, NULL);
+	  ingame->player->sprite->clipable.position.x = ingame->player->area.x - ingame->camera.x - ingame->layer[i]->clipable.position.x;
+	  ingame->player->sprite->clipable.position.y = ingame->player->area.y - ingame->camera.y - ingame->layer[i]->clipable.position.y;
+	  bunny_blit(&ingame->program->screen->buffer, &ingame->player->sprite->clipable, NULL);
+	  bunny_blit(&ingame->program->screen->buffer, &ingame->fire->clipable, NULL);
 	}
     }
-
   
   ///////////////// GUI /////////////////
   ingame_display_health_bar(ingame);

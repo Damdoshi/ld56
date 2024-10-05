@@ -6,22 +6,19 @@
 // Game
 
 #include		"program.h"
-#include		"ingame.h"
-#include		"movement.h"
 
 t_bunny_response	ingame_loop(t_ingame		*ingame)
 {
-  size_t		i;
-  t_bunny_accurate_position	target_pos;
+  t_bunny_accurate_position target_pos;
 
   /// TRUCS DE JOUEUR
   
-  target_pos.x = ingame->player.area.x;
-  target_pos.y = ingame->player.area.y;
-  pixel_move(&ingame->player, target_pos, ingame->map);
-
-  ingame->camera.x = ingame->player.area.x - ingame->program->screen->buffer.width / 2;
-  ingame->camera.y = ingame->player.area.y - ingame->program->screen->buffer.height / 2;
+  target_pos.x = ingame->player->area.x;
+  target_pos.y = ingame->player->area.y;
+  pixel_move(ingame, ingame->player, target_pos);
+  
+  ingame->camera.x = ingame->player->area.x - ingame->program->screen->buffer.width / 2;
+  ingame->camera.y = ingame->player->area.y - ingame->program->screen->buffer.height / 2;
 
   ingame->layer[1]->clipable.clip_x_position = ingame->camera.x;
   ingame->layer[1]->clipable.clip_y_position = ingame->camera.y;

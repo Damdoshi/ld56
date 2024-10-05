@@ -46,7 +46,7 @@ int				fire(t_bunny_pixelarray		*px,
 void				set_fire_pixel(int		x,
 					       int		y);
 
-t_bunny_position		get_real_mouse_position(t_bunny_picture         *screen);
+t_bunny_position		get_real_mouse_position(t_bunny_picture *screen);
 
 
 #endif	//			__PROGRAM_H__

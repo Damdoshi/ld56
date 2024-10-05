@@ -1,7 +1,8 @@
+
 #include		"program.h"
 
-bool			load_map(t_ingame			*ing,
-				 const char			*file)
+bool			ingame_load_map(t_ingame		*ing,
+					const char		*file)
 {
   t_bunny_pixelarray	*color_map;
 
@@ -19,6 +20,7 @@ bool			load_map(t_ingame			*ing,
   t_bunny_color		color_pix;
   size_t		i;
 
+  ing->player = NULL;
   for (i = 0; i < size; i++)
     {
       color_pix.full = ((unsigned int*)(color_map->pixels))[i];
@@ -36,8 +38,21 @@ bool			load_map(t_ingame			*ing,
 	ing->physic_map[i] = SAND;
       else if (color_pix.full == PINK2)
 	ing->physic_map[i] = FIRE;
+      else if (color_pix.full == TEAL)
+	{
+	  if (ing->last_unit >= NBRCELL(ing->units))
+	    return (false);
+	  ing->player = &ing->units[ing->last_unit++];
+	  ing->player->type = HERO;
+	  ing->player->area.w = 50;
+	  ing->player->area.h = 50;
+	  ing->player->area.x = 0;
+	  ing->player->area.y = 0;
+	}
     }
-
+  if (ing->player == NULL)
+    return (false);
+  
   bunny_delete_clipable(&color_map->clipable);
   return (true);
 }

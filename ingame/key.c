@@ -6,8 +6,6 @@
 // Game
 
 #include			"program.h"
-#include			"ingame.h"
-#include			"movement.h"
 
 double				afabs(double			x)
 {
@@ -48,41 +46,43 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
       return (GO_ON);
     }
 
+
+  //// DEBUG
   
   if (sym == BKS_Z)
     {
-      target_pos.x = ingame->player.area.x;
-      target_pos.y = ingame->player.area.y - 10;
+      target_pos.x = ingame->player->area.x;
+      target_pos.y = ingame->player->area.y - 10;
       for (int i = 0; i < 10; i += 1)
-	pixel_move(&ingame->player, target_pos, ingame->map);
-      printf("Player pos : x: %f y: %f\n", ingame->player.area.x, ingame->player.area.y);
+	pixel_move(ingame, ingame->player, target_pos);
+      printf("Player pos : x: %f y: %f\n", ingame->player->area.x, ingame->player->area.y);
     }
 
   if (sym == BKS_S)
     {
-      target_pos.x = ingame->player.area.x;
-      target_pos.y = ingame->player.area.y + 10;
+      target_pos.x = ingame->player->area.x;
+      target_pos.y = ingame->player->area.y + 10;
       for (int i = 0; i < 10; i += 1)
-	pixel_move(&ingame->player, target_pos, ingame->map);
-      printf("Player pos : x: %f y: %f\n", ingame->player.area.x, ingame->player.area.y);
+	pixel_move(ingame, ingame->player, target_pos);
+      printf("Player pos : x: %f y: %f\n", ingame->player->area.x, ingame->player->area.y);
     }
 
   if (sym == BKS_Q)
     {      
-      target_pos.x = ingame->player.area.x - 10;
-      target_pos.y = ingame->player.area.y;
+      target_pos.x = ingame->player->area.x - 10;
+      target_pos.y = ingame->player->area.y;
       for (int i = 0; i < 10; i += 1)
-	pixel_move(&ingame->player, target_pos, ingame->map);
-      printf("Player pos : x: %f y: %f\n", ingame->player.area.x, ingame->player.area.y);
+	pixel_move(ingame, ingame->player, target_pos);
+      printf("Player pos : x: %f y: %f\n", ingame->player->area.x, ingame->player->area.y);
     }
   
   if (sym == BKS_D)
     {
-      target_pos.x = ingame->player.area.x + 10;
-      target_pos.y = ingame->player.area.y;
+      target_pos.x = ingame->player->area.x + 10;
+      target_pos.y = ingame->player->area.y;
       for (int i = 0; i < 10; i += 1)
-	pixel_move(&ingame->player, target_pos, ingame->map);
-      printf("Player pos : x: %f y: %f\n", ingame->player.area.x, ingame->player.area.y);
+	pixel_move(ingame, ingame->player, target_pos);
+      printf("Player pos : x: %f y: %f\n", ingame->player->area.x, ingame->player->area.y);
     }  
 
   /*

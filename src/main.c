@@ -7,7 +7,6 @@
 
 #include		<stdlib.h>
 #include		"program.h"
-#include		"load_file.h"
 
 int			main(int		argc,
 			     char		**argv)

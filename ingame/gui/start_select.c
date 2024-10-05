@@ -5,7 +5,7 @@ void			ingame_start_select(t_ingame	*ing)
 {
   if (ing->select_on)
     return ;
-  t_bunny_position	pos = ingame_get_real_mouse_position(ing);
+  t_bunny_position	pos = get_real_mouse_position(ing->program->screen);
 
   ing->select.x = pos.x;
   ing->select.y = pos.y;
