@@ -11,7 +11,9 @@
 void			ingame_leaving(t_bunny_response	response,
 				       t_ingame		*ingame)
 {
-  (void)response;
-  bunny_delete_clipable(&ingame->mmx->clipable);
+  if (response == EXIT_ON_ERROR || response == EXIT_ON_SUCCESS)
+    return ;
+  ingame_free_sprite(ingame, &ingame->cursor);
+  ingame_free_sprite(ingame, &ingame->health_track);
 }
 

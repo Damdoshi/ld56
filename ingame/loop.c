@@ -10,6 +10,7 @@
 
 t_bunny_response	ingame_loop(t_ingame		*ingame)
 {
+  ingame_progress_health(ingame);
   for (size_t i = 0; i < ingame->last_sprite; ++i)
     bunny_sprite_animate_now(ingame->sprites[i]);
   return (GO_ON);

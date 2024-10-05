@@ -48,6 +48,7 @@ int			main(int		argc,
       fprintf(stderr, "Cannot open window.\n");
       return (EXIT_FAILURE);
     }
+  bunny_set_mouse_visibility(program.window, false);
   bunny_set_key_repeat(program.window, false);
   const char		*scale = "Stretch";
 
@@ -58,6 +59,10 @@ int			main(int		argc,
   else if (strcasecmp(scale, "cover") == 0)
     program.scale_mode = BST_COVER;
   bunny_scale_clipable(&program.window->buffer, program.screen, program.scale_mode, program.keep_pixel_ratio);
+  program.screen->origin.x = program.screen->buffer.width / 2;
+  program.screen->origin.y = program.screen->buffer.height / 2;
+  program.screen->position.x = program.window->buffer.width / 2;
+  program.screen->position.y = program.window->buffer.height / 2;
 
   program.context = FIRST_CONTEXT;
   void			*data[LAST_CONTEXT];

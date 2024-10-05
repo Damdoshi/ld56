@@ -1,6 +1,6 @@
 RessourceFile = @"./cursor.png"
 Scale = 1, 1
-Frequency = 12
+Frequency = 24
 Origin = 10, 10
 
 [Clip
@@ -12,7 +12,20 @@ Origin = 10, 10
     Position = 0, 0 * [.].Clip.Size[1]
     Frame = 4
     Browsing = "BackAndForth"
-    FramePlay = 4, 1, 1, 1, 1, 1, 1, 0
+    FramePlay = 8, 2, 2, 2, 0, 3, 3, 0
+    Loop
+  ]
+  [Selection
+    Position = 0, 1 * [.].Clip.Size[1]
+    Frame = 7
+    Browsing = "LeftToRight"
+    Loop
+  ]
+  [Construction
+    Position = 0, 2 * [.].Clip.Size[1]
+    Frame = 7
+    Browsing = "BackAndForth"
+    FramePlay = 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
     Loop
   ]
 ]
