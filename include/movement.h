@@ -12,6 +12,6 @@
 
 void				pixel_move(t_unit			*unit,
 					   t_bunny_accurate_position	target_pos,
-					   t_bunny_pixelarray		*env);
+					   t_map			*env);
 
 #endif //			__movement_H__
