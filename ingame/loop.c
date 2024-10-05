@@ -14,6 +14,8 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
   size_t		i;
   t_bunny_accurate_position	target_pos;
 
+  /// TRUCS DE JOUEUR
+  
   target_pos.x = ingame->player.area.x;
   target_pos.y = ingame->player.area.y;
   pixel_move(&ingame->player, target_pos, ingame->map);
@@ -36,9 +38,10 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
       ingame->layer[1]->clipable.clip_height += ingame->layer[1]->clipable.clip_y_position;
       ingame->layer[1]->clipable.clip_y_position *= -1;
     }
-  ingame_progress_health(ingame);
 
-  ingame->frames +=1;
+  /// MISC
+
+  ingame->frame_counter +=1;
   if (ingame_progress_health(ingame) == false)
     {
       if (ingame->life-- > 0)
@@ -49,7 +52,7 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
     }
   for (size_t i = 0; i < ingame->last_sprite; ++i)
     bunny_sprite_animate_now(ingame->sprites[i]);
-  butcher(ingame);
+  ingame_event(ingame);
   return (GO_ON);
 }
 
