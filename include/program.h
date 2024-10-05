@@ -9,6 +9,7 @@
 # define			__PROGRAM_H__
 # include			<lapin.h>
 # include			<assert.h>
+# include			"tekfunction.h"
 # include			"context_headers.template"
 
 typedef enum			e_context
@@ -37,6 +38,11 @@ typedef struct			s_program
   t_bunny_splash_screen		bunny_splash;
 # include			"context_attribute.template"
 }				t_program;
+
+int				fire(t_bunny_pixelarray		*px,
+				     bool			underfire);
+void				set_fire_pixel(int		x,
+					       int		y);
 
 #endif	//			__PROGRAM_H__
 

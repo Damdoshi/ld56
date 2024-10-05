@@ -20,5 +20,6 @@ void			ingame_leaving(t_bunny_response	response,
   ingame_free_sprite(ingame, &ingame->health_bar);
   ingame_free_sprite(ingame, &ingame->health_renderer);
   ingame_free_sprite(ingame, &ingame->skull);
+  fire(NULL, false);
 }
 

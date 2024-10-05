@@ -10,40 +10,28 @@
 
 t_bunny_response	ingame_display(t_ingame	*ingame)
 {
-  t_bunny_position	pos;
-  
+  fire(ingame->fire, true);
   bunny_clear(&ingame->program->screen->buffer, BLACK);
 
+  set_fire_pixel(0, 0);
+  // Il faut placer correctement le feu... comme les autres calques de niveau
+  bunny_blit(&ingame->program->screen->buffer, &ingame->fire->clipable, NULL);
+
+  ///////////////// GUI /////////////////
+  ingame_display_health_bar(ingame);
   ingame_display_selection(ingame);
+  ingame_display_life(ingame);
+  ingame_display_mouse(ingame);
 
-  ////// BARRE DE VIE
-  pos.y = 0;
-  bunny_clear(&ingame->health_renderer->clipable.buffer, 0);
-  for (pos.x = 0; pos.x < ingame->health_renderer->clipable.buffer.width; pos.x += ingame->health_bar->clipable.clip_width)
-    bunny_blit(&ingame->health_renderer->clipable.buffer, &ingame->health_bar->clipable, &pos);
-  ingame->health_renderer->clipable.clip_width = ingame->health * ingame->health_renderer->clipable.buffer.width;
-  bunny_blit(&ingame->program->screen->buffer, &ingame->health_renderer->clipable, NULL);
-  bunny_blit(&ingame->program->screen->buffer, &ingame->health_track->clipable, NULL);
-
-  /// VIES
-  pos.x = ingame->skull->clipable.position.x;
-  pos.y = ingame->skull->clipable.position.y;
-  for (int i = 0; i < ingame->life; ++i)
-    {
-      bunny_blit(&ingame->program->screen->buffer, &ingame->skull->clipable, &pos);
-      pos.x += ingame->skull->clipable.clip_width / 2;
-    }
-
-  //// CURSEUR DE SOURIS
-  pos = ingame_get_real_mouse_position(ingame);
-  bunny_blit(&ingame->program->screen->buffer, &ingame->cursor->clipable, &pos);
-
+  if (ingame->program->screen->color_mask.argb[BLUE_CMP] < 255)
+    ingame->program->screen->color_mask.argb[BLUE_CMP] += 1;
+  if (ingame->program->screen->color_mask.argb[GREEN_CMP] < 255)
+    ingame->program->screen->color_mask.argb[GREEN_CMP] += 1;
+  
   //// MOUVEMENT DE L'ECRAN
   if (fabs(ingame->health_target - ingame->health) > 0.01)
     {
-      // Hurt my feeling
       bunny_clear(&ingame->program->window->buffer, RED);
-      // Shake that screen
       ingame->program->screen->rotation = (rand() % 4000 / 1000.0) - 2;
     }
   else

@@ -15,6 +15,8 @@ int			main(int		argc,
   t_bunny_response	ret;
   
   (void)argc;
+  tekinit();
+  bunny_enable_full_blit(true);
   bunny_set_error_descriptor(2);
   memset(&program, 0, sizeof(program));
   bunny_join_binary_directory(*argv);
@@ -48,7 +50,7 @@ int			main(int		argc,
       fprintf(stderr, "Cannot open window.\n");
       return (EXIT_FAILURE);
     }
-  bunny_set_mouse_visibility(program.window, false);
+  // bunny_set_mouse_visibility(program.window, false);
   bunny_set_key_repeat(program.window, false);
   const char		*scale = "Stretch";
 
@@ -95,7 +97,6 @@ int			main(int		argc,
   {
     (void)ret;
     (void)_bss;
-    // program.context = BUNNY_SPLASH + 1;
     program.context = CINEMATIC;
     program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";
     program.cinematic.following_context = INGAME;

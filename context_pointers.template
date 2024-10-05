@@ -4,3 +4,6 @@
   data[CINEMATIC] = &program.cinematic;
   program.ingame.program = &program;
   data[INGAME] = &program.ingame;
+  program.credit.program = &program;
+  data[CREDIT] = &program.credit;
+  
