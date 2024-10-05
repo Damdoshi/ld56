@@ -11,7 +11,7 @@ bool			load_map(t_ingame			*ing,
 
   ing->map_size.x = color_map->clipable.buffer.width;
   ing->map_size.y = color_map->clipable.buffer.height;
-  if ((ing->map = malloc(sizeof(t_element) * size)) == NULL)
+  if ((ing->physic_map = malloc(sizeof(t_element) * size)) == NULL)
     {
       puts("echec de malloc : " __FILE__);
       return (false);
@@ -23,19 +23,22 @@ bool			load_map(t_ingame			*ing,
     {
       color_pix.full = ((unsigned int*)(color_map->pixels))[i];
       if (color_pix.argb[3] == 0)
-	ing->map[i] = AIR;
+	ing->physic_map[i] = AIR;
       else if (color_pix.full == GREEN)
-	ing->map[i] = EARTH;
+	ing->physic_map[i] = EARTH;
       else if (color_pix.full == BLACK)
-	ing->map[i] = ROCK;
+	ing->physic_map[i] = ROCK;
       else if (color_pix.full == BLUE)
-	ing->map[i] = WATER;
+	ing->physic_map[i] = WATER;
       else if (color_pix.full == RED)
-	ing->map[i] = EXPLODE;
+	ing->physic_map[i] = EXPLODE;
       else if (color_pix.full == YELLOW)
-	ing->map[i] = SAND;
+	ing->physic_map[i] = SAND;
       else if (color_pix.full == PINK2)
-	ing->map[i] = FIRE;
+	ing->physic_map[i] = FIRE;
     }
+
+  bunny_delete_clipable(&color_map->clipable);
   return (true);
 }
+
