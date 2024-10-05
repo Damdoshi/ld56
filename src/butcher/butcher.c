@@ -6,7 +6,7 @@ void butcher_add(t_deltimer pix, t_deletelist list)
   list.len +=1;
 }
 
-void butcher(map map,game game)
+void butcher(game game)
 {
   while (i < len && i < NBRCELL)
     {
