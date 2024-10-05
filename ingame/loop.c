@@ -10,7 +10,14 @@
 
 t_bunny_response	ingame_loop(t_ingame		*ingame)
 {
-  ingame_progress_health(ingame);
+  if (ingame_progress_health(ingame) == false)
+    {
+      if (ingame->life-- > 0)
+	return (SWITCH_CONTEXT);
+      ingame->program->context = CINEMATIC;
+      ingame->program->cinematic.following_context = MAIN_MENU;
+      return (SWITCH_CONTEXT);
+    }
   for (size_t i = 0; i < ingame->last_sprite; ++i)
     bunny_sprite_animate_now(ingame->sprites[i]);
   return (GO_ON);
