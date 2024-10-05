@@ -12,7 +12,7 @@ void butcher(game game)
     {
       if (list.pixels[i].timer > frames)
 	{
-	  pixel_delete(map,list.pixels[i].pos);
+	  pixel_delete(game.map,list.pixels[i].pos);
 	  memcpy(&list.pixels[i],&list.pixels[len],sizeof(list.pixels[len]));
 	  len -1;
 	}
