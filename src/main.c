@@ -96,7 +96,7 @@ int			main(int		argc,
     (void)ret;
     (void)_bss;
     // program.context = BUNNY_SPLASH + 1;
-    program.context = CINEMATIC;
+    program.context = MAIN_MENU;
     program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";
     program.cinematic.following_context = INGAME;
   }

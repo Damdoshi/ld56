@@ -1,4 +1,4 @@
-#include		"movement.h"
+#include		"program.h"
 
 #include		<stdbool.h>
 
@@ -8,7 +8,7 @@ static bool		check_fall(t_unit			*unit,
 				   int				npos)
 {
   int			i;
-  int			nb_pixel;
+  int			nb_pixel = 0;
   int			side_size;
 
   side_size = unit->area.w / 2;
@@ -32,7 +32,7 @@ static bool		check_fall(t_unit			*unit,
 }
 
 static int		check_remaining_front(t_unit		*unit,
-					      t_map		*map,
+					      t_map		*env,
 					      int		npos,
 					      int		i)
 {
@@ -46,7 +46,7 @@ static int		check_remaining_front(t_unit		*unit,
 
 static void		move_toward(t_unit			*unit,
 				    t_bunny_accurate_position	target_pos,
-				    t_map			*map,
+				    t_map			*env,
 				    int				npos)
 {
   int			direction;
@@ -79,7 +79,7 @@ void			pixel_move(t_unit			*unit,
   int			side;
   
   // + 1 pour check sous le personnage
-  npos = (unit->area.y + 1) * env->clipable.buffer.width + unit->area.x;
+  npos = (unit->area.y + 1) * env->map->clipable.buffer.width + unit->area.x;
   if (check_fall(unit, target_pos, env, npos))
     return;
   if (unit->area.x == target_pos.x)
