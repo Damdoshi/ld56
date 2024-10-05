@@ -37,6 +37,10 @@ t_map			*load_map(t_bunny_pixelarray		*map)
 	map_elem[i] = EAU;
       else if (color_pix.full == RED)
 	map_elem[i] = EXPLOSIF;
+      else if (color_pix.full == YELLOW)
+	map_elem[i] = SAND;
+      else if (color_pix.full == PINK2)
+	map_elem[i] = FIRE;
     }
   return (map_property);
 }
