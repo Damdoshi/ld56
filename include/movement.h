@@ -9,6 +9,7 @@
 # include			<lapin.h>
 
 # include			"load_file.h"
+# include			"ingame.h"
 
 void				pixel_move(t_unit			*unit,
 					   t_bunny_accurate_position	target_pos,
