@@ -13,7 +13,7 @@ int			main(int		argc,
 {
   static t_program	program;
   t_bunny_response	ret;
-  
+
   (void)argc;
   tekinit();
   memset(&program, 0, sizeof(program)); // Normalement ca sert pas.... mais bon.
@@ -102,6 +102,7 @@ int			main(int		argc,
     program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";
     program.cinematic.following_context = INGAME;
   }
+  sfx_loader(&(program.ingame));
   program.bunny_splash.head.subcontext.display = subcontext_display;
   program.bunny_splash.head.subcontext.leaving_context = subcontext_leaving;
   program.bunny_splash.head.screen = &program.hdscreen->buffer;
