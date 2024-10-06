@@ -27,28 +27,21 @@ t_bunny_response	main_menu_loop(t_main_menu		*main_menu)
       }
     };
 
+  main_menu->text_menu[0]->clipable.color_mask.full = WHITE;
+  main_menu->text_menu[1]->clipable.color_mask.full = WHITE;
+
   if (pos_mou.x >= area[0].x
       && pos_mou.x <= area[0].x + area[0].w
       && pos_mou.y >= area[0].y
       && pos_mou.y <= area[0].y + area[0].h)
-    {
-      printf("position x = %d, y = %d de la souris\n", pos_mou.x, pos_mou.y);
-      main_menu->text_menu[0]->clipable.color_mask.full = BLACK | rand();
-    }
+    main_menu->text_menu[0]->clipable.color_mask.full = BLACK | rand();
   else if (area[1].x <= pos_mou.x
 	   && area[1].x + area[1].w >= pos_mou.x
 	   && area[1].y <= pos_mou.y
 	   && area[1].y + area[1].h >= pos_mou.y)
-    {
-      printf("position x = %d, y = %d de la souris\n", pos_mou.x, pos_mou.y);
-      main_menu->text_menu[1]->clipable.color_mask.full = BLACK | rand();
-    }
-  else
-    {
-      main_menu->text_menu[0]->clipable.color_mask.full = WHITE;
-      main_menu->text_menu[1]->clipable.color_mask.full = WHITE;
-    }
-  (void)main_menu;
+    main_menu->text_menu[1]->clipable.color_mask.full = BLACK | rand();
+
+  bunny_sprite_animate_now(main_menu->cursor);
   return (GO_ON);
 }
 

@@ -51,7 +51,7 @@ int			main(int		argc,
       fprintf(stderr, "Cannot open window.\n");
       return (EXIT_FAILURE);
     }
-  // bunny_set_mouse_visibility(program.window, false);
+  bunny_set_mouse_visibility(program.window, false);
   bunny_set_key_repeat(program.window, false);
   const char		*scale = "Stretch";
 
@@ -98,7 +98,7 @@ int			main(int		argc,
   {
     (void)ret;
     (void)_bss;
-    program.context = CINEMATIC;
+    program.context = MAIN_MENU;
     program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";
     program.cinematic.following_context = INGAME;
   }
