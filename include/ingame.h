@@ -11,6 +11,8 @@
 # define			MIN_PIXEL_TO_HOLD			1
 # define			COEF_CLIMBING_HEIGHT			5
 
+# define			HERO_MAX_SPEED				2
+
 typedef enum			e_event_type
   {
     KILL_PIXEL
@@ -147,6 +149,7 @@ void				pixel_move(t_ingame			*ing,
 					   t_bunny_accurate_position	target_pos);
 void				manage_inertia(t_ingame			*ing,
 					       t_unit			*unit);
-
+bool				ingame_bottom_collision(t_ingame	*ing,
+							t_unit		*unit);
 #endif	/*			__ingame_H__				*/
 

@@ -1,5 +1,5 @@
 RessourceFile = @"hero.png"
-Origin=25,50
+Origin=25,45
 Frequency=16
 
 [Clip

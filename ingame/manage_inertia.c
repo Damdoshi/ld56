@@ -1,15 +1,33 @@
 #include		"program.h"
 
-static void		apply_external_forces(t_unit	*unit)
+static void		moderate_forces(t_ingame	*ing,
+					t_unit		*unit)
 {
-  if (unit->inertia.y > 0.5)
-    unit->inertia.y *= 0.25;
-  else if (unit->inertia.y < 0.5 || unit->inertia.y > -0.5)
-    unit->inertia.y = -5;
-  else if (unit->inertia.y > -50)
-    unit->inertia.y *= 2;
-  if (unit->inertia.x > -0.5 && unit->inertia.x < 0.5)
-    unit->inertia.x *= 0.5;
+  if (ingame_bottom_collision(ing, unit))
+    {
+      if (unit->inertia.y > 6)
+	ingame_get_hurt(ing, (unit->inertia.y - 6) / 4.0);
+      else if (unit->inertia.y > 0.5)
+	{} // Faire un bruit de bobo - mais on est pas blessé
+      unit->inertia.y = 0;
+    }
+  else
+    {
+      if (unit->inertia.y > 0)
+	unit->inertia.y = bunny_clamp(unit->inertia.y * 1.001, -10, 10);
+      else
+	unit->inertia.y = bunny_clamp(unit->inertia.y * 0.999, -10, 10);
+    }
+  
+  if (fabs(unit->inertia.x) > 0.01)
+    {
+      if (ingame_bottom_collision(ing, unit))
+	unit->inertia.x *= 0.90;
+      else
+	unit->inertia.x *= 0.95;
+    }
+  else
+    unit->inertia.x = 0;
 }
 
 static void		check_bottom(t_ingame		*ingame,
@@ -93,7 +111,11 @@ static void		check_side(t_ingame		*ingame,
 void			manage_inertia(t_ingame		*ingame,
 				       t_unit		*unit)
 {
-  apply_external_forces(unit);
+  moderate_forces(ingame, unit);
+  unit->area.x += unit->inertia.x;
+  unit->area.y += unit->inertia.y;
+  return ;
+  
   if (unit->inertia.y < 0)
     check_bottom(ingame, unit);
   else if (unit->inertia.y > 0)
