@@ -45,7 +45,6 @@ typedef enum			e_unit_type
     LAST_UNIT_TYPE
   }				t_unit_type;
 
-
 typedef enum			e_element
   {
     AIR,			//transparent
@@ -66,6 +65,16 @@ typedef struct			s_unit
   bool				selected;
   t_bunny_accurate_position	speed; // Vitesse horizontal et saut sur Y
 }				t_unit;
+
+typedef enum			s_sfx
+{
+  MENU,
+  PLAYER,
+  NPC,
+  ENEMY_NPC,
+  AMBIENT,
+  LAST_SFX_CATEGORY
+}				t_sfx;
 
 typedef struct			s_particule
 {
@@ -93,7 +102,6 @@ typedef struct			s_ingame
   t_bunny_sprite		*health_track;
   t_bunny_sprite		*health_bar;
   t_bunny_sprite		*health_renderer;
-  t_bunny_effect		*scream;
 
   //
   t_bunny_sprite		*cursor;
@@ -106,6 +114,9 @@ typedef struct			s_ingame
   size_t			last_selection;
 
   t_unit			*player;
+
+  //// SON
+  t_bunny_effect		*sfx[LAST_SFX_CATEGORY][128];
   
   //// NIVEAU
   t_bunny_pixelarray		*layer[3];
@@ -162,6 +173,9 @@ void				ingame_pixel_explosif(t_ingame		*ing,
 void				pixel_move(t_ingame			*ing,
 					   t_unit			*unit,
 					   t_bunny_accurate_position	target_pos);
+
+void				sfx_loader(t_ingame			*ing);
+
 void				manage_inertia(t_ingame			*ing,
 					       t_unit			*unit);
 bool				ingame_bottom_collision(t_ingame	*ing,
@@ -186,6 +200,7 @@ void				new_particule(t_particule		*particule,
 void				delete_particule(t_particule		*particule,
 						 int32_t		index);
 void				check_particule(t_ingame		*ingame);
+
 
 #endif	/*			__ingame_H__				*/
 
