@@ -43,11 +43,7 @@ bool			ingame_load_map(t_ingame		*ing,
 	ing->physic_map[i] = FIRE;
       else if (color_pix.full == TEAL && ing->player == NULL)
 	{
-	  if (ing->last_unit >= NBRCELL(ing->units))
-	    {
-	      puts("un probleme que je ne connais pas mais il est la : " __FILE__);
-	      return (false);
-	    }
+	  /// appeler ingame_new_unit
 	  ing->player = &ing->units[ing->last_unit++];
 	  ing->player->type = HERO;
 	  ing->player->area.w = 50;
@@ -56,6 +52,7 @@ bool			ingame_load_map(t_ingame		*ing,
 	  ing->player->area.y = i / ing->map_size.x;
 	  printf("Position %f %f\n", ing->player->area.x, ing->player->area.y);
 	}
+      // else { faire les autres monstres }
     }
   if (ing->player == NULL)
     {

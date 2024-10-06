@@ -3,26 +3,15 @@
 static void		moderate_forces(t_ingame	*ing,
 					t_unit		*unit)
 {
-  if (ingame_bottom_collision(ing, unit))
-    {
-      if (unit->inertia.y > 6)
-	ingame_get_hurt(ing, (unit->inertia.y - 6) / 4.0);
-      else if (unit->inertia.y > 0.5)
-	{} // Faire un bruit de bobo - mais on est pas blessé
-      unit->inertia.y = 0;
-    }
+  if (unit->inertia.y > 0)
+    unit->inertia.y = bunny_clamp(unit->inertia.y * 1.001, -12, 12);
   else
-    {
-      if (unit->inertia.y > 0)
-	unit->inertia.y = bunny_clamp(unit->inertia.y * 1.001, -10, 10);
-      else
-	unit->inertia.y = bunny_clamp(unit->inertia.y * 0.999, -10, 10);
-    }
-  
+    unit->inertia.y = bunny_clamp(unit->inertia.y * 0.999, -12, 12);
+
   if (fabs(unit->inertia.x) > 0.01)
     {
       if (ingame_bottom_collision(ing, unit))
-	unit->inertia.x *= 0.90;
+	unit->inertia.x *= 0.75;
       else
 	unit->inertia.x *= 0.95;
     }
@@ -33,24 +22,18 @@ static void		moderate_forces(t_ingame	*ing,
 static void		check_bottom(t_ingame		*ingame,
 				     t_unit		*unit)
 {
-  int			side_size;
-  int			n_move;
-  int			i;
-
-  side_size = unit->area.w / 2;
-  n_move = 0;
-  while (n_move < unit->inertia.y)
+  for (int n_move = 0; n_move < unit->inertia.y; ++n_move)
     {
-      i = 0;
-      while (i < side_size)
+      if (ingame_bottom_collision(ingame, unit))
 	{
-	  // y + 1 pour check sous les pieds
-	  if (ingame_get_pixel(ingame, unit->area.x + i, unit->area.y + 1) != AIR
-	      || ingame_get_pixel(ingame, unit->area.x - i, unit->area.y + 1) != AIR)
-	    return;
-	  i += 1;
+	  if (unit->inertia.y > 8)
+	    ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
+	  else if (unit->inertia.y > 0.5)
+	    {} // Faire un bruit de bobo - mais on est pas blessé
+	  unit->inertia.y = 0;
+	  return ;
 	}
-      unit->inertia.y += 1;
+      unit->area.y += 1;
       n_move += 1;
     }
 }
@@ -58,27 +41,15 @@ static void		check_bottom(t_ingame		*ingame,
 static void		check_top(t_ingame		*ingame,
 				  t_unit		*unit)
 {
-  int			side_size;
-  int			i;
-  int			y;
-  int			n_move;
-
-  side_size = unit->area.w / 2;
-  // y + 1 pour check sous les pieds
-  y = unit->area.y - unit->area.h - 1;
-  n_move = 0;
-  while (n_move < -unit->inertia.y)
+  for (int n_move = 0; n_move < -unit->inertia.y; ++n_move)
     {
-      i = 0;
-      while (i < side_size)
+      if (ingame_top_collision(ingame, unit))
 	{
-	  if (ingame_get_pixel(ingame, unit->area.x + i, y) != AIR
-	      || ingame_get_pixel(ingame, unit->area.x - i, y) != AIR)
-	      return;
-	  i += 1;
+	  unit->inertia.y = 0;
+	  return ;
 	}
-      n_move += 1;
       unit->area.y -= 1;
+      n_move += 1;
     }
 }
 
@@ -93,8 +64,8 @@ static void		check_side(t_ingame		*ingame,
 
   n_move = 0;
   side_size = unit->area.w / 2;
-  x = unit->area.x + (side_size + 1) * side;    
-  while (n_move < unit->inertia.x)
+  x = unit->area.x + (side_size + 2) * side;    
+  while (n_move < unit->inertia.x * side)
     {
       i = 0;
       while (i < unit->area.h)
@@ -111,15 +82,12 @@ static void		check_side(t_ingame		*ingame,
 void			manage_inertia(t_ingame		*ingame,
 				       t_unit		*unit)
 {
-  moderate_forces(ingame, unit);
-  unit->area.x += unit->inertia.x;
-  unit->area.y += unit->inertia.y;
-  return ;
-  
-  if (unit->inertia.y < 0)
+  moderate_forces(ingame, unit);  
+  if (unit->inertia.y > 0)
     check_bottom(ingame, unit);
-  else if (unit->inertia.y > 0)
+  else if (unit->inertia.y < 0)
     check_top(ingame, unit);
+
   if (unit->inertia.x < 0)
     check_side(ingame, -1, unit);
   else if (unit->inertia.x > 0)

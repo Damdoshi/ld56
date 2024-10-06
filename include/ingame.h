@@ -5,7 +5,6 @@
 //
 // Game
 
-
 #ifndef				__ingame_H__
 # define			__ingame_H__
 # define			MIN_PIXEL_TO_HOLD			1
@@ -38,7 +37,8 @@ typedef enum			e_unit_type
     WALLSPIDER,
     EATSPIDER,
     LIGHTSPIDER,
-    BADSPIDER
+    BADSPIDER,
+    LAST_UNIT_TYPE
   }				t_unit_type;
 
 
@@ -60,6 +60,7 @@ typedef struct			s_unit
   t_bunny_accurate_position	inertia;
   t_bunny_sprite		*sprite;
   bool				selected;
+  t_bunny_accurate_position	speed; // Vitesse horizontal et saut sur Y
 }				t_unit;
 
 struct				s_program;
@@ -151,5 +152,18 @@ void				manage_inertia(t_ingame			*ing,
 					       t_unit			*unit);
 bool				ingame_bottom_collision(t_ingame	*ing,
 							t_unit		*unit);
+bool				ingame_top_collision(t_ingame		*ing,
+						     t_unit		*unit);
+
+void				ingame_go(t_ingame			*ing,
+					  t_unit			*unit,
+					  int				x);
+void				ingame_jump(t_ingame			*ing,
+					    t_unit			*unit);
+
+bool				ingame_new_unit(t_ingame		*ing,
+						t_unit_type		type,
+						t_bunny_position	pos);
+
 #endif	/*			__ingame_H__				*/
 

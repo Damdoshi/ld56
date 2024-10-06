@@ -16,8 +16,6 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
 					    t_bunny_keysym	sym,
 					    t_ingame		*ingame)
 {
-  t_bunny_accurate_position	target_pos;
-
   if (state == GO_UP)
     return (GO_ON);
   if (sym == BKS_1)
