@@ -39,7 +39,7 @@ t_bunny_response		main_menu_click(t_bunny_event_state	state,
 	{
 	  main_menu->text_menu[0]->clipable.color_mask.full = BLACK | TO_RED(100);
 	  main_menu->program->context = INGAME;
-	  return (GO_ON);//SWITCH_CONTEXT);
+	  return (GO_ON);
 	}
       else if (pos_mou.x >= area[1].x
 	       && pos_mou.x <= area[1].x + area[1].w

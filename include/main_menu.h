@@ -17,6 +17,7 @@ typedef struct			s_main_menu
   t_bunny_font			*text_menu[2];
   t_bunny_area			pos_txt[2];
   t_bunny_sprite		*cursor;
+  t_bunny_music			*music;
   //
 }				t_main_menu;
 
