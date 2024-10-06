@@ -18,13 +18,6 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_renderer.dab", &ingame->health_renderer);
   ingame_load_sprite(ingame, "./res/ingame/gfx/skull.dab", &ingame->skull);
 
-
-  ingame_load_sprite(ingame, "./res/ingame/gfx/hero.dab", &ingame->player->sprite);
-  ingame->player->area.w = 15;
-  ingame->player->area.h = 50 - 7 - 5;
-  ingame->player->speed.x = 2;
-  ingame->player->speed.y = -1.6 * 2.33;
-
   ingame->layer[0] = NULL; // Car pas encore la ressource
   ingame->layer[1] = bunny_load_pixelarray("./res/ingame/TestPhysiqueMap.png");
   ingame->layer[2] = NULL;
