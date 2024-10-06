@@ -1,7 +1,5 @@
 #include		"program.h"
 
-#include		<stdbool.h>
-
 static bool		check_fall(t_ingame			*ing,
 				   t_unit			*unit,
 				   int				npos)

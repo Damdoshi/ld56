@@ -55,6 +55,7 @@ typedef struct			s_unit
 {
   t_unit_type			type;
   t_bunny_accurate_area		area;
+  t_bunny_accurate_position	inertia;
   t_bunny_sprite		*sprite;
   bool				selected;
 }				t_unit;
@@ -144,6 +145,8 @@ void				ingame_pixel_explosif(t_ingame		*ing,
 void				pixel_move(t_ingame			*ing,
 					   t_unit			*unit,
 					   t_bunny_accurate_position	target_pos);
+void				manage_inertia(t_ingame			*ing,
+					       t_unit			*unit);
 
 #endif	/*			__ingame_H__				*/
 

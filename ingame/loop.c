@@ -7,15 +7,53 @@
 
 #include		"program.h"
 
+static void		check_actions(t_ingame	*ingame)
+{
+  const bool		*keys = bunny_get_keyboard();
+
+  if (keys[BKS_Z] || keys[BKS_W] || keys[BKS_SPACE])
+    {
+      if (ingame->player->inertia.y < 0.5 && ingame->player->inertia.y > -0.5)
+	ingame->player->inertia.y = -100;
+    }
+  if (keys[BKS_S])
+    {
+      if (ingame->player->inertia.y < 0.5 && ingame->player->inertia.y > -0.5)
+	ingame->player->inertia.y = 0.5;
+      else if (ingame->player->inertia.y < -0.5)
+	ingame->player->inertia.y *= 0.25;
+      else
+	ingame->player->inertia.y *= 1.05;
+    }
+
+  if (keys[BKS_Q] || keys[BKS_A])
+    {
+      if (ingame->player->inertia.x < 0.5 && ingame->player->inertia.x > -0.5)
+	ingame->player->inertia.x = -0.5;
+      else if (ingame->player->inertia.x > 0.5)
+	ingame->player->inertia.x *= 0.25;
+      else
+	ingame->player->inertia.x *= 1.05;
+    }
+  if (keys[BKS_D])
+  {
+    if (ingame->player->inertia.x < 0.5 && ingame->player->inertia.x > -0.5)
+      ingame->player->inertia.x = 0.5;
+    else if (ingame->player->inertia.x < -0.5)
+      ingame->player->inertia.x *= 0.25;
+    else
+      ingame->player->inertia.x *= 1.05;
+  }
+  printf("inertie x %f y %f\n", ingame->player->inertia.x, ingame->player->inertia.y);
+}
+
 t_bunny_response	ingame_loop(t_ingame		*ingame)
 {
-  t_bunny_accurate_position target_pos;
 
   /// TRUCS DE JOUEUR
-  
-  target_pos.x = ingame->player->area.x;
-  target_pos.y = ingame->player->area.y;
-  pixel_move(ingame, ingame->player, target_pos);
+
+  check_actions(ingame);
+  manage_inertia(ingame, ingame->player);
   
   ingame->camera.x = ingame->player->area.x - ingame->program->screen->buffer.width / 2;
   ingame->camera.y = ingame->player->area.y - ingame->program->screen->buffer.height / 2;
