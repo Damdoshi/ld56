@@ -22,8 +22,8 @@ t_bunny_response	main_menu_entering(t_main_menu		*main_menu)
     return (EXIT_ON_ERROR);
   bunny_clear(&main_menu->program->window->buffer, BLACK);
   t_bunny_sound *son = (t_bunny_sound*)(main_menu->music);
-  bunny_sound_play(son);
   bunny_sound_loop(son, true);
+  bunny_sound_play(son);
   // bunny_set_mouse_visibility(main_menu->program->window, true);
 
   /*

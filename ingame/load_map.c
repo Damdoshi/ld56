@@ -7,7 +7,10 @@ bool			ingame_load_map(t_ingame		*ing,
   t_bunny_pixelarray	*color_map;
 
   if (!(color_map = bunny_load_pixelarray(file)))
-    return (false);
+    {
+       puts("echec de load_pixelarray : " __FILE__);
+      return (false);
+    }
   ing->map_size.x = color_map->clipable.buffer.width;
   ing->map_size.y = color_map->clipable.buffer.height;
   size_t		size = ing->map_size.x * ing->map_size.y;
@@ -41,7 +44,10 @@ bool			ingame_load_map(t_ingame		*ing,
       else if (color_pix.full == TEAL && ing->player == NULL)
 	{
 	  if (ing->last_unit >= NBRCELL(ing->units))
-	    return (false);
+	    {
+	      puts("un probleme que je ne connais pas mais il est la : " __FILE__);
+	      return (false);
+	    }
 	  ing->player = &ing->units[ing->last_unit++];
 	  ing->player->type = HERO;
 	  ing->player->area.w = 50;
@@ -52,8 +58,10 @@ bool			ingame_load_map(t_ingame		*ing,
 	}
     }
   if (ing->player == NULL)
-    return (false);
-  
+    {
+      puts("pas de joueur sur la carte : " __FILE__);
+      return (false);
+    }
   bunny_delete_clipable(&color_map->clipable);
   return (true);
 }
