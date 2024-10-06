@@ -10,7 +10,7 @@
 t_bunny_response	ingame_entering(t_ingame		*ingame)
 {
   bunny_clear(&ingame->program->window->buffer, BLACK);
-  assert(ingame_load_map(ingame, "./res/ingame/TestPhysiqueMap.png"));
+  assert(ingame_load_map(ingame, "./res/ingame/level/00/map_part_1_physique.png"));
 
   ingame_load_sprite(ingame, "./res/ingame/gfx/cursor.dab", &ingame->cursor);
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_track.dab", &ingame->health_track);
