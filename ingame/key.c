@@ -16,8 +16,6 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
 					    t_bunny_keysym	sym,
 					    t_ingame		*ingame)
 {
-  t_bunny_accurate_position	target_pos;
-
   if (state == GO_UP)
     return (GO_ON);
   if (sym == BKS_1)
@@ -48,7 +46,7 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
 
 
   //// DEBUG
-  
+  /*  
   if (sym == BKS_Z)
     {
       target_pos.x = ingame->player->area.x;
@@ -85,7 +83,6 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
       printf("Player pos : x: %f y: %f\n", ingame->player->area.x, ingame->player->area.y);
     }  
 
-  /*
   if (sym == BKS_LEFT)
     {
       if (state == GO_DOWN)

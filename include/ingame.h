@@ -5,11 +5,16 @@
 //
 // Game
 
-
 #ifndef				__ingame_H__
 # define			__ingame_H__
+
+#include			<lapin.h>
+
 # define			MIN_PIXEL_TO_HOLD			1
 # define			COEF_CLIMBING_HEIGHT			5
+
+# define			HERO_MAX_SPEED				2
+#define				MAX_PARTICULE				10240
 
 typedef enum			e_event_type
   {
@@ -36,7 +41,8 @@ typedef enum			e_unit_type
     WALLSPIDER,
     EATSPIDER,
     LIGHTSPIDER,
-    BADSPIDER
+    BADSPIDER,
+    LAST_UNIT_TYPE
   }				t_unit_type;
 
 typedef enum			e_element
@@ -54,8 +60,10 @@ typedef struct			s_unit
 {
   t_unit_type			type;
   t_bunny_accurate_area		area;
+  t_bunny_accurate_position	inertia;
   t_bunny_sprite		*sprite;
   bool				selected;
+  t_bunny_accurate_position	speed; // Vitesse horizontal et saut sur Y
 }				t_unit;
 
 typedef enum			s_sfx
@@ -68,6 +76,15 @@ typedef enum			s_sfx
   LAST_SFX_CATEGORY
 }				t_sfx;
 
+typedef struct			s_particule
+{
+  double			death_time[MAX_PARTICULE];
+  uint32_t			color[MAX_PARTICULE];
+  t_bunny_accurate_position	pos[MAX_PARTICULE];
+  t_bunny_accurate_position	spos[MAX_PARTICULE];
+  int32_t			nb_particule;
+}				t_particule;
+
 struct				s_program;
 typedef struct			s_ingame
 {
@@ -75,6 +92,7 @@ typedef struct			s_ingame
   t_bunny_sprite		*sprites[4096];
   size_t			last_sprite;
   int				frame_counter;
+  t_particule			particules;
 
   ///// VIE
   int				life;
@@ -155,7 +173,34 @@ void				ingame_pixel_explosif(t_ingame		*ing,
 void				pixel_move(t_ingame			*ing,
 					   t_unit			*unit,
 					   t_bunny_accurate_position	target_pos);
+
 void				sfx_loader(t_ingame			*ing);
+
+void				manage_inertia(t_ingame			*ing,
+					       t_unit			*unit);
+bool				ingame_bottom_collision(t_ingame	*ing,
+							t_unit		*unit);
+bool				ingame_top_collision(t_ingame		*ing,
+						     t_unit		*unit);
+
+void				ingame_go(t_ingame			*ing,
+					  t_unit			*unit,
+					  int				x);
+void				ingame_jump(t_ingame			*ing,
+					    t_unit			*unit);
+
+bool				ingame_new_unit(t_ingame		*ing,
+						t_unit_type		type,
+						t_bunny_position	pos);
+void				new_particule(t_particule		*particule,
+					      double			death_time,
+					      t_bunny_accurate_position	pos,
+					      t_bunny_accurate_position	spos,
+					      uint32_t			color);
+void				delete_particule(t_particule		*particule,
+						 int32_t		index);
+void				check_particule(t_ingame		*ingame);
+
 
 #endif	/*			__ingame_H__				*/
 

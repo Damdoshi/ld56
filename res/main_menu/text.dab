@@ -1,0 +1,15 @@
+RessourceFile=@"./font.png"
+BoxSize=320,64
+Scale=1
+GlyphSize=32,32
+Interglyph=5,5
+'Scrolling=0,50
+VerticalAlign="Middle"
+HorizontalAlign="Middle"
+
+
+Color=0x80, 0x0, 0x00
+'Rotation=10
+
+OutlineSize=1
+OutlineColor=0,0,0,255

@@ -7,39 +7,32 @@
 
 #include		"program.h"
 
+static void		check_actions(t_ingame	*ingame)
+{
+  const bool		*keys = bunny_get_keyboard();
+  int			x = 0;
+  
+  if (keys[BKS_Z] || keys[BKS_W] || keys[BKS_SPACE])
+    ingame_jump(ingame, ingame->player);
+  if (keys[BKS_Q] || keys[BKS_A])
+    x = -1;
+  if (keys[BKS_D])
+    x += 1;
+  ingame_go(ingame, ingame->player, x);
+}
+
 t_bunny_response	ingame_loop(t_ingame		*ingame)
 {
-  t_bunny_accurate_position target_pos;
-
-  /// TRUCS DE JOUEUR
-  
-  target_pos.x = ingame->player->area.x;
-  target_pos.y = ingame->player->area.y;
-  pixel_move(ingame, ingame->player, target_pos);
+  check_actions(ingame);
+  for (size_t i = 0; i < ingame->last_unit; ++i)
+    {
+      ingame->units[i].inertia.y += 0.2;
+      manage_inertia(ingame, &ingame->units[i]);
+    }
   
   ingame->camera.x = ingame->player->area.x - ingame->program->screen->buffer.width / 2;
   ingame->camera.y = ingame->player->area.y - ingame->program->screen->buffer.height / 2;
-
-  /*
-  ingame->layer[1]->clipable.clip_x_position = ingame->camera.x;
-  ingame->layer[1]->clipable.clip_y_position = ingame->camera.y;
-  ingame->layer[1]->clipable.clip_width = ingame->layer[1]->clipable.buffer.width;
-  ingame->layer[1]->clipable.clip_height = ingame->layer[1]->clipable.buffer.height;
-
-  if (ingame->layer[1]->clipable.clip_x_position < 0)
-    {
-      ingame->layer[1]->clipable.clip_width += ingame->layer[1]->clipable.clip_x_position;
-      ingame->layer[1]->clipable.clip_x_position = 0;
-    }
-  if (ingame->layer[1]->clipable.clip_y_position < 0)
-    {
-      ingame->layer[1]->clipable.clip_height += ingame->layer[1]->clipable.clip_y_position;
-      ingame->layer[1]->clipable.clip_y_position = 0;
-    }
-  */
-
   /// MISC
-
   ingame->frame_counter +=1;
   if (ingame_progress_health(ingame) == false)
     {

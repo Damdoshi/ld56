@@ -37,7 +37,8 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	  bunny_blit(&ingame->program->screen->buffer, &ingame->fire->clipable, NULL);
 	}
     }
-  
+  check_particule(ingame);
+
   ///////////////// GUI /////////////////
   ingame_display_health_bar(ingame);
   ingame_display_selection(ingame);
