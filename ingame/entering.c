@@ -29,6 +29,7 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
   ingame->layer[1] = bunny_load_pixelarray("./res/ingame/TestPhysiqueMap.png");
   ingame->layer[2] = NULL;
 
+  ingame->particules.nb_particule = 0;
   ingame->health = ingame->health_target = 1;
   assert((ingame->fire = bunny_new_pixelarray(ingame->map_size.x, ingame->map_size.y)));
 

@@ -7,10 +7,14 @@
 
 #ifndef				__ingame_H__
 # define			__ingame_H__
+
+#include			<lapin.h>
+
 # define			MIN_PIXEL_TO_HOLD			1
 # define			COEF_CLIMBING_HEIGHT			5
 
 # define			HERO_MAX_SPEED				2
+#define				MAX_PARTICULE				10240
 
 typedef enum			e_event_type
   {
@@ -63,6 +67,15 @@ typedef struct			s_unit
   t_bunny_accurate_position	speed; // Vitesse horizontal et saut sur Y
 }				t_unit;
 
+typedef struct			s_particule
+{
+  double			death_time[MAX_PARTICULE];
+  uint32_t			color[MAX_PARTICULE];
+  t_bunny_accurate_position	pos[MAX_PARTICULE];
+  t_bunny_accurate_position	spos[MAX_PARTICULE];
+  int32_t			nb_particule;
+}				t_particule;
+
 struct				s_program;
 typedef struct			s_ingame
 {
@@ -70,6 +83,7 @@ typedef struct			s_ingame
   t_bunny_sprite		*sprites[4096];
   size_t			last_sprite;
   int				frame_counter;
+  t_particule			particules;
 
   ///// VIE
   int				life;
@@ -164,6 +178,14 @@ void				ingame_jump(t_ingame			*ing,
 bool				ingame_new_unit(t_ingame		*ing,
 						t_unit_type		type,
 						t_bunny_position	pos);
+void				new_particule(t_particule		*particule,
+					      double			death_time,
+					      t_bunny_accurate_position	pos,
+					      t_bunny_accurate_position	spos,
+					      uint32_t			color);
+void				delete_particule(t_particule		*particule,
+						 int32_t		index);
+void				check_particule(t_ingame		*ingame);
 
 #endif	/*			__ingame_H__				*/
 
