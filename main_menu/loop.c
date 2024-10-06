@@ -26,7 +26,8 @@ t_bunny_response	main_menu_loop(t_main_menu		*main_menu)
 	main_menu->text_menu[1]->clipable.buffer.height
       }
     };
-
+  if (main_menu->program->context != MAIN_MENU)
+    return (SWITCH_CONTEXT);
   main_menu->text_menu[0]->clipable.color_mask.full = WHITE;
   main_menu->text_menu[1]->clipable.color_mask.full = WHITE;
 
