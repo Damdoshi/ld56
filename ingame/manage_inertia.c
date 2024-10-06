@@ -61,8 +61,12 @@ static void		check_side(t_ingame		*ingame,
   int			side_size;
   int			i;
   int			n_move;
+  int     step_height;
+  int     max_step_height;
 
   n_move = 0;
+  step_height = 0;
+  max_step_height = unit->area.h / 5;
   side_size = unit->area.w / 2;
   x = unit->area.x + (side_size + 2) * side;    
   while (n_move < unit->inertia.x * side)
@@ -71,7 +75,19 @@ static void		check_side(t_ingame		*ingame,
       while (i < unit->area.h)
 	{
 	  if (ingame_get_pixel(ingame, x, unit->area.y - i) != AIR)
+	    {
+	      step_height += 1;
+	      if (step_height > max_step_height)
+		return;
+	    }
+	  i += 1;
+	} 
+      i = 0;
+      while (i < step_height)
+	{
+	  if (ingame_top_collision(ingame, unit))
 	    return;
+	  unit->area.y -= 1;
 	  i += 1;
 	}
       unit->area.x += side;
