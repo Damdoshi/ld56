@@ -89,6 +89,8 @@ typedef struct			s_unit
   t_bunny_accurate_position	speed; // Vitesse horizontale et force du saut
   t_unit_action			action;
   t_bunny_position		target;	// Ou dois je aller?
+  t_bunny_area			target_area;	// Ou je creuse?
+  int				nb;
   t_action			target_action; // pour faire quoi?
   unsigned int			light_color;
   double			light_radius;
@@ -160,7 +162,7 @@ typedef struct			s_ingame
 
   t_bunny_bitfield		*attack_map;
   t_bunny_bitfield		*build_map;
-  
+
   t_game_event			event_list[4096];
   size_t			event_len;
 

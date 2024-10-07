@@ -50,7 +50,12 @@ bool			ingame_load_map(t_ingame		*ing,
 
   ing->attack_map = bunny_new_bitfield(size);
   ing->build_map = bunny_new_bitfield(size);
-  
+
+  for (size_t i ; i < size; i++)
+    {
+
+    }
+
   assert((ing->physic_map = malloc(sizeof(t_element) * size)));
   t_bunny_color		color;
   size_t		i;
@@ -60,8 +65,14 @@ bool			ingame_load_map(t_ingame		*ing,
   for (i = 0; i < size; i++)
     {
       color.full = ((unsigned int*)(physic_map->pixels))[i];
+      bunny_bitfield_set(ing->attack_map, i);
+      bunny_bitfield_set(ing->build_map, i);
       if (color.argb[3] == 0)
-	ing->physic_map[i] = AIR;
+	{
+	  ing->physic_map[i] = AIR;
+	  bunny_bitfield_clr(ing->attack_map, i);
+	  bunny_bitfield_clr(ing->build_map, i);
+	}
       else if (color.full == GREEN)
 	ing->physic_map[i] = EARTH;
       else if (color.full == BLACK)

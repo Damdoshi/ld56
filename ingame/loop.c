@@ -30,6 +30,8 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
   for (size_t i = 0; i < ingame->last_sprite; ++i)
     bunny_sprite_animate_now(ingame->sprites[i]);
   ingame_event(ingame);
+  attack_map(ingame, &unit[i], r);
   return (GO_ON);
 }
 
+ 

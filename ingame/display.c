@@ -14,7 +14,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 {
   bunny_clear(&ingame->program->screen->buffer, GRAY(64));
   bunny_clear(&ingame->whitescreen->buffer, BLACK);
-  
+
   if (ingame->fire)
     {
       fire(ingame->fire, false);
@@ -34,9 +34,9 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
     {
       ingame->color_map->clipable.position.x = 0;
       ingame->color_map->clipable.clip_x_position = ingame->camera.x;
-      ingame->color_map->clipable.clip_width = ingame->program->screen->buffer.width;                  ;
+      ingame->color_map->clipable.clip_width = ingame->program->screen->buffer.width;
     }
-  
+
   if (ingame->camera.y < 0)
     {
       ingame->color_map->clipable.position.y = -ingame->camera.y;
@@ -47,7 +47,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
     {
       ingame->color_map->clipable.position.y = 0;
       ingame->color_map->clipable.clip_y_position = ingame->camera.y;
-      ingame->color_map->clipable.clip_height = ingame->program->screen->buffer.height;                  ;
+      ingame->color_map->clipable.clip_height = ingame->program->screen->buffer.height;
     }
 
   if (ingame->background)
