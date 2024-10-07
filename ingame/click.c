@@ -24,21 +24,22 @@ t_bunny_response		ingame_click(t_bunny_event_state	state,
 	  else
 	    ingame_end_select(ingame);
 	}
-      else if (but == BMB_RIGHT)
+      else if (but == BMB_RIGHT && state == GO_DOWN)
 	{
 	  t_bunny_position pos = get_real_mouse_position(ingame->program->screen);
-	  int wu = (ingame->last_unit - 1);
+	  int wu = (ingame->last_selection - 1);
 	  int xdiff = (-wu / 2) * 8;
 	  int moved = 0;
 
-	  for (size_t i = 0; i < ingame->last_unit && i < NBRCELL(ingame->units); i++)
-	    if (ingame->units[i].selected)
-	      {
-		ingame->units[i].target.x = pos.x + ingame->camera.x + xdiff + moved * 8;
-		ingame->units[i].target.y = pos.y + ingame->camera.y;
-		ingame->units[i].target_action = ingame->cursor_type;
-		moved += 1;
-	      }
+	  pos.x += ingame->camera.x;
+	  pos.y += ingame->camera.x;
+	  for (size_t i = 0; i < ingame->last_selection && i < NBRCELL(ingame->selection); i++)
+	    {
+	      ingame->units[i].target.x = pos.x + xdiff + moved * 8;
+	      ingame->units[i].target.y = pos.y;
+	      ingame->units[i].target_action = ingame->cursor_type;
+	      moved += 1;
+	    }
 	}
     }
   return (GO_ON);

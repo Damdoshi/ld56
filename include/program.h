@@ -65,5 +65,7 @@ double				distance(double			x1,
 double				fcos(double			v);
 double				fsin(double			v);
 
+void				sound_play(t_bunny_effect	*eff);
+
 #endif	//			__PROGRAM_H__
 
