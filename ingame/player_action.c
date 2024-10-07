@@ -6,6 +6,15 @@ void			ingame_player_action(t_ingame	*ingame,
 {
   const bool		*keys = bunny_get_keyboard();
   int			x = 0;
+
+  if (bunny_sprite_animation_name("Crashing") == bunny_sprite_get_animation(unit->sprite))
+    {
+      if (bunny_sprite_is_still(unit->sprite))
+	bunny_sprite_set_animation_name(unit->sprite, "GettingUp");
+      return ;
+    }
+  if (bunny_sprite_animation_name("GettingUp") == bunny_sprite_get_animation(unit->sprite))
+    return ;
   
   if (keys[BKS_Q] || keys[BKS_A] || keys[BKS_LEFT])
     x = -1;
@@ -27,9 +36,7 @@ void			ingame_player_action(t_ingame	*ingame,
     {
       if (unit->inertia.y < 0)
 	bunny_sprite_set_animation_name(unit->sprite, "Jumping");
-      else if (unit->inertia.y < 4)
+      else if (unit->inertia.y > 4)
 	bunny_sprite_set_animation_name(unit->sprite, "Landing");
-      else  if (unit->inertia.y > 0)
-	bunny_sprite_set_animation_name(unit->sprite, "Falling");
     }
 }

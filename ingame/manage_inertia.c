@@ -27,7 +27,10 @@ static void		check_bottom(t_ingame		*ingame,
       if (ingame_bottom_collision(ingame, unit))
 	{
 	  if (unit->inertia.y > 8)
-	    ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
+	    {
+	      bunny_sprite_set_animation_name(unit->sprite, "Crashing");
+	      ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
+	    }
 	  else if (unit->inertia.y > 0.5)
 	    {} // Faire un bruit de bobo - mais on est pas blessé
 	  unit->inertia.y = 0;

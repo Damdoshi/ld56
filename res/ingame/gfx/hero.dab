@@ -23,8 +23,36 @@ SpeedY=-3.728
     Position = 0, 1 * [.].Clip.Size[1]
     Browsing = "LeftToRight"
     Frequency = 8
-    Frame = 6 'Amputé expres
+    Frame = 5
     Loop
+  ]
+  [Jumping
+    Position = 0, 2 * [.].Clip.Size[1]
+    Browsing = "LeftToRight"
+    Frequency = 8
+    Frame = 3
+    NextAnimation = "Landing"
+  ]
+  [Landing
+    Position = 0, 3 * [.].Clip.Size[1]
+    Browsing = "LeftToRight"
+    Frequency = 8
+    Frame = 1
+    Loop
+  ]
+  [Crashing
+    Position = [.].Clip.Size[0], 3 * [.].Clip.Size[1]
+    Browsing = "LeftToRight"
+    Frequency = 8
+    Frame = 4
+    FramePlay = 1, 1, 1, 16
+  ]
+  [GettingUp
+    Position = 0, 4 * [.].Clip.Size[1]
+    Frequency = 3
+    Browsing = "LeftToRight"
+    Frame = 3
+    NextAnimation = "Idle"
   ]
 ]
 

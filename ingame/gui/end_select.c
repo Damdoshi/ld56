@@ -35,8 +35,8 @@ void			ingame_end_select(t_ingame	*ing)
   t_bunny_accurate_area	area = {
     .x = ing->select.x + ing->camera.x,
     .y = ing->select.y + ing->camera.y,
-    .w = ing->camera.w,
-    .h = ing->camera.h
+    .w = ing->select.w,
+    .h = ing->select.h
   };
 
   // Et on rafraichit la selection
