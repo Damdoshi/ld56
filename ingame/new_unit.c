@@ -9,6 +9,14 @@ const char		*gl_files[LAST_UNIT_TYPE] = {
   "./res/ingame/gfx/badspider.dab"
 };
 
+t_unit_action		gl_action[LAST_UNIT_TYPE] = {
+  ingame_player_action,
+  ingame_spider_action,
+  ingame_spider_action,
+  ingame_spider_action,
+  ingame_spider_action,
+};
+
 int			ingame_new_unit(t_ingame	*ing,
 					t_unit_type	type,
 					t_bunny_position pos)
@@ -18,7 +26,7 @@ int			ingame_new_unit(t_ingame	*ing,
   assert(ing->last_unit < NBRCELL(ing->units));
   t_unit		*unit = &ing->units[ing->last_unit++];
 
-  assert((unit->sprite = bunny_load_sprite(gl_files[type])));
+  ingame_load_sprite(ing, gl_files[type], &unit->sprite);
   assert((cnf = bunny_open_configuration(gl_files[type], NULL)));
 
   if (!bunny_configuration_getf(cnf, &unit->area.w, "ColWidth"))
@@ -31,8 +39,14 @@ int			ingame_new_unit(t_ingame	*ing,
 
   if (!bunny_configuration_getf(cnf, &unit->speed.x, "SpeedX"))
     unit->speed.x = 2;
-  if (!bunny_configuration_getf(cnf, &unit->speed.x, "SpeedY"))
+  if (!bunny_configuration_getf(cnf, &unit->speed.y, "SpeedY"))
     unit->speed.y = -3.7;
 
+  unit->target.x = unit->area.x;
+  unit->target.y = unit->area.y;
+  unit->target_action = SELECTION; // "Ne fait rien"
+  unit->action = gl_action[type];
+
+  bunny_delete_configuration(cnf);
   return (ing->last_unit - 1);
 }

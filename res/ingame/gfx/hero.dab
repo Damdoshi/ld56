@@ -16,13 +16,14 @@ SpeedY=-3.728
     Position = 0, 0 * [.].Clip.Size[1]
     Browsing = "LeftToRight"
     Frame = 10
-    FramePlay = 64, 1, 1, 16, 1, 1, 1, 1, 16, 1
+    FramePlay = 32, 1, 1, 16, 1, 1, 1, 1, 16, 1
     Loop
   ]
   [Walking
     Position = 0, 1 * [.].Clip.Size[1]
     Browsing = "LeftToRight"
-    Frame = 7
+    Frequency = 8
+    Frame = 6 'Amputé expres
     Loop
   ]
 ]

@@ -10,7 +10,7 @@
 t_bunny_response	ingame_entering(t_ingame		*ingame)
 {
   bunny_clear(&ingame->program->window->buffer, BLACK);
-  assert(ingame_load_map(ingame, "./res/ingame/level/00/physic.png"));
+  assert(ingame_load_map(ingame, "./res/ingame/level/00/configuration.dab"));
 
   ingame_load_sprite(ingame, "./res/ingame/gfx/cursor.dab", &ingame->cursor);
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_track.dab", &ingame->health_track);
@@ -18,13 +18,8 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_renderer.dab", &ingame->health_renderer);
   ingame_load_sprite(ingame, "./res/ingame/gfx/skull.dab", &ingame->skull);
 
-  ingame->layer[0] = NULL; // Car pas encore la ressource
-  ingame->layer[1] = bunny_load_pixelarray("./res/ingame/level/00/color.png");
-  ingame->layer[2] = NULL;
-
   ingame->particules.nb_particule = 0;
   ingame->health = ingame->health_target = 1;
-  assert((ingame->fire = bunny_new_pixelarray(ingame->map_size.x, ingame->map_size.y)));
 
   return (GO_ON);
 }

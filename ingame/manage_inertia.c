@@ -88,6 +88,7 @@ static void		check_side(t_ingame		*ingame,
 	  if (ingame_top_collision(ingame, unit))
 	    return;
 	  unit->area.y -= 1;
+	  unit->inertia.x *= 0.6;
 	  i += 1;
 	}
       unit->area.x += side;

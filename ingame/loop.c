@@ -7,23 +7,11 @@
 
 #include		"program.h"
 
-static void		check_actions(t_ingame	*ingame)
-{
-  const bool		*keys = bunny_get_keyboard();
-  int			x = 0;
-  
-  if (keys[BKS_Q] || keys[BKS_A] || keys[BKS_LEFT])
-    x = -1;
-  if (keys[BKS_D] || keys[BKS_RIGHT])
-    x += 1;
-  ingame_go(ingame, ingame->player, x);
-}
-
 t_bunny_response	ingame_loop(t_ingame		*ingame)
 {
-  check_actions(ingame);
-  for (size_t i = 1; i < ingame->last_unit; ++i)
+  for (size_t i = 0; i < ingame->last_unit; ++i)
     {
+      ingame->units[i].action(ingame, &ingame->units[i]);
       ingame->units[i].inertia.y += 0.2;
       manage_inertia(ingame, &ingame->units[i]);
     }

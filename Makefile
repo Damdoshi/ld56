@@ -1,21 +1,39 @@
 ## Hanged Bunny Studio Library ------    ---  -- --- -    ---  --    - -- -   -
-## Hanged Bunny Studio 2014-2024 ----- -- - -- -  -  -- -- - -- --  -- -- -- --
-## Pentacle Technologie 2008-2024 ---- -- -    - - - -- -- - -- ---- -    -- --
-## EFRITS SAS 2022-2024 -------------    -- -- - --- -    ---  --   -- -- -   -
-## LibLapin -------------------------------------------------------------------
+## Hanged Bunny Studio 2014-2016 ----- -- - -- -  -  -- -- - -- --  -- -- -- --
+## ----------------------------------- -- -    - - - -- -- - -- ---- -    -- --
+## ----------------------------------    -- -- - --- -    ---  --   -- -- -   -
+## ----------------------------------------------------------------------------
 
 ## ----------------------------------------------------------------------------
 ## Configuration --------------------------------------------------------------
 
-PRODUCT	= game.exe
-COMMAND = bcc -I$(HOME)/.froot/include -L$(HOME)/.froot/lib */*.c */*/*.c -o $(PRODUCT) -Wall -Wextra -I./ -I./include/ -g -g3 -ggdb
+  MOD		=	game.exe
+  BIN		=	game.exe
+  FLAG		=	-W -Wall -std=gnu11 -g -g3 -ggdb
 
-all:
-	$(COMMAND)
-debug:
-	$(COMMAND)
-clean:
-fclean:
-	rm -f $(PRODUCT)
-re:	fclean all
+  INCLUDE	=	-I$(HOME)/.froot/include/ -I./ -I./include/
+  SRC		=	$(wildcard */*.c) $(wildcard */*/*.c)
+  OBJ		=	$(SRC:.c=.o)
+  LIBPATH	=	-L${HOME}/.froot/lib/
 
+  ## Rules ------------------------------------------------------------------
+  all:		bin
+  bin:		$(OBJ)
+		@bcc $(OBJ) -o $(BIN) $(LIBPATH) $(FLAG)
+		@echo "[OUT] " $(BIN)
+		@echo $(BIN) | tr '[:lower:]' '[:upper:]'
+  .c.o:
+		@bcc $(INCLUDE) $(FLAG) -c $< -o $@
+		@echo "[BUNNYCC]" $<
+  clean:
+		@rm -f $(OBJ)
+  fclean:	clean
+		@rm -f $(BIN)
+  re:		fclean all
+
+## ----------------------------------------------------------------------------
+## MISC -----------------------------------------------------------------------
+
+  .PHONY: all clean fclean re
+
+  .SUFFIXES: .cpp .o

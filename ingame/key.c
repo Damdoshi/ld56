@@ -7,11 +7,6 @@
 
 #include			"program.h"
 
-double				afabs(double			x)
-{
-  return (x < 0 ? x : -x);
-}
-
 t_bunny_response		ingame_key(t_bunny_event_state	state,
 					    t_bunny_keysym	sym,
 					    t_ingame		*ingame)
