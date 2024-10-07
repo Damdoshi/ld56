@@ -1,24 +1,6 @@
 RessourceFile = @"lightspider.png"
-Origin=25,45
-Frequency=16
+@insert @"spider.dab"
 
-ColWidth=15
-ColHeight=9
-SpeedX=2
-SpeedY=-3.728
+LightRadius=100
+LightColor = 255, 255, 255, 128
 
-[Clip
-  Size = 50, 50
-]
-
-[Animations
-  [Idle
-    Position = 0, 0
-    Browsing = "LeftToRight"
-    Frame = 10
-    FramePlay = 64, 1, 1, 16, 1, 1, 1, 1, 16, 1
-    Loop
-  ]
-]
-
-InitialAnimation = "Idle"

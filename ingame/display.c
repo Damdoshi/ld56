@@ -13,6 +13,7 @@
 t_bunny_response	ingame_display(t_ingame	*ingame)
 {
   bunny_clear(&ingame->program->screen->buffer, GRAY(64));
+  bunny_clear(&ingame->whitescreen->buffer, BLACK);
   
   if (ingame->fire)
     {
@@ -60,9 +61,30 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 
   for (size_t i = 0; i < ingame->last_unit && i < NBRCELL(ingame->units); i++)
     {
-      ingame->units[i].sprite->clipable.position.x = ingame->units[i].area.x - ingame->camera.x;
-      ingame->units[i].sprite->clipable.position.y = ingame->units[i].area.y - ingame->camera.y;
-      bunny_blit(&ingame->program->screen->buffer, &ingame->units[i].sprite->clipable, NULL);
+      t_unit		*unit = &ingame->units[i];
+      t_bunny_position	pos = {
+	unit->area.x - ingame->camera.x,
+	unit->area.y - ingame->camera.y
+      };
+
+      if (unit->light_radius > 0)
+	{
+	  t_bunny_size	siz = {(int)unit->light_radius, (int)unit->light_radius};
+	  t_bunny_position lpos = {pos.x, pos.y};
+	  size_t	i;
+
+	  lpos.y -= unit->area.h  / 2;
+	  for (i = 0; i < 5; ++i)
+	    {
+	      bunny_set_disk(&ingame->whitescreen->buffer, lpos, siz, unit->light_color, 0, 0);
+	      siz.x *= 0.9;
+	      siz.y *= 0.9;
+	    }
+	}
+      
+      unit->sprite->clipable.position.x = pos.x;
+      unit->sprite->clipable.position.y = pos.y;
+      bunny_blit(&ingame->program->screen->buffer, &unit->sprite->clipable, NULL);
     }
 
   if (ingame->fire)
@@ -76,6 +98,13 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 
   check_particule(ingame);
 
+  if (ingame->program->no_light == false)
+    {
+      bunny_set_multiply_blit(true);
+      bunny_blit(&ingame->program->screen->buffer, ingame->whitescreen, NULL);
+      bunny_set_multiply_blit(false);
+    }
+
   ///////////////// GUI /////////////////
   ingame_display_health_bar(ingame);
   ingame_display_selection(ingame);
@@ -88,7 +117,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
   if (ingame->program->screen->color_mask.argb[GREEN_CMP] < 255)
     ingame->program->screen->color_mask.argb[GREEN_CMP] += 1;
 
-  if (fabs(ingame->health_target - ingame->health) > 0.01)
+  if (fabs(ingame->player->health - ingame->health) > 0.01)
     {
       bunny_clear(&ingame->program->window->buffer, RED);
       ingame->program->screen->rotation = (rand() % 4000 / 1000.0) - 2;

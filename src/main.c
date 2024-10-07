@@ -13,14 +13,20 @@ int			main(int		argc,
 {
   static t_program	program;
   t_bunny_response	ret;
-
+  int			i;
+  
   (void)argc;
   tekinit();
-  memset(&program, 0, sizeof(program)); // Normalement ca sert pas.... mais bon.
+  bunny_set_maximum_ram(1024 * 1024 * 512);
   bunny_enable_full_blit(true);
   // bunny_set_error_descriptor(2);
   memset(&program, 0, sizeof(program));
   bunny_join_binary_directory(*argv);
+  for (i = 0; i < argc; ++i)
+    if (strcmp(argv[i], "--nomusic") == 0)
+      program.no_music = true;
+    else if (strcmp(argv[i], "--nolight") == 0)
+      program.no_light = true;
   if (!(program.configuration = bunny_open_configuration("./res/configuration.dab", NULL)))
     {
       fprintf(stderr, "Cannot open configuration.\n");

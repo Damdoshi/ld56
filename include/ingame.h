@@ -14,7 +14,14 @@
 # define			COEF_CLIMBING_HEIGHT			5
 
 # define			HERO_MAX_SPEED				2
-#define				MAX_PARTICULE				10240
+# define			MAX_PARTICULE				10240
+
+# define			BITGET(bf, x, y, w)			\
+  bunny_bitfield_get((bf), (x) + (y) * (w))
+# define			BITSET(bf, x, y, w)			\
+  bunny_bitfield_set((bf), (x) + (y) * (w))
+# define			BITCLR(bf, x, y, w)			\
+  bunny_bitfield_clr((bf), (x) + (y) * (w))
 
 typedef enum			e_unit_status
   {
@@ -83,6 +90,10 @@ typedef struct			s_unit
   t_unit_action			action;
   t_bunny_position		target;	// Ou dois je aller?
   t_action			target_action; // pour faire quoi?
+  unsigned int			light_color;
+  double			light_radius;
+  double			health;
+  t_bunny_effect		*hurt[16];
 }				t_unit;
 
 typedef enum			s_sfx
@@ -112,11 +123,13 @@ typedef struct			s_ingame
   size_t			last_sprite;
   int				frame_counter;
   t_particule			particules;
+  t_bunny_music			*music;
+
   ///// VIE
+  t_unit			*player;
   int				life;
   t_bunny_sprite		*skull;
   double			health;
-  double			health_target;
   t_bunny_sprite		*health_track;
   t_bunny_sprite		*health_bar;
   t_bunny_sprite		*health_renderer;
@@ -131,8 +144,6 @@ typedef struct			s_ingame
   t_unit			*selection[4096];
   size_t			last_selection;
 
-  t_unit			*player;
-
   //// SON
   t_bunny_effect		*sfx[LAST_SFX_CATEGORY][128];
   int				step_frame;
@@ -143,9 +154,13 @@ typedef struct			s_ingame
   t_bunny_pixelarray		*color_map;
   t_element			*physic_map;
   t_bunny_picture		*foreground;
+  t_bunny_picture		*whitescreen;
   t_bunny_pixelarray		*fire;
   t_bunny_position		map_size;
 
+  t_bunny_bitfield		*attack_map;
+  t_bunny_bitfield		*build_map;
+  
   t_game_event			event_list[4096];
   size_t			event_len;
 
@@ -155,6 +170,7 @@ typedef struct			s_ingame
 }				t_ingame;
 
 void				ingame_get_hurt(t_ingame		*ing,
+						t_unit			*unit,
 						double			damage);
 bool				ingame_progress_health(t_ingame		*ing);
 

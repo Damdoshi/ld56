@@ -36,7 +36,9 @@ typedef struct			s_program
   t_context			context;
   // Pour les contextes a sortie multiple... ou aller après?
   t_context			next_context;
-  
+
+  bool				no_music;
+  bool				no_light;
   t_bunny_splash_screen		bunny_splash;
 # include			"context_attribute.template"
 }				t_program;

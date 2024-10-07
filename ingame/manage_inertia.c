@@ -10,7 +10,8 @@ static void		moderate_forces(t_ingame	*ing,
 
   if (fabs(unit->inertia.x) > 0.01)
     {
-      if (ingame_bottom_collision(ing, unit))
+      if (ingame_bottom_collision(ing, unit) &&
+	  bunny_sprite_animation_name("Crashing") != bunny_sprite_get_animation(unit->sprite))
 	unit->inertia.x *= 0.75;
       else
 	unit->inertia.x *= 0.95;
@@ -29,21 +30,18 @@ static void		check_bottom(t_ingame		*ingame,
 	  if (unit->inertia.y > 8.75)
 	    {
 	      bunny_sprite_set_animation_name(unit->sprite, "Crashing");
-	      ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
+	      ingame_get_hurt(ingame, unit, (unit->inertia.y - 8) / 4.0);
 	    }
 	  else if (unit->inertia.y > 8)
-	    {
-	      ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
-	    }
+	    ingame_get_hurt(ingame, unit, (unit->inertia.y - 8) / 4.0);
 	  else if (unit->inertia.y > 4)
 	    {
 	      bunny_sound_play(&(ingame->sfx[PLAYER][19]->sound));
-	      bunny_sound_play(&(ingame->sfx[PLAYER][0]->sound));
+	      if (unit->hurt[0])
+		bunny_sound_play(&unit->hurt[0]->sound);
 	    }
 	  else if (unit->inertia.y > 1)
-	    {
-	      bunny_sound_play(&(ingame->sfx[PLAYER][18]->sound));
-	    }
+	    bunny_sound_play(&(ingame->sfx[PLAYER][18]->sound));
 	  unit->inertia.y = 0;
 	  return ;
 	}

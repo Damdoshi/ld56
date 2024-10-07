@@ -4,12 +4,14 @@ void sfx_loader(t_ingame *ing)
 {
   int i = 11;
   ing->step_frame = 0;
+  /* Déplace dans res/ingame/sfx/hero_hurtX.ogg
   ing->sfx[PLAYER][0] = bunny_load_effect("res/SFX/player/small_dmg.ogg");
   ing->sfx[PLAYER][1] = bunny_load_effect("res/SFX/player/medium_dmg.ogg");
   ing->sfx[PLAYER][2] = bunny_load_effect("res/SFX/player/medium_dmg2.ogg");
   ing->sfx[PLAYER][3] = bunny_load_effect("res/SFX/player/medium_dmg3.ogg");
   ing->sfx[PLAYER][4] = bunny_load_effect("res/SFX/player/big_dmg.ogg");
   ing->sfx[PLAYER][5] = bunny_load_effect("res/SFX/player/death.ogg");
+  */
   ing->sfx[PLAYER][6] = bunny_load_effect("res/SFX/player/burning.ogg");
   ing->sfx[PLAYER][7] = bunny_load_effect("res/SFX/player/degaine.ogg");
   ing->sfx[PLAYER][8] = bunny_load_effect("res/SFX/player/incantation.ogg");

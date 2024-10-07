@@ -9,7 +9,8 @@ void			ingame_player_action(t_ingame	*ingame,
 
   if (bunny_sprite_animation_name("Crashing") == bunny_sprite_get_animation(unit->sprite))
     {
-      if (bunny_sprite_is_still(unit->sprite))
+      if (bunny_sprite_is_still(unit->sprite) &&
+	  unit->health > 0 && ingame_bottom_collision(ingame, unit))
 	bunny_sprite_set_animation_name(unit->sprite, "GettingUp");
       return ;
     }

@@ -22,6 +22,7 @@ int			ingame_new_unit(t_ingame	*ing,
 					t_bunny_position pos)
 {
   t_bunny_configuration	*cnf;
+  const char		*str;
 
   assert(ing->last_unit < NBRCELL(ing->units));
   t_unit		*unit = &ing->units[ing->last_unit++];
@@ -42,10 +43,20 @@ int			ingame_new_unit(t_ingame	*ing,
   if (!bunny_configuration_getf(cnf, &unit->speed.y, "SpeedY"))
     unit->speed.y = -3.7;
 
+  if (!bunny_configuration_getf(cnf, &unit->light_radius, "LightRadius"))
+    unit->light_radius = -1;
+  unit->light_color = WHITE;
+  bunny_color_configuration("LightColor", (t_bunny_color*)&unit->light_color, cnf);
+
   unit->target.x = unit->area.x;
   unit->target.y = unit->area.y;
   unit->target_action = SELECTION; // "Ne fait rien"
   unit->action = gl_action[type];
+  unit->health = 1;
+
+  for (size_t i = 0; i < NBRCELL(unit->hurt); ++i)
+    if (bunny_configuration_getf(cnf, &str, "Hurt[%zu]", i))
+      assert((unit->hurt[i] = bunny_load_effect(str)));
 
   bunny_delete_configuration(cnf);
   return (ing->last_unit - 1);

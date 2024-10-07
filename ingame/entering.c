@@ -19,9 +19,13 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
   ingame_load_sprite(ingame, "./res/ingame/gfx/skull.dab", &ingame->skull);
   bunny_sound_play(&(bunny_load_music("res/music/music.ogg")->sound));
   ingame->particules.nb_particule = 0;
-  ingame->health = ingame->health_target = 1;
-  ingame->cursor_type = ATTACK;
+  ingame->cursor_type = SELECTION;
 
+  assert((ingame->whitescreen = bunny_new_picture(ingame->program->screen->buffer.width, ingame->program->screen->buffer.height)));
+
+  ingame->health = 1;
+  assert((ingame->music = bunny_load_music("./res/ingame/music.ogg")));
+  bunny_sound_play(&ingame->music->sound);
   return (GO_ON);
 }
 

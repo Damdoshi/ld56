@@ -30,4 +30,4 @@ Origin = 10, 10
   ]
 ]
 
-InitialAnimation = "Attack"
+InitialAnimation = "Selection"

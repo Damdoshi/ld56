@@ -1,0 +1,54 @@
+Origin=16,32
+Frequency=16
+
+ColWidth=15
+ColHeight=9
+
+SpeedX=3
+SpeedY=-4
+
+[Clip
+  Size = 32, 32
+]
+
+[Animations
+  [Idle
+    Position = 4 * [.].Clip.Size[0], 0 * [.].Clip.Size[1]
+    Browsing = "BackAndForth"
+    Frame = 3
+    FramePlay = 16, 1, 1, 1, 1, 1
+    Loop
+  ]
+  [Walking
+    Position = 0 * [.].Clip.Size[0], 0 * [.].Clip.Size[1]
+    Frame = 8
+    Browsing = "LeftToRight"
+    Loop
+  ]
+  [Attack
+    Position = 0 * [.].Clip.Size[0], 4 * [.].Clip.Size[1]
+    Frame = 4
+    Browsing = "LeftToRight"
+    NextAnimation = "Idle"
+  ]
+  [Dig
+    Position = 0 * [.].Clip.Size[0], 1 * [.].Clip.Size[1]
+    Frame = 4
+    Browsing = "LeftToRight"
+    NextAnimation = "Idle"
+  ]
+  [Hurt
+    Position = 0 * [.].Clip.Size[0], 2 * [.].Clip.Size[1]
+    Frame = 3
+    Browsing = "LeftToRight"
+    NextAnimation = "Idle"
+  ]
+  [Die
+    Position = 0 * [.].Clip.Size[0], 3 * [.].Clip.Size[1]
+    Frame = 8
+    Browsing = "LeftToRight"
+  ]
+]
+
+InitialAnimation = "Idle"
+

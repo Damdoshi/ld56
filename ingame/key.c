@@ -37,7 +37,7 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
 
   if (sym >= BKS_F1 && sym <= BKS_F4)
     {
-      ingame_get_hurt(ingame, 0.1 * (sym - BKS_F1 + 1));
+      ingame_get_hurt(ingame, ingame->player, 0.1 * (sym - BKS_F1 + 1));
       return (GO_ON);
     }
   return (GO_ON);

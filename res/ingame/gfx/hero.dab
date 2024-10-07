@@ -7,6 +7,18 @@ ColHeight=38
 SpeedX=2
 SpeedY=-3.728
 
+LightRadius = 70
+LightColor = 255, 255, 255, 32
+
+{Hurt
+  "./res/ingame/sfx/hero_hurt0.ogg",
+  "./res/ingame/sfx/hero_hurt1.ogg",
+  "./res/ingame/sfx/hero_hurt2.ogg",
+  "./res/ingame/sfx/hero_hurt3.ogg",
+  "./res/ingame/sfx/hero_hurt4.ogg",
+  "./res/ingame/sfx/hero_hurt5.ogg"
+}
+
 [Clip
   Size = 50, 50
 ]

@@ -35,7 +35,7 @@ bool			ingame_load_map(t_ingame		*ing,
     assert((ing->fire = bunny_new_pixelarray(ing->map_size.x, ing->map_size.y)));
   else
     ing->fire = NULL;
-
+  
   if ((bunny_configuration_getf(cnf, &str, "Background")))
     assert((ing->background = bunny_load_picture(str)));
   else
@@ -48,6 +48,9 @@ bool			ingame_load_map(t_ingame		*ing,
 
   size_t		size = ing->map_size.x * ing->map_size.y;
 
+  ing->attack_map = bunny_new_bitfield(size);
+  ing->build_map = bunny_new_bitfield(size);
+  
   assert((ing->physic_map = malloc(sizeof(t_element) * size)));
   t_bunny_color		color;
   size_t		i;

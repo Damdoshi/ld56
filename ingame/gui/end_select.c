@@ -30,8 +30,8 @@ void			ingame_end_select(t_ingame	*ing)
     {
       for (i = 0; i < ing->last_selection; ++i)
 	{
-	  ing->units[i].selected = false;
-	  ing->units[i].sprite->clipable.color_mask.full = WHITE;
+	  ing->selection[i]->selected = false;
+	  ing->selection[i]->sprite->clipable.color_mask.full = WHITE;
 	}
       ing->last_selection = 0;
     }
@@ -52,10 +52,11 @@ void			ingame_end_select(t_ingame	*ing)
       continue ;
     else
       {
+	if (ing->last_selection >= NBRCELL(ing->selection))
+	  break ;
 	ing->selection[ing->last_selection] = &ing->units[i];
 	ing->units[i].selected = true;
 	ing->units[i].sprite->clipable.color_mask.full = RED;
-	if ((ing->last_selection += 1) >= NBRCELL(ing->selection))
-	  break ;
+	ing->last_selection += 1;
       }
 }
