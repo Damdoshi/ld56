@@ -1,11 +1,13 @@
 #include		"program.h"
 
-void			new_particule(t_particule			*particule,
+void			new_particule(t_ingame				*ing,
 				      double				death_time,
-				      t_bunny_accurate_position		pos,
+				      t_bunny_position			pos,
 				      t_bunny_accurate_position		spos,
 				      uint32_t				color)
 {
+  t_particule		*particule = &ing->particules;
+  
   if (particule->nb_particule >= MAX_PARTICULE)
     return ;
   particule->color[particule->nb_particule] = color;

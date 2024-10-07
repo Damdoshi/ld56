@@ -1,3 +1,6 @@
-
+Background = @"background.dab"
 Eatable = @"color.png"
 Physic = @"physic.png"
+
+Fire = true
+

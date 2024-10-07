@@ -32,7 +32,10 @@ bool			ingame_load_map(t_ingame		*ing,
   ing->map_size.y = ing->color_map->clipable.buffer.height;
 
   if (bunny_configuration_getf(cnf, &tmp, "Fire") && tmp)
-    assert((ing->fire = bunny_new_pixelarray(ing->map_size.x, ing->map_size.y)));
+    {
+      assert((ing->fire = bunny_new_pixelarray(ing->map_size.x, ing->map_size.y)));
+      bunny_clear(&ing->fire->clipable.buffer, 0);
+    }
   else
     ing->fire = NULL;
   
@@ -50,11 +53,8 @@ bool			ingame_load_map(t_ingame		*ing,
 
   ing->attack_map = bunny_new_bitfield(size);
   ing->build_map = bunny_new_bitfield(size);
-
-  for (size_t i ; i < size; i++)
-    {
-
-    }
+  memset(ing->attack_map, 0, ceil(size / 8));
+  memset(ing->build_map, 0, ceil(size / 8));
 
   assert((ing->physic_map = malloc(sizeof(t_element) * size)));
   t_bunny_color		color;
@@ -65,8 +65,6 @@ bool			ingame_load_map(t_ingame		*ing,
   for (i = 0; i < size; i++)
     {
       color.full = ((unsigned int*)(physic_map->pixels))[i];
-      bunny_bitfield_set(ing->attack_map, i);
-      bunny_bitfield_set(ing->build_map, i);
       if (color.argb[3] == 0)
 	{
 	  ing->physic_map[i] = AIR;
@@ -85,7 +83,10 @@ bool			ingame_load_map(t_ingame		*ing,
 	ing->physic_map[i] = SAND;
       else if (color.full == PINK2)
 	ing->physic_map[i] = FIRE;
-      else if (color.full == TEAL && ing->player == NULL)
+      else
+	ing->physic_map[i] = AIR;
+      
+      if (color.full == TEAL && ing->player == NULL)
 	{
 	  pos.x = i % ing->map_size.x;
 	  pos.y = i / ing->map_size.x;
@@ -103,7 +104,12 @@ bool			ingame_load_map(t_ingame		*ing,
 	  pos.y = i / ing->map_size.x;
 	  ingame_new_unit(ing, EATSPIDER, pos);
 	}
-      // else { faire les autres monstres }
+      else if (color.full == PINK)
+	{
+	  pos.x = i % ing->map_size.x;
+	  pos.y = i / ing->map_size.x;
+	  ingame_new_unit(ing, WALLSPIDER, pos);
+	}
     }
   assert((ing->player != NULL));
   bunny_delete_clipable(&physic_map->clipable);

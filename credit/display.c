@@ -10,7 +10,7 @@
 
 t_bunny_response	credit_display(t_credit	*credit)
 {
-  fire(credit->fire, true);
+  fire(credit->fire, true, NULL);
   bunny_clear(&credit->screen->clipable.buffer, 0);
   bunny_clear(&credit->font->clipable.buffer, 0);
   bunny_draw(&credit->font->clipable);

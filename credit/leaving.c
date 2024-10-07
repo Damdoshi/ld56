@@ -13,5 +13,5 @@ void			credit_leaving(t_bunny_response	response,
 {
   (void)response;
   (void)credit;
-  fire(NULL, false);
+  fire(NULL, false, NULL);
 }

@@ -31,7 +31,7 @@ void			ingame_end_select(t_ingame	*ing)
       for (i = 0; i < ing->last_selection; ++i)
 	{
 	  ing->selection[i]->selected = false;
-	  ing->selection[i]->sprite->clipable.color_mask.full = WHITE;
+	  // ing->selection[i]->sprite->clipable.color_mask.full = WHITE;
 	}
       ing->last_selection = 0;
     }
@@ -50,13 +50,15 @@ void			ingame_end_select(t_ingame	*ing)
       continue ;
     else if (!bunny_rectangular_collision(&area, &ing->units[i].area))
       continue ;
+    else if (ing->units[i].type == HERO || ing->units[i].type == BADSPIDER)
+      continue ;
     else
       {
 	if (ing->last_selection >= NBRCELL(ing->selection))
 	  break ;
 	ing->selection[ing->last_selection] = &ing->units[i];
 	ing->units[i].selected = true;
-	ing->units[i].sprite->clipable.color_mask.full = RED;
+	// ing->units[i].sprite->clipable.color_mask.full = RED;
 	ing->last_selection += 1;
       }
 }

@@ -2,11 +2,12 @@ RessourceFile = @"hero.png"
 Origin=25,45
 Frequency=16
 
-ColWidth=15
+ColWidth=5
 ColHeight=38
 SpeedX=2
 SpeedY=-3.728
 
+Stair=9
 LightRadius = 70
 LightColor = 255, 255, 255, 32
 
@@ -53,6 +54,13 @@ LightColor = 255, 255, 255, 32
     Loop
   ]
   [Crashing
+    Position = [.].Clip.Size[0], 3 * [.].Clip.Size[1]
+    Browsing = "LeftToRight"
+    Frequency = 8
+    Frame = 4
+    FramePlay = 1, 1, 1, 16
+  ]
+  [Die
     Position = [.].Clip.Size[0], 3 * [.].Clip.Size[1]
     Browsing = "LeftToRight"
     Frequency = 8

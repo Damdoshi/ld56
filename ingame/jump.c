@@ -8,7 +8,7 @@ void			ingame_jump(t_ingame		*ing,
     return ;
   if (bunny_sprite_animation_name("GettingUp") == bunny_sprite_get_animation(unit->sprite))
     return ;
-  if (ingame_bottom_collision(ing, unit))
+  if (ingame_bottom_collision(ing, unit, false))
     {
       unit->inertia.y += unit->speed.y;
       bunny_sound_play(&(ing->sfx[PLAYER][20])->sound);

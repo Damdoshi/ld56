@@ -17,10 +17,30 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 
   if (ingame->fire)
     {
-      fire(ingame->fire, false);
-      for (int j = 0; j < ingame->fire->clipable.buffer.height; ++j)
-	for (int i = 0; i < ingame->fire->clipable.buffer.width; ++i)
-	  if (((unsigned int*)ingame->color_map->pixels)[i + j * ingame->color_map->clipable.buffer.width] == RED)
+      t_bunny_area	cam = {
+	ingame->camera.x - ingame->camera.w,
+	ingame->camera.y - ingame->camera.h,
+	3 * ingame->program->screen->buffer.width,
+	3 * ingame->program->screen->buffer.height
+      };
+      int		startx = cam.x;
+      int		starty = cam.y;
+      int		endx = cam.w + startx;
+      int		endy = cam.h + starty;
+
+      if (startx < 0)
+	startx = 0;
+      if (starty < 0)
+	starty = 0;
+      if (endx > ingame->map_size.x)
+	endx = ingame->map_size.x;
+      if (endy > ingame->map_size.y)
+	endy = ingame->map_size.y;
+
+      fire(ingame->fire, false, &cam);
+      for (int j = starty; j < endy; ++j)
+	for (int i = startx; i < endx; ++i)
+	  if (ingame->physic_map[i + j * ingame->map_size.x] == FIRE)
 	    set_fire_pixel(i, j);
     }
 
@@ -51,7 +71,11 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
     }
 
   if (ingame->background)
-    bunny_blit(&ingame->program->screen->buffer, ingame->background, NULL);
+    {
+      ingame->background->position.x = -ingame->camera.x / 2;
+      ingame->background->position.y = -ingame->camera.y / 2;
+      bunny_blit(&ingame->program->screen->buffer, ingame->background, NULL);
+    }
   if (ingame->remain_map)
     {
       bunny_clipable_copy(ingame->remain_map, &ingame->color_map->clipable);
@@ -84,7 +108,45 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
       
       unit->sprite->clipable.position.x = pos.x;
       unit->sprite->clipable.position.y = pos.y;
+
       bunny_blit(&ingame->program->screen->buffer, &unit->sprite->clipable, NULL);
+      
+      t_bunny_accurate_area area = {
+	unit->area.x - unit->area.w / 2 - ingame->camera.x,
+	unit->area.y - unit->area.h - ingame->camera.y,
+	unit->area.w,
+	unit->area.h
+      };
+
+      if (unit->selected)
+	draw_rect(ingame, &area);
+
+      unsigned int black[3] = {BLACK, BLACK, BLACK};
+      unsigned int heal[2] = {RED, BLUE};
+      t_bunny_position line[3] = {
+	{area.x - unit->area.w / 2, area.y - unit->area.h - 5},
+	{area.x, area.y - unit->area.h - 5},
+	{area.x + unit->area.w / 2, area.y - unit->area.h - 5}
+      };
+      if (unit != ingame->player && unit->health < 1.0)
+	{
+	  for (int i = 0; i < 6; ++i)
+	    {
+	      bunny_set_line(&ingame->program->screen->buffer, &line[0], &black[0]);
+	      bunny_set_line(&ingame->program->screen->buffer, &line[1], &black[1]);
+	      line[0].y += 1;
+	      line[1].y += 1;
+	      line[2].y += 1;
+	    }
+
+	  line[0].y -= 4;
+	  line[1].y -= 4;
+	  line[1].x = unit->health * (line[2].x - line[0].x) + line[0].x;
+	  bunny_set_line(&ingame->program->screen->buffer, &line[0], &heal[0]);
+	  line[0].y += 1;
+	  line[1].y += 1;
+	  bunny_set_line(&ingame->program->screen->buffer, &line[0], &heal[0]);
+	}
     }
 
   if (ingame->fire)
@@ -105,11 +167,44 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
       bunny_set_multiply_blit(false);
     }
 
+  /////////////// MID GUI ////////////////
+  bunny_clear(&ingame->action_screen->clipable.buffer, 0);
+  for (int j = 0; j < ingame->program->screen->buffer.height; ++j)
+    for (int i = 0; i < ingame->program->screen->buffer.width; ++i)
+      {
+	int jj = j + ingame->camera.y;
+	int ii = i + ingame->camera.x;
+
+	if (jj < 0 || ii < 0 || jj >= ingame->map_size.y || ii >= ingame->map_size.x)
+	  continue ;	
+	bool att = BITGET(ingame->attack_map, ii, jj, ingame->map_size.x);
+	bool bld = BITGET(ingame->build_map, ii, jj, ingame->map_size.x);
+
+	((unsigned int*)ingame->action_screen->pixels)[i + j * ingame->action_screen->clipable.buffer.width] = 0;
+	if (att)
+	  ((unsigned int*)ingame->action_screen->pixels)[i + j * ingame->action_screen->clipable.buffer.width] |= TO_RED(128) | TO_ALPHA(128);
+	if (bld)
+	  ((unsigned int*)ingame->action_screen->pixels)[i + j * ingame->action_screen->clipable.buffer.width] |= TO_BLUE(128) | TO_ALPHA(128);
+      }
+  bunny_blit(&ingame->program->screen->buffer, &ingame->action_screen->clipable, NULL);
+  
   ///////////////// GUI /////////////////
   ingame_display_health_bar(ingame);
   ingame_display_selection(ingame);
   ingame_display_life(ingame);
   ingame_display_mouse(ingame);
+
+  t_bunny_size bsiz = {ingame->brush_size, ingame->brush_size};
+  t_bunny_size lbsiz = {ingame->brush_size - 3, ingame->brush_size - 3};
+  unsigned int bcol = ALPHA(64, WHITE);
+  unsigned int ocol = ALPHA(128, WHITE);
+  t_bunny_position bpos = {
+    ingame->program->screen->buffer.width - 20,
+    ingame->program->screen->buffer.height - 20
+  };
+
+  bunny_set_disk(&ingame->program->screen->buffer, bpos, bsiz, bcol, 0, 3);
+  bunny_set_disk(&ingame->program->screen->buffer, bpos, lbsiz, 0, ocol, 3);
   
   //// MOUVEMENT DE L'ECRAN
   if (ingame->program->screen->color_mask.argb[BLUE_CMP] < 255)

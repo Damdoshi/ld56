@@ -7,7 +7,7 @@ void		ingame_add_event(t_ingame	       *ing,
 				 t_event_type		evt,
 				 ...)
 {
-  t_game_event	*gev = &ing->event_list[ing->event_len];
+  t_game_event	*gev = &ing->event_list[ing->event_len++];
   va_list	lst;
   
   va_start(lst, evt);

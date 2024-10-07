@@ -1,0 +1,12 @@
+kRessourceFile = @"badspider.png"
+@insert @"spider.dab"
+
+[Animations
+  [Idle
+    Position = 0 * [.].Clip.Size[0], 0 * [.].Clip.Size[1]
+    Browsing = "LeftToRight"
+    Frame = 8
+    FramePlay = 1, 1, 1, 1, 1, 1, 1, 1
+    Loop
+  ]
+]

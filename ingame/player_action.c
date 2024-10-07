@@ -10,7 +10,7 @@ void			ingame_player_action(t_ingame	*ingame,
   if (bunny_sprite_animation_name("Crashing") == bunny_sprite_get_animation(unit->sprite))
     {
       if (bunny_sprite_is_still(unit->sprite) &&
-	  unit->health > 0 && ingame_bottom_collision(ingame, unit))
+	  unit->health > 0 && ingame_bottom_collision(ingame, unit, false))
 	bunny_sprite_set_animation_name(unit->sprite, "GettingUp");
       return ;
     }
@@ -25,15 +25,15 @@ void			ingame_player_action(t_ingame	*ingame,
   if (x)
     ingame_go(ingame, unit, x);
 
-  if (ingame_bottom_collision(ingame, unit))
+  if (ingame_bottom_collision(ingame, unit, true))
     {
       if (x || fabs(unit->inertia.x) > 0.1)
 	{
 	  bunny_sprite_set_animation_name(unit->sprite, "Walking");
 	  if(ingame->step_frame <= ingame->frame_counter)
 	    {
-	     bunny_sound_play(&(ingame->sfx[PLAYER][11+rand()%5]->sound));
-	     ingame->step_frame = ingame->frame_counter + 20;
+	      bunny_sound_play(&(ingame->sfx[PLAYER][11 + rand() % 5]->sound));
+	      ingame->step_frame = ingame->frame_counter + 20;
 	    }
 	}
       else
@@ -43,11 +43,9 @@ void			ingame_player_action(t_ingame	*ingame,
     {
       if (unit->inertia.y < 0)
 	bunny_sprite_set_animation_name(unit->sprite, "Jumping");
-      else if (unit->inertia.y < 4)
-	{
-	  bunny_sprite_set_animation_name(unit->sprite, "Landing");
-	}
-      else  if (unit->inertia.y > 0)
+      else if (unit->inertia.y > 1 && unit->inertia.y < 4)
+	bunny_sprite_set_animation_name(unit->sprite, "Landing");
+      else if (unit->inertia.y > 0)
 	bunny_sprite_set_animation_name(unit->sprite, "Falling");
     }
 }

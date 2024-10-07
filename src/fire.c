@@ -7,8 +7,8 @@
 #include		<ctype.h>
 
 void			gpixel(t_bunny_pixelarray	*pix,
-				 t_bunny_position	pos,
-				 unsigned int		color)
+			       t_bunny_position	pos,
+			       unsigned int		color)
 {
   t_color		res;
   t_color		ori;
@@ -251,6 +251,7 @@ void			big_reset(t_prog *p)
     p->grz = 0;
 }
 
+/*
 static void		rotate(t_bunny_position	*pos,
 			       double		grotx,
 			       double		groty,
@@ -284,11 +285,32 @@ static void		rotate(t_bunny_position	*pos,
   pos->y = yy;
 }
 
+*/
+
 t_bunny_response display(void		*n,
-			 bool		underfire)
+			 bool		underfire,
+			 t_bunny_area	*camera)
 {
-  static int prog;
+  // static int prog;
   t_prog *p = (t_prog*)n;
+
+  int startx = 0;
+  int starty = 0;
+  int endx = p->w;
+  int endy = p->h;
+
+  if (camera)
+    {
+      if ((startx = camera->x) < 0)
+	startx = 0;
+      if ((starty = camera->y) < 0)
+	starty = 0;
+      if ((endx = camera->x + camera->w) > p->w)
+	endx = p->w;
+      if ((endy = camera->x + camera->h) > p->h)
+	endy = p->h;
+    }
+  
   int i;
   int j;
 
@@ -296,7 +318,7 @@ t_bunny_response display(void		*n,
   if (underfire)
     {
       for (j = 0; j < 2; ++j)
-	for (i = 0; i < p->w; ++i)
+	for (i = startx; i < endx; ++i)
 	  {
 	    if (rand() % 2 == 0)
 	      pic[i + (j + p->h) * p->w] = rand() % 64;
@@ -304,16 +326,16 @@ t_bunny_response display(void		*n,
 	      pic[i + (j + p->h) * p->w] = NBRCELL(col) - 1;// / 1.2;
 	  }
     }
-  else
+  else if (0)
     {
       for (j = 0; j < 2; ++j)
-	for (i = 0; i < p->w; ++i)
+	for (i = startx; i < endx; ++i)
 	  opic[i + (j + p->h) * p->w] = pic[i + (j + p->h) * p->w] = NBRCELL(col) - 1;// / 1.2;
     }
 
   // La moyenne des blocs
-  for (j = p->h + 1; j >= 0; --j)
-    for (i = 0; i < p->w; ++i)
+  for (j = endy + 1; j >= starty; --j)
+    for (i = startx; i < endx; ++i)
       {
 	float sum = 0;
 
@@ -358,16 +380,18 @@ t_bunny_response display(void		*n,
       }
 
   // Maintenant, on renvoit les resultats
-  for (i = 0; i < p->len; ++i)
-    {
-      if ((pic[i] = opic[i]) >= 0)
-	((unsigned int*)p->pix->pixels)[i] = col[(int)opic[i]].full;
-      else
-	((unsigned int*)p->pix->pixels)[i] = col[0].full;
-    }
+  for (j = starty; j < endy; ++j)
+    for (i = startx; i < endx; ++i)
+      {
+	int t = i + j * p->w;
+	if ((pic[t] = opic[t]) >= 0)
+	  ((unsigned int*)p->pix->pixels)[t] = col[(int)opic[t]].full;
+	else
+	  ((unsigned int*)p->pix->pixels)[t] = col[0].full;
+      }
 
   // Lissage des pixels noirs
-  for (i = 0; i < p->len && 0; ++i)
+  while (0) // for (i = 0; i < p->len; ++i)
     {
       t_bunny_color col = {.full = ((unsigned int*)p->pix->pixels)[i] };
       int x = i % p->w;
@@ -395,6 +419,8 @@ t_bunny_response display(void		*n,
 	  ((unsigned int*)p->pix->pixels)[i] = col.full;
 	}
     }
+
+  /*
   const char *str = " efrits ";
   size_t len = strlen(str) - 1;
   t_bunny_position siz;
@@ -473,6 +499,7 @@ t_bunny_response display(void		*n,
   if (d < 0)
     d = 0;
   p->pix->clipable.color_mask.argb[ALPHA_CMP] = 255;// 16 + d;
+  */
   return (GO_ON);
 }
 
@@ -536,7 +563,8 @@ t_bunny_response loop(void		*n)
 
 
 int		fire(t_bunny_pixelarray		*px,
-		     bool			underfire)
+		     bool			underfire,
+		     t_bunny_area		*camera)
 {
   int j;
   int i;
@@ -595,7 +623,7 @@ int		fire(t_bunny_pixelarray		*px,
     }
 
   loop(&p);
-  display(&p, underfire);
+  display(&p, underfire, camera);
 
   return (0);
 }

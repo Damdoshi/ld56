@@ -31,6 +31,14 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
       bunny_sprite_set_animation_name(ingame->cursor, "Construction");
       return (GO_ON);
     }
+
+  if (sym == BKS_ADD)
+    if ((ingame->brush_size += 1) > 20)
+      ingame->brush_size = 20;
+
+  if (sym == BKS_SUBTRACT)
+    if ((ingame->brush_size -= 1) < 5)
+      ingame->brush_size = 5;
   
   if (sym == BKS_Z || sym == BKS_W || sym == BKS_SPACE || sym == BKS_UP)
     ingame_jump(ingame, ingame->player);

@@ -1,35 +1,26 @@
-#include			"program.h"
 
-int				kclamps(int			value,
-					int			min,
-					int			max)
-{
-  if (value < min)
-    return min;
-  if (value > max)
-    return max;
-  return value;
-}
+#include		"program.h"
 
-void				attack_map(t_ingame		*ing,
-					   t_unit		*unit,
-					   unsigned int		r)
+// 2 * M_PI / 90 ~= 0.069
+
+void			ingame_attack_map(t_ingame		*ing,
+					  t_unit		*unit,
+					  unsigned int		rad)
 {
-  //chaque unit doit manger 1 pixel
-  //dans t_unit ya nb qui permet de savoir combien ont ete manger dans le area
-  for (size_t i = 0; i < ing->last_unit && i < NBRCELL(unit); i++)
-    {
-      int sy = ;
-      int sx =  ;
-      for (size_t y = pos_start.y; y < pos_end.y; y++)
-	for (size_t x = pos_start.x; x < pos_end.x; x++)
+  double		dist;
+
+  for (double i = 0; i < 2 * M_PI; i += (0.050 + (rand() % 20) / 1000.0))
+    for (dist = 0; dist < rad; dist += 3 + rand() % 7)
+      {
+	int		x = unit->area.x + cos(i) * dist;
+	int		y = unit->area.y + sin(i) * dist;
+	
+	if (BITGET(ing->attack_map, x, y, ing->map_size.x))
 	  {
-	    save_pos.x = unit[ind[i]].target.x;
-	    save_pos.y = unit[ind[i]].target.y;
-	    if (bunny_bitfield_get(ing->attack_map, x + (y * (r*2))))
-	      ;
-	    //unit[i].target.x = save_pos.x;
-	    //unit[i].target.y = save_pos.y;
+	    unit->target.x = x;
+	    unit->target.y = y;
+	    // BITCLR(ing->attack_map, x, y, ing->map_size.x);
 	  }
-    }
+      }
 }
+

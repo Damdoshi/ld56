@@ -35,7 +35,9 @@ typedef enum			e_unit_status
 
 typedef enum			e_event_type
   {
-    KILL_PIXEL
+    KILL_PIXEL,
+    RETRY,
+    GAME_OVER
   }				t_event_type;
 
 typedef struct			s_game_event
@@ -54,11 +56,11 @@ typedef enum			e_action
 
 typedef enum			e_unit_type
   {
-    HERO,
-    WALLSPIDER,
-    EATSPIDER,
-    LIGHTSPIDER,
-    BADSPIDER,
+    HERO,			// TEAL
+    WALLSPIDER,			// PINK
+    EATSPIDER,			// PURPLE
+    LIGHTSPIDER,		// WHITE
+    BADSPIDER,			// A DEFINIR
     LAST_UNIT_TYPE
   }				t_unit_type;
 
@@ -96,6 +98,7 @@ typedef struct			s_unit
   double			light_radius;
   double			health;
   t_bunny_effect		*hurt[16];
+  int				stair;
 }				t_unit;
 
 typedef enum			s_sfx
@@ -127,6 +130,8 @@ typedef struct			s_ingame
   t_particule			particules;
   t_bunny_music			*music;
 
+  double			brush_size;
+
   ///// VIE
   t_unit			*player;
   int				life;
@@ -135,6 +140,7 @@ typedef struct			s_ingame
   t_bunny_sprite		*health_track;
   t_bunny_sprite		*health_bar;
   t_bunny_sprite		*health_renderer;
+  t_bunny_sprite		*aura;
 
   //
   t_bunny_sprite		*cursor;
@@ -160,6 +166,7 @@ typedef struct			s_ingame
   t_bunny_pixelarray		*fire;
   t_bunny_position		map_size;
 
+  t_bunny_pixelarray		*action_screen;
   t_bunny_bitfield		*attack_map;
   t_bunny_bitfield		*build_map;
 
@@ -189,7 +196,7 @@ void				ingame_display_life(t_ingame		*ingame);
 void				ingame_display_mouse(t_ingame		*ingame);
 void				ingame_display_selection(t_ingame	*ing);
 
-void				ingame_event(t_ingame			*game);
+int				ingame_event(t_ingame			*game);
 void				ingame_add_event(t_ingame		*game,
 						 int			date,
 						 t_event_type		evt,
@@ -207,6 +214,8 @@ int				ingame_get_pixel(t_ingame		*ing,
 						 int			y);
 void				ingame_pixel_delete(t_ingame		*ing,
 						    t_bunny_position	pos);
+void				ingame_pixel_build(t_ingame		*ing,
+						   t_bunny_position	pos);
 void				ingame_pixel_explosif(t_ingame		*ing,
 						      t_bunny_position	pos,
 						      double		r);
@@ -219,7 +228,8 @@ void				sfx_loader(t_ingame			*ing);
 void				manage_inertia(t_ingame			*ing,
 					       t_unit			*unit);
 bool				ingame_bottom_collision(t_ingame	*ing,
-							t_unit		*unit);
+							t_unit		*unit,
+							bool		wider);
 bool				ingame_top_collision(t_ingame		*ing,
 						     t_unit		*unit);
 
@@ -232,9 +242,11 @@ void				ingame_jump(t_ingame			*ing,
 int 				ingame_new_unit(t_ingame		*ing,
 						t_unit_type		type,
 						t_bunny_position	pos);
-void				new_particule(t_particule		*particule,
+void				ingame_delete_unit(t_ingame		*ing,
+						   t_unit		*unit);
+void				new_particule(t_ingame			*ing,
 					      double			death_time,
-					      t_bunny_accurate_position	pos,
+					      t_bunny_position		pos,
 					      t_bunny_accurate_position	spos,
 					      uint32_t			color);
 void				delete_particule(t_particule		*particule,
@@ -245,6 +257,20 @@ void				ingame_player_action(t_ingame		*ing,
 						     t_unit		*unit);
 void				ingame_spider_action(t_ingame		*ing,
 						     t_unit		*unit);
+
+void				ingame_brush(t_ingame			*ing,
+					     t_bunny_bitfield		*field,
+					     bool			add,
+					     int			cursor);
+
+double				ingame_get_slope(t_ingame		*ing,
+						 t_unit			*unit);
+void				ingame_attack_map(t_ingame		*ing,
+						  t_unit		*unit,
+						  unsigned int		rad);
+void				ingame_build_map(t_ingame		*ing,
+						 t_unit			*unit,
+						 unsigned int		rad);
 
 #endif	/*			__ingame_H__				*/
 

@@ -1,9 +1,10 @@
 Origin=16,32
-Frequency=16
+Frequency=8
 
 ColWidth=15
 ColHeight=9
 
+Stair=3
 SpeedX=3
 SpeedY=-4
 
@@ -13,14 +14,14 @@ SpeedY=-4
 
 [Animations
   [Idle
-    Position = 4 * [.].Clip.Size[0], 0 * [.].Clip.Size[1]
-    Browsing = "BackAndForth"
-    Frame = 3
-    FramePlay = 16, 1, 1, 1, 1, 1
+    Position = 0 * [.].Clip.Size[0], 0 * [.].Clip.Size[1]
+    Browsing = "LeftToRight"
+    Frame = 8
+    FramePlay = 8, 1, 1, 1, 1, 1, 1, 1
     Loop
   ]
   [Walking
-    Position = 0 * [.].Clip.Size[0], 0 * [.].Clip.Size[1]
+    Position = 0 * [.].Clip.Size[0], 1 * [.].Clip.Size[1]
     Frame = 8
     Browsing = "LeftToRight"
     Loop
@@ -32,7 +33,7 @@ SpeedY=-4
     NextAnimation = "Idle"
   ]
   [Dig
-    Position = 0 * [.].Clip.Size[0], 1 * [.].Clip.Size[1]
+    Position = 0 * [.].Clip.Size[0], 4 * [.].Clip.Size[1]
     Frame = 4
     Browsing = "LeftToRight"
     NextAnimation = "Idle"

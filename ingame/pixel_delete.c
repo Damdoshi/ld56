@@ -15,7 +15,17 @@ void		ingame_pixel_delete(t_ingame		*ing,
 	{pos.x - 0, pos.y + 1}
       };
 
+      BITCLR(ing->attack_map, pos.x, pos.y, ing->map_size.x);
+      unsigned int lost = ((unsigned int*)ing->color_map->pixels)[pos.x + pos.y * ing->map_size.x];
+      ((unsigned int*)ing->color_map->pixels)[pos.x + pos.y * ing->map_size.x] = 0;
       ing->physic_map[pos.x + pos.y * ing->map_size.x] = AIR;
+
+      t_bunny_accurate_position spos = {
+	3 * ((rand() % 1000) / 1000.0 - 0.5),
+	3 * ((rand() % 1000) / 1000.0 - 0.5)
+      };
+      new_particule(ing, bunny_time_plus(bunny_get_delay() * 3), pos, spos, lost);
+      
       for (size_t i = 0; i < NBRCELL(p); ++i)
 	if (ingame_is_orphan(ing, p[i].x, p[i].y))
 	  ingame_add_event(ing, ing->frame_counter + 1, KILL_PIXEL, p[i]);

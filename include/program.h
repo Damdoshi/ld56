@@ -44,13 +44,26 @@ typedef struct			s_program
 }				t_program;
 
 int				fire(t_bunny_pixelarray		*px,
-				     bool			underfire);
+				     bool			underfire,
+				     t_bunny_area		*camera);
 void				set_fire_pixel(int		x,
 					       int		y);
 
 t_bunny_position		get_real_mouse_position(t_bunny_picture *screen);
 
 double				afabs(double			x);
+
+void				draw_rect(t_ingame		*ing,
+					  t_bunny_accurate_area	*area);
+
+double				distance(double			x1,
+					 double			y1,
+					 double			x2,
+					 double			y2);
+
+
+double				fcos(double			v);
+double				fsin(double			v);
 
 #endif	//			__PROGRAM_H__
 

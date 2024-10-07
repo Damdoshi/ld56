@@ -42,12 +42,15 @@ int			ingame_new_unit(t_ingame	*ing,
     unit->speed.x = 2;
   if (!bunny_configuration_getf(cnf, &unit->speed.y, "SpeedY"))
     unit->speed.y = -3.7;
+  if (!bunny_configuration_getf(cnf, &unit->stair, "Stair"))
+    unit->stair = unit->area.h * 0.2;
 
   if (!bunny_configuration_getf(cnf, &unit->light_radius, "LightRadius"))
     unit->light_radius = -1;
   unit->light_color = WHITE;
   bunny_color_configuration("LightColor", (t_bunny_color*)&unit->light_color, cnf);
 
+  unit->type = type;
   unit->target.x = unit->area.x;
   unit->target.y = unit->area.y;
   unit->target_action = SELECTION; // "Ne fait rien"

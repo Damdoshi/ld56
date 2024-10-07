@@ -13,7 +13,14 @@ t_bunny_response		ingame_wheel(int			wheel,
 					      t_ingame			*ingame)
 {
   (void)wheel;
-  (void)delta;
-  (void)ingame;
+
+  if (delta > 0)
+    if ((ingame->brush_size += 1) > 20)
+      ingame->brush_size = 20;
+
+  if (delta < 0)
+    if ((ingame->brush_size -= 1) < 5)
+      ingame->brush_size = 5;
+
   return (GO_ON);
 }

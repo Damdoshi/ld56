@@ -10,7 +10,7 @@ static void		moderate_forces(t_ingame	*ing,
 
   if (fabs(unit->inertia.x) > 0.01)
     {
-      if (ingame_bottom_collision(ing, unit) &&
+      if (ingame_bottom_collision(ing, unit, false) &&
 	  bunny_sprite_animation_name("Crashing") != bunny_sprite_get_animation(unit->sprite))
 	unit->inertia.x *= 0.75;
       else
@@ -25,7 +25,7 @@ static void		check_bottom(t_ingame		*ingame,
 {
   for (int n_move = 0; n_move < unit->inertia.y; ++n_move)
     {
-      if (ingame_bottom_collision(ingame, unit))
+      if (ingame_bottom_collision(ingame, unit, false))
 	{
 	  if (unit->inertia.y > 8.75)
 	    {
@@ -34,14 +34,15 @@ static void		check_bottom(t_ingame		*ingame,
 	    }
 	  else if (unit->inertia.y > 8)
 	    ingame_get_hurt(ingame, unit, (unit->inertia.y - 8) / 4.0);
-	  else if (unit->inertia.y > 4)
+	  else if (unit->inertia.y > 5)
 	    {
 	      bunny_sound_play(&(ingame->sfx[PLAYER][19]->sound));
 	      if (unit->hurt[0])
 		bunny_sound_play(&unit->hurt[0]->sound);
 	    }
 	  else if (unit->inertia.y > 1)
-	    bunny_sound_play(&(ingame->sfx[PLAYER][18]->sound));
+	    if (!ingame_bottom_collision(ingame, unit, true))
+	      bunny_sound_play(&(ingame->sfx[PLAYER][18]->sound));
 	  unit->inertia.y = 0;
 	  return ;
 	}
@@ -79,7 +80,7 @@ static void		check_side(t_ingame		*ingame,
   n_move = 0;
   step_height = 0;
   max_step_height = unit->area.h / 5;
-  side_size = unit->area.w / 2;
+  side_size = unit->stair;
   x = unit->area.x + (side_size + 2) * side;
   while (n_move < unit->inertia.x * side)
     {
@@ -101,6 +102,7 @@ static void		check_side(t_ingame		*ingame,
 	    return;
 	  unit->area.y -= 1;
 	  unit->inertia.x *= 0.6;
+	  unit->inertia.y = 0;
 	  i += 1;
 	}
       unit->area.x += side;

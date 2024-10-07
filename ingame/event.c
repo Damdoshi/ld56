@@ -12,7 +12,7 @@ static void	remove_event(t_ingame		*ing,
   ing->event_len -= 1;
 }
 
-void		ingame_event(t_ingame		*ing)
+int		ingame_event(t_ingame		*ing)
 {
   size_t	i;
   
@@ -21,13 +21,23 @@ void		ingame_event(t_ingame		*ing)
       {
 	if (ing->event_list[i].type == KILL_PIXEL)
 	  ingame_pixel_delete(ing, ing->event_list[i].pos);
+	if (ing->event_list[i].type == RETRY)
+	  {
+	    remove_event(ing, i);
+	    return (SWITCH_CONTEXT);
+	  }
+	if (ing->event_list[i].type == RETRY)
+	  {
+	    remove_event(ing, i);
+	    ing->program->context = CREDIT;
+	    return (SWITCH_CONTEXT);
+	  }
 	remove_event(ing, i);
 	break ;
       }
     else
       ++i;
-
-  
+  return (GO_ON);
 }
 
 
