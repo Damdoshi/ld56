@@ -22,6 +22,7 @@ bool			ingame_load_map(t_ingame		*ing,
     }
   t_bunny_color		color_pix;
   size_t		i;
+  t_bunny_position	pos;
 
   ing->player = NULL;
   for (i = 0; i < size; i++)
@@ -43,14 +44,21 @@ bool			ingame_load_map(t_ingame		*ing,
 	ing->physic_map[i] = FIRE;
       else if (color_pix.full == TEAL && ing->player == NULL)
 	{
-	  /// appeler ingame_new_unit
-	  ing->player = &ing->units[ing->last_unit++];
-	  ing->player->type = HERO;
-	  ing->player->area.w = 50;
-	  ing->player->area.h = 50;
-	  ing->player->area.x = i % ing->map_size.x;
-	  ing->player->area.y = i / ing->map_size.x;
-	  printf("Position %f %f\n", ing->player->area.x, ing->player->area.y);
+	  pos.x = i % ing->map_size.x;
+	  pos.y = i / ing->map_size.x;
+	  ingame_new_unit(ingame, HERO, pos);
+	}
+      else if (color_pix.full == LIGHTSPIDER_SPAWN)
+	{
+	  pos.x = i % ing->map_size.x;
+	  pos.y = i / ing->map_size.x;
+	  ingame_new_unit(ingame, LIGHTSPIDER, pos);
+	}
+      else if (color_pix.full == EATSPIDER_SPAWN)
+	{
+	  pos.x = i % ing->map_size.x;
+	  pos.y = i / ing->map_size.x;
+	  ingame_new_unit(ingame, EATSPIDER, pos);
 	}
       // else { faire les autres monstres }
     }
