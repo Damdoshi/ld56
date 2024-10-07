@@ -16,6 +16,16 @@
 # define			HERO_MAX_SPEED				2
 #define				MAX_PARTICULE				10240
 
+typedef enum			e_unit_status
+  {
+    IDLE,
+    WALKING,
+    FALLING,
+    JUMPING,
+    ATTACKING,
+    CRAWLING
+  }				t_unit_status;
+
 typedef enum			e_event_type
   {
     KILL_PIXEL
@@ -59,6 +69,7 @@ typedef enum			e_element
 typedef struct			s_unit
 {
   t_unit_type			type;
+  t_unit_status			status;
   t_bunny_accurate_area		area;
   t_bunny_accurate_position	inertia;
   t_bunny_sprite		*sprite;
@@ -189,7 +200,7 @@ void				ingame_go(t_ingame			*ing,
 void				ingame_jump(t_ingame			*ing,
 					    t_unit			*unit);
 
-bool				ingame_new_unit(t_ingame		*ing,
+int 				ingame_new_unit(t_ingame		*ing,
 						t_unit_type		type,
 						t_bunny_position	pos);
 void				new_particule(t_particule		*particule,

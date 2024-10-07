@@ -46,19 +46,19 @@ bool			ingame_load_map(t_ingame		*ing,
 	{
 	  pos.x = i % ing->map_size.x;
 	  pos.y = i / ing->map_size.x;
-	  ingame_new_unit(ingame, HERO, pos);
+	  ing->player = &ing->units[ingame_new_unit(ing, HERO, pos)];
 	}
-      else if (color_pix.full == LIGHTSPIDER_SPAWN)
+      else if (color_pix.full == WHITE)
 	{
 	  pos.x = i % ing->map_size.x;
 	  pos.y = i / ing->map_size.x;
-	  ingame_new_unit(ingame, LIGHTSPIDER, pos);
+	  ingame_new_unit(ing, LIGHTSPIDER, pos);
 	}
-      else if (color_pix.full == EATSPIDER_SPAWN)
+      else if (color_pix.full == PURPLE)
 	{
 	  pos.x = i % ing->map_size.x;
 	  pos.y = i / ing->map_size.x;
-	  ingame_new_unit(ingame, EATSPIDER, pos);
+	  ingame_new_unit(ing, EATSPIDER, pos);
 	}
       // else { faire les autres monstres }
     }

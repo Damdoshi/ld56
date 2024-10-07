@@ -13,10 +13,16 @@ SpeedY=-3.728
 
 [Animations
   [Idle
-    Position = 0, 0
+    Position = 0, 0 * [.].Clip.Size[1]
     Browsing = "LeftToRight"
     Frame = 10
     FramePlay = 64, 1, 1, 16, 1, 1, 1, 1, 16, 1
+    Loop
+  ]
+  [Walking
+    Position = 0, 1 * [.].Clip.Size[1]
+    Browsing = "LeftToRight"
+    Frame = 7
     Loop
   ]
 ]
