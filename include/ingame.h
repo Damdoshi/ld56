@@ -68,7 +68,7 @@ typedef struct			s_unit
 
 typedef enum			s_sfx
 {
-  MENU,
+  MENU = 0,
   PLAYER,
   NPC,
   ENEMY_NPC,
@@ -117,7 +117,7 @@ typedef struct			s_ingame
 
   //// SON
   t_bunny_effect		*sfx[LAST_SFX_CATEGORY][128];
-  
+
   //// NIVEAU
   t_bunny_pixelarray		*layer[3];
   t_bunny_pixelarray		*fire;
