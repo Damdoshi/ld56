@@ -20,6 +20,7 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
 
   ingame->particules.nb_particule = 0;
   ingame->health = ingame->health_target = 1;
+  ingame->cursor_type = ATTACK;
 
   return (GO_ON);
 }

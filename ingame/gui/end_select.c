@@ -13,25 +13,30 @@ void			ingame_end_select(t_ingame	*ing)
   ingame_move_select(ing);
 
   // On conclu le rectangle final
-  if (ing->select.w < 0)
+  t_bunny_position pos = get_real_mouse_position(ing->program->screen);
+  if (pos.x < ing->select.x)
     {
-      ing->select.x += ing->select.w;
-      ing->select.w *= 1;
+      ing->select.x = pos.x;
+      ing->select.w *= -1;
     }
-  if (ing->select.h < 0)
+  if (pos.y < ing->select.y)
     {
-      ing->select.y += ing->select.h;
-      ing->select.h *= 1;
+      ing->select.y = pos.y;
+      ing->select.h *= -1;
     }
 
   // La politique de selection - si c'est une nouvelle, on détruit l'ancienne
   if (!bunny_get_keyboard()[BKS_LSHIFT] && !bunny_get_keyboard()[BKS_RSHIFT])
     {
       for (i = 0; i < ing->last_selection; ++i)
-	ing->units[i].selected = false;
+	{
+	  ing->units[i].selected = false;
+	  ing->units[i].sprite->clipable.color_mask.full = WHITE;
+	}
       ing->last_selection = 0;
     }
   // La zone de selection traduite dans l'espace de jeu
+
   t_bunny_accurate_area	area = {
     .x = ing->select.x + ing->camera.x,
     .y = ing->select.y + ing->camera.y,
@@ -49,6 +54,7 @@ void			ingame_end_select(t_ingame	*ing)
       {
 	ing->selection[ing->last_selection] = &ing->units[i];
 	ing->units[i].selected = true;
+	ing->units[i].sprite->clipable.color_mask.full = RED;
 	if ((ing->last_selection += 1) >= NBRCELL(ing->selection))
 	  break ;
       }
