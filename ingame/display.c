@@ -57,10 +57,13 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
       bunny_blit(&ingame->program->screen->buffer, ingame->remain_map, NULL);
     }
   bunny_blit(&ingame->program->screen->buffer, &ingame->color_map->clipable, NULL);
-  
-  ingame->player->sprite->clipable.position.x = ingame->player->area.x - ingame->camera.x;
-  ingame->player->sprite->clipable.position.y = ingame->player->area.y - ingame->camera.y;
-  bunny_blit(&ingame->program->screen->buffer, &ingame->player->sprite->clipable, NULL);
+
+  for (size_t i = 0; i < ingame->last_unit && i < NBRCELL(ingame->units); i++)
+    {
+      ingame->units[i].sprite->clipable.position.x = ingame->units[i].area.x - ingame->camera.x;
+      ingame->units[i].sprite->clipable.position.y = ingame->units[i].area.y - ingame->camera.y;
+      bunny_blit(&ingame->program->screen->buffer, &ingame->units[i].sprite->clipable, NULL);
+    }
 
   if (ingame->fire)
     {
