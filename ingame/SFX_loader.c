@@ -30,7 +30,8 @@ void sfx_loader(t_ingame *ing)
   ing->sfx[PLAYER][20] = bunny_load_effect("res/SFX/player/jump.ogg");
   ing->sfx[PLAYER][21] = bunny_load_effect("res/SFX/player/jump_grunt.ogg");
   ing->sfx[PLAYER][22] = bunny_load_effect("res/SFX/player/jump_grunt2.ogg");
-  c[1] = 23;
+  ing->sfx[PLAYER][23] = bunny_load_effect("res/SFX/player/fall_hurt.ogg");
+  c[1] = 24;
 
   ing->sfx[MENU][0] = bunny_load_effect("res/SFX/menu/click_rev.ogg");
   c[0] = 1;
