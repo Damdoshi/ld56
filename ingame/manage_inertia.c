@@ -27,7 +27,10 @@ static void		check_bottom(t_ingame		*ingame,
       if (ingame_bottom_collision(ingame, unit))
 	{
 	  if (unit->inertia.y > 8)
+	  {
+	    bunny_sprite_set_animation_name(unit->sprite, "Crashing");
 	    ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
+	  }
 	  else if (unit->inertia.y > 4)
 	    {
 	      bunny_sound_play(&(ingame->sfx[PLAYER][19]->sound));

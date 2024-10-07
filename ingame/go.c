@@ -8,7 +8,6 @@ void			ingame_go(t_ingame		*ing,
   double		inertia;
 
   (void)ing;
-  inertia = 0;
   inertia = 0.25 * x;
   unit->inertia.x += inertia;
   unit->inertia.x = bunny_clamp(unit->inertia.x, -unit->speed.x, +unit->speed.x);
