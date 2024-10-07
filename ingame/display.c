@@ -12,31 +12,65 @@
 
 t_bunny_response	ingame_display(t_ingame	*ingame)
 {
-  fire(ingame->fire, false);
   bunny_clear(&ingame->program->screen->buffer, GRAY(64));
-
-  for (int j = 0; j < ingame->fire->clipable.buffer.height; ++j)
-    for (int i = 0; i < ingame->fire->clipable.buffer.width; ++i)
-      if (((unsigned int*)ingame->layer[1]->pixels)[i + j * ingame->layer[1]->clipable.buffer.width] == RED)
-	set_fire_pixel(i, j);
-
-  ingame->layer[1]->clipable.position.x = -ingame->camera.x;
-  ingame->layer[1]->clipable.position.y = -ingame->camera.y;
-  ingame->fire->clipable.position.x = -ingame->camera.x;
-  ingame->fire->clipable.position.y = -ingame->camera.y;
-  for (size_t i = 0; i < 3; i += 1)
+  
+  if (ingame->fire)
     {
-      if (!ingame->layer[i])
-	continue;
-      bunny_blit(&ingame->program->screen->buffer, &ingame->layer[i]->clipable, NULL);
-      if (i == 1)
-	{
-	  ingame->player->sprite->clipable.position.x = ingame->player->area.x - ingame->camera.x;
-	  ingame->player->sprite->clipable.position.y = ingame->player->area.y - ingame->camera.y;
-	  bunny_blit(&ingame->program->screen->buffer, &ingame->player->sprite->clipable, NULL);
-	  bunny_blit(&ingame->program->screen->buffer, &ingame->fire->clipable, NULL);
-	}
+      fire(ingame->fire, false);
+      for (int j = 0; j < ingame->fire->clipable.buffer.height; ++j)
+	for (int i = 0; i < ingame->fire->clipable.buffer.width; ++i)
+	  if (((unsigned int*)ingame->color_map->pixels)[i + j * ingame->color_map->clipable.buffer.width] == RED)
+	    set_fire_pixel(i, j);
     }
+
+  if (ingame->camera.x < 0)
+    {
+      ingame->color_map->clipable.position.x = -ingame->camera.x;
+      ingame->color_map->clipable.clip_x_position = 0;
+      ingame->color_map->clipable.clip_width = ingame->program->screen->buffer.width - ingame->camera.x;
+    }
+  else
+    {
+      ingame->color_map->clipable.position.x = 0;
+      ingame->color_map->clipable.clip_x_position = ingame->camera.x;
+      ingame->color_map->clipable.clip_width = ingame->program->screen->buffer.width;                  ;
+    }
+  
+  if (ingame->camera.y < 0)
+    {
+      ingame->color_map->clipable.position.y = -ingame->camera.y;
+      ingame->color_map->clipable.clip_y_position = 0;
+      ingame->color_map->clipable.clip_height = ingame->program->screen->buffer.height - ingame->camera.y;
+    }
+  else
+    {
+      ingame->color_map->clipable.position.y = 0;
+      ingame->color_map->clipable.clip_y_position = ingame->camera.y;
+      ingame->color_map->clipable.clip_height = ingame->program->screen->buffer.height;                  ;
+    }
+
+  if (ingame->background)
+    bunny_blit(&ingame->program->screen->buffer, ingame->background, NULL);
+  if (ingame->remain_map)
+    {
+      bunny_clipable_copy(ingame->remain_map, &ingame->color_map->clipable);
+      bunny_blit(&ingame->program->screen->buffer, ingame->remain_map, NULL);
+    }
+  bunny_blit(&ingame->program->screen->buffer, &ingame->color_map->clipable, NULL);
+  
+  ingame->player->sprite->clipable.position.x = ingame->player->area.x - ingame->camera.x;
+  ingame->player->sprite->clipable.position.y = ingame->player->area.y - ingame->camera.y;
+  bunny_blit(&ingame->program->screen->buffer, &ingame->player->sprite->clipable, NULL);
+
+  if (ingame->fire)
+    {
+      bunny_clipable_copy(&ingame->fire->clipable, &ingame->color_map->clipable);
+      bunny_blit(&ingame->program->screen->buffer, &ingame->fire->clipable, NULL);
+    }
+
+  if (ingame->foreground)
+    bunny_blit(&ingame->program->screen->buffer, ingame->foreground, NULL);
+
   check_particule(ingame);
 
   ///////////////// GUI /////////////////

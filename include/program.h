@@ -48,6 +48,7 @@ void				set_fire_pixel(int		x,
 
 t_bunny_position		get_real_mouse_position(t_bunny_picture *screen);
 
+double				afabs(double			x);
 
 #endif	//			__PROGRAM_H__
 

@@ -5,6 +5,8 @@ void			ingame_end_select(t_ingame	*ing)
 {
   size_t		i;
 
+  if (ing->select_on == false)
+    return ;
   ing->select_on = false;
 
   // On détermine via la dernière position de la souris la vraie selection.

@@ -4,9 +4,9 @@ static void		moderate_forces(t_ingame	*ing,
 					t_unit		*unit)
 {
   if (unit->inertia.y > 0)
-    unit->inertia.y = bunny_clamp(unit->inertia.y * 1.001, -12, 12);
+    unit->inertia.y = bunny_clamp(unit->inertia.y * 1.001, -13, +13);
   else
-    unit->inertia.y = bunny_clamp(unit->inertia.y * 0.999, -12, 12);
+    unit->inertia.y = bunny_clamp(unit->inertia.y * 0.999, -13, +13);
 
   if (fabs(unit->inertia.x) > 0.01)
     {
@@ -93,6 +93,7 @@ static void		check_side(t_ingame		*ingame,
 	  if (ingame_top_collision(ingame, unit))
 	    return;
 	  unit->area.y -= 1;
+	  unit->inertia.x *= 0.6;
 	  i += 1;
 	}
       unit->area.x += side;

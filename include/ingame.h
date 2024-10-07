@@ -16,6 +16,16 @@
 # define			HERO_MAX_SPEED				2
 #define				MAX_PARTICULE				10240
 
+typedef enum			e_unit_status
+  {
+    IDLE,
+    WALKING,
+    FALLING,
+    JUMPING,
+    ATTACKING,
+    CRAWLING
+  }				t_unit_status;
+
 typedef enum			e_event_type
   {
     KILL_PIXEL
@@ -56,14 +66,23 @@ typedef enum			e_element
     FIRE			//PINK2
   }				t_element;
 
+struct				s_ingame;
+struct				s_unit;
+typedef void			(*t_unit_action)(struct s_ingame	*ing,
+						 struct s_unit		*unit);
+
 typedef struct			s_unit
 {
   t_unit_type			type;
+  t_unit_status			status;
   t_bunny_accurate_area		area;
   t_bunny_accurate_position	inertia;
   t_bunny_sprite		*sprite;
   bool				selected;
-  t_bunny_accurate_position	speed; // Vitesse horizontal et saut sur Y
+  t_bunny_accurate_position	speed; // Vitesse horizontale et force du saut
+  t_unit_action			action;
+  t_bunny_position		target;	// Ou dois je aller?
+  t_action			target_action; // pour faire quoi?
 }				t_unit;
 
 typedef enum			s_sfx
@@ -119,9 +138,12 @@ typedef struct			s_ingame
   t_bunny_effect		*sfx[LAST_SFX_CATEGORY][128];
 
   //// NIVEAU
-  t_bunny_pixelarray		*layer[3];
-  t_bunny_pixelarray		*fire;
+  t_bunny_picture		*background;
+  t_bunny_picture		*remain_map;
+  t_bunny_pixelarray		*color_map;
   t_element			*physic_map;
+  t_bunny_picture		*foreground;
+  t_bunny_pixelarray		*fire;
   t_bunny_position		map_size;
   
   t_game_event			event_list[4096];
@@ -189,7 +211,7 @@ void				ingame_go(t_ingame			*ing,
 void				ingame_jump(t_ingame			*ing,
 					    t_unit			*unit);
 
-bool				ingame_new_unit(t_ingame		*ing,
+int 				ingame_new_unit(t_ingame		*ing,
 						t_unit_type		type,
 						t_bunny_position	pos);
 void				new_particule(t_particule		*particule,
@@ -201,6 +223,10 @@ void				delete_particule(t_particule		*particule,
 						 int32_t		index);
 void				check_particule(t_ingame		*ingame);
 
+void				ingame_player_action(t_ingame		*ing,
+						     t_unit		*unit);
+void				ingame_spider_action(t_ingame		*ing,
+						     t_unit		*unit);
 
 #endif	/*			__ingame_H__				*/
 

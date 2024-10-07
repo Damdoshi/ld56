@@ -4,70 +4,96 @@
 bool			ingame_load_map(t_ingame		*ing,
 					const char		*file)
 {
-  t_bunny_pixelarray	*color_map;
+  t_bunny_pixelarray	*physic_map;
+  const char		*str;
+  t_bunny_configuration	*cnf;
+  bool			tmp;
 
-  if (!(color_map = bunny_load_pixelarray(file)))
+  assert((cnf = bunny_open_configuration(file, NULL)));
+
+  assert((bunny_configuration_getf(cnf, &str, "Eatable")));
+  assert((ing->color_map = bunny_load_pixelarray(str)));
+  assert((bunny_configuration_getf(cnf, &str, "Physic")));
+  assert((physic_map = bunny_load_pixelarray(str)));
+  
+  assert((ing->color_map->clipable.buffer.width == physic_map->clipable.buffer.width));
+  assert((ing->color_map->clipable.buffer.height == physic_map->clipable.buffer.height));
+
+  if ((bunny_configuration_getf(cnf, &str, "Remain")))
     {
-       puts("echec de load_pixelarray : " __FILE__);
-      return (false);
+      assert((ing->remain_map = bunny_load_picture(str)));
+      assert((ing->color_map->clipable.buffer.width == ing->remain_map->buffer.width));
+      assert((ing->color_map->clipable.buffer.height == ing->remain_map->buffer.height));
     }
-  ing->map_size.x = color_map->clipable.buffer.width;
-  ing->map_size.y = color_map->clipable.buffer.height;
+  else
+    ing->remain_map = NULL;
+
+  ing->map_size.x = ing->color_map->clipable.buffer.width;
+  ing->map_size.y = ing->color_map->clipable.buffer.height;
+
+  if (bunny_configuration_getf(cnf, &tmp, "Fire") && tmp)
+    assert((ing->fire = bunny_new_pixelarray(ing->map_size.x, ing->map_size.y)));
+  else
+    ing->fire = NULL;
+
+  if ((bunny_configuration_getf(cnf, &str, "Background")))
+    assert((ing->background = bunny_load_picture(str)));
+  else
+    ing->background = NULL;
+    
+  if ((bunny_configuration_getf(cnf, &str, "Foreground")))
+    assert((ing->foreground = bunny_load_picture(str)));
+  else
+    ing->foreground = NULL;
+
   size_t		size = ing->map_size.x * ing->map_size.y;
 
-  if ((ing->physic_map = malloc(sizeof(t_element) * size)) == NULL)
-    {
-      puts("echec de malloc : " __FILE__);
-      return (false);
-    }
-  t_bunny_color		color_pix;
+  assert((ing->physic_map = malloc(sizeof(t_element) * size)));
+  t_bunny_color		color;
   size_t		i;
   t_bunny_position	pos;
 
   ing->player = NULL;
   for (i = 0; i < size; i++)
     {
-      color_pix.full = ((unsigned int*)(color_map->pixels))[i];
-      if (color_pix.argb[3] == 0)
+      color.full = ((unsigned int*)(physic_map->pixels))[i];
+      if (color.argb[3] == 0)
 	ing->physic_map[i] = AIR;
-      else if (color_pix.full == GREEN)
+      else if (color.full == GREEN)
 	ing->physic_map[i] = EARTH;
-      else if (color_pix.full == BLACK)
+      else if (color.full == BLACK)
 	ing->physic_map[i] = ROCK;
-      else if (color_pix.full == BLUE)
+      else if (color.full == BLUE)
 	ing->physic_map[i] = WATER;
-      else if (color_pix.full == RED)
+      else if (color.full == RED)
 	ing->physic_map[i] = EXPLODE;
-      else if (color_pix.full == YELLOW)
+      else if (color.full == YELLOW)
 	ing->physic_map[i] = SAND;
-      else if (color_pix.full == PINK2)
+      else if (color.full == PINK2)
 	ing->physic_map[i] = FIRE;
-      else if (color_pix.full == TEAL && ing->player == NULL)
+      else if (color.full == TEAL && ing->player == NULL)
 	{
 	  pos.x = i % ing->map_size.x;
 	  pos.y = i / ing->map_size.x;
-	  ingame_new_unit(ingame, HERO, pos);
+	  ing->player = &ing->units[ingame_new_unit(ing, HERO, pos)];
 	}
-      else if (color_pix.full == LIGHTSPIDER_SPAWN)
+      else if (color.full == WHITE)
 	{
 	  pos.x = i % ing->map_size.x;
 	  pos.y = i / ing->map_size.x;
-	  ingame_new_unit(ingame, LIGHTSPIDER, pos);
+	  ingame_new_unit(ing, LIGHTSPIDER, pos);
 	}
-      else if (color_pix.full == EATSPIDER_SPAWN)
+      else if (color.full == PURPLE)
 	{
 	  pos.x = i % ing->map_size.x;
 	  pos.y = i / ing->map_size.x;
-	  ingame_new_unit(ingame, EATSPIDER, pos);
+	  ingame_new_unit(ing, EATSPIDER, pos);
 	}
       // else { faire les autres monstres }
     }
-  if (ing->player == NULL)
-    {
-      puts("pas de joueur sur la carte : " __FILE__);
-      return (false);
-    }
-  bunny_delete_clipable(&color_map->clipable);
+  assert((ing->player != NULL));
+  bunny_delete_clipable(&physic_map->clipable);
+  bunny_delete_configuration(cnf);
   return (true);
 }
 

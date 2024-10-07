@@ -33,29 +33,14 @@ void sfx_loader(t_ingame *ing)
   ing->sfx[PLAYER][23] = bunny_load_effect("res/SFX/player/fall_hurt.ogg");
   c[1] = 24;
 
-  ing->sfx[MENU][0] = bunny_load_effect("res/SFX/menu/click_rev.ogg");
-  c[0] = 1;
-
   ing->sfx[NPC][0] = bunny_load_effect("res/SFX/npc/spider_walk.ogg");
   c[2] = 1;
 
-  ing->sfx[ENEMY_NPC][0] = bunny_load_effect("res/SFX/enemy_npc/graouh");
-  c[3] = 0;
+  // ing->sfx[ENEMY_NPC][0] = bunny_load_effect("res/SFX/enemy_npc/graouh");
+  // c[3] = 0;
 
   ing->sfx[AMBIENT][0] = bunny_load_effect("res/SFX/ambient/drip1.ogg");
   ing->sfx[AMBIENT][1] = bunny_load_effect("res/SFX/ambient/drip2.ogg");
   ing->sfx[AMBIENT][2] = bunny_load_effect("res/SFX/ambient/drip3.ogg");
   ing->sfx[AMBIENT][3] = bunny_load_effect("res/SFX/ambient/water_falling.ogg");
-  c[4] = 4;
-  while (j < 5)
-    {
-      while(i < c[j])
-	{
-	  bunny_sound_loop(&(ing->sfx[type][i]->sound),false);
-	  i++;
-	}
-      (int)type++;
-      j++;
-      i = 0;
-    }
 }

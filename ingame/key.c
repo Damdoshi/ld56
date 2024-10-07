@@ -7,11 +7,6 @@
 
 #include			"program.h"
 
-double				afabs(double			x)
-{
-  return (x < 0 ? x : -x);
-}
-
 t_bunny_response		ingame_key(t_bunny_event_state	state,
 					    t_bunny_keysym	sym,
 					    t_ingame		*ingame)
@@ -36,6 +31,9 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
       bunny_sprite_set_animation_name(ingame->cursor, "Construction");
       return (GO_ON);
     }
+  
+  if (sym == BKS_Z || sym == BKS_W || sym == BKS_SPACE || sym == BKS_UP)
+    ingame_jump(ingame, ingame->player);
 
 
   if (sym >= BKS_F1 && sym <= BKS_F4)
