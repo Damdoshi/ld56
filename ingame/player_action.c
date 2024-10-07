@@ -42,16 +42,11 @@ void			ingame_player_action(t_ingame	*ingame,
     {
       if (unit->inertia.y < 0)
 	bunny_sprite_set_animation_name(unit->sprite, "Jumping");
-<<<<<<< HEAD
       else if (unit->inertia.y < 4)
 	{
 	  bunny_sprite_set_animation_name(unit->sprite, "Landing");
 	}
       else  if (unit->inertia.y > 0)
 	bunny_sprite_set_animation_name(unit->sprite, "Falling");
-=======
-      else if (unit->inertia.y > 4)
-	bunny_sprite_set_animation_name(unit->sprite, "Landing");
->>>>>>> aebcc0c07a6c496dc01d2952b24f3fb83508ec64
     }
 }

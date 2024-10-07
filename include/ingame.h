@@ -112,7 +112,6 @@ typedef struct			s_ingame
   size_t			last_sprite;
   int				frame_counter;
   t_particule			particules;
-
   ///// VIE
   int				life;
   t_bunny_sprite		*skull;

@@ -7,6 +7,7 @@ void			ingame_pixel_explosif(t_ingame		*ing,
   t_bunny_position	start;
   t_bunny_position	end;
 
+  bunny_sound_play(&(ing->sfx[AMBIENT][4]->sound));
   if ((start.x = pos.x - r) < 0)
     start.x = 0;
   if ((start.y = pos.y - r) < 0)

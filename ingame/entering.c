@@ -17,7 +17,7 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_bar.dab", &ingame->health_bar);
   ingame_load_sprite(ingame, "./res/ingame/gfx/health_renderer.dab", &ingame->health_renderer);
   ingame_load_sprite(ingame, "./res/ingame/gfx/skull.dab", &ingame->skull);
-
+  bunny_sound_play(&(bunny_load_music("res/music/music.ogg")->sound));
   ingame->particules.nb_particule = 0;
   ingame->health = ingame->health_target = 1;
 

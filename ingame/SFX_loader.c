@@ -44,4 +44,6 @@ void sfx_loader(t_ingame *ing)
   ing->sfx[AMBIENT][1] = bunny_load_effect("res/SFX/ambient/drip2.ogg");
   ing->sfx[AMBIENT][2] = bunny_load_effect("res/SFX/ambient/drip3.ogg");
   ing->sfx[AMBIENT][3] = bunny_load_effect("res/SFX/ambient/water_falling.ogg");
+  ing->sfx[AMBIENT][4] = bunny_load_effect("res/SFX/ambient/Explosion.ogg");
+  bunny_sound_volume(&(ing->sfx[AMBIENT][4]->sound),35);
 }
