@@ -15,7 +15,6 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
       ingame->units[i].inertia.y += 0.2;
       manage_inertia(ingame, &ingame->units[i]);
     }
-  
   ingame->camera.x = ingame->player->area.x - ingame->program->screen->buffer.width / 2;
   ingame->camera.y = ingame->player->area.y - ingame->program->screen->buffer.height / 2;
   /// MISC

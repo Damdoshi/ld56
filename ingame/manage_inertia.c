@@ -26,13 +26,24 @@ static void		check_bottom(t_ingame		*ingame,
     {
       if (ingame_bottom_collision(ingame, unit))
 	{
-	  if (unit->inertia.y > 8)
+	  if (unit->inertia.y > 8.75)
 	    {
 	      bunny_sprite_set_animation_name(unit->sprite, "Crashing");
 	      ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
 	    }
-	  else if (unit->inertia.y > 0.5)
-	    {} // Faire un bruit de bobo - mais on est pas blessé
+	  else if (unit->inertia.y > 8)
+	    {
+	      ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
+	    }
+	  else if (unit->inertia.y > 4)
+	    {
+	      bunny_sound_play(&(ingame->sfx[PLAYER][19]->sound));
+	      bunny_sound_play(&(ingame->sfx[PLAYER][0]->sound));
+	    }
+	  else if (unit->inertia.y > 1)
+	    {
+	      bunny_sound_play(&(ingame->sfx[PLAYER][18]->sound));
+	    }
 	  unit->inertia.y = 0;
 	  return ;
 	}
@@ -71,7 +82,7 @@ static void		check_side(t_ingame		*ingame,
   step_height = 0;
   max_step_height = unit->area.h / 5;
   side_size = unit->area.w / 2;
-  x = unit->area.x + (side_size + 2) * side;    
+  x = unit->area.x + (side_size + 2) * side;
   while (n_move < unit->inertia.x * side)
     {
       i = 0;
@@ -84,7 +95,7 @@ static void		check_side(t_ingame		*ingame,
 		return;
 	    }
 	  i += 1;
-	} 
+	}
       i = 0;
       while (i < step_height)
 	{
@@ -102,7 +113,7 @@ static void		check_side(t_ingame		*ingame,
 void			manage_inertia(t_ingame		*ingame,
 				       t_unit		*unit)
 {
-  moderate_forces(ingame, unit);  
+  moderate_forces(ingame, unit);
   if (unit->inertia.y > 0)
     check_bottom(ingame, unit);
   else if (unit->inertia.y < 0)
