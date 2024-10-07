@@ -28,13 +28,15 @@ static void		check_bottom(t_ingame		*ingame,
 	{
 	  if (unit->inertia.y > 8)
 	    ingame_get_hurt(ingame, (unit->inertia.y - 8) / 4.0);
-	  else if (unit->inertia.y > 0.5)
+	  else if (unit->inertia.y > 4)
 	    {
 	      bunny_sound_play(&(ingame->sfx[PLAYER][19]->sound));
 	      bunny_sound_play(&(ingame->sfx[PLAYER][0]->sound));
-	    } // Faire un bruit de bobo - mais on est pas blessé
-	  else
-	    bunny_sound_play(&(ingame->sfx[PLAYER][18]->sound));
+	    }
+	  else if (unit->inertia.y > 1)
+	    {
+	      bunny_sound_play(&(ingame->sfx[PLAYER][18]->sound));
+	    }
 	  unit->inertia.y = 0;
 	  return ;
 	}
@@ -104,7 +106,7 @@ static void		check_side(t_ingame		*ingame,
 void			manage_inertia(t_ingame		*ingame,
 				       t_unit		*unit)
 {
-  moderate_forces(ingame, unit);  
+  moderate_forces(ingame, unit);
   if (unit->inertia.y > 0)
     check_bottom(ingame, unit);
   else if (unit->inertia.y < 0)

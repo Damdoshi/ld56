@@ -136,6 +136,7 @@ typedef struct			s_ingame
 
   //// SON
   t_bunny_effect		*sfx[LAST_SFX_CATEGORY][128];
+  int				step_frame;
 
   //// NIVEAU
   t_bunny_picture		*background;
@@ -145,10 +146,10 @@ typedef struct			s_ingame
   t_bunny_picture		*foreground;
   t_bunny_pixelarray		*fire;
   t_bunny_position		map_size;
-  
+
   t_game_event			event_list[4096];
   size_t			event_len;
-  
+
   t_bunny_accurate_area		camera;
   t_bunny_accurate_area		select;
   bool				select_on;
