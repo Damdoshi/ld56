@@ -127,6 +127,12 @@ bool			ingame_load_map(t_ingame		*ing,
 	  pos.y = i / ing->map_size.x;
 	  ingame_new_unit(ing, WALLSPIDER, pos);
 	}
+      else if (color.full == (TO_GREEN(128) | BLACK))
+	{
+	  pos.x = i % ing->map_size.x;
+	  pos.y = i / ing->map_size.x;
+	  ingame_new_unit(ing, BADSPIDER, pos);
+	}
     }
   assert((ing->player != NULL));
   bunny_delete_clipable(&physic_map->clipable);

@@ -1,4 +1,4 @@
-kRessourceFile = @"badspider.png"
+RessourceFile = @"badspider.png"
 @insert @"spider.dab"
 
 [Animations

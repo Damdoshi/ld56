@@ -60,7 +60,7 @@ typedef enum			e_unit_type
     WALLSPIDER,			// PINK
     EATSPIDER,			// PURPLE
     LIGHTSPIDER,		// WHITE
-    BADSPIDER,			// A DEFINIR
+    BADSPIDER,			// DARKGREEN
     LAST_UNIT_TYPE
   }				t_unit_type;
 

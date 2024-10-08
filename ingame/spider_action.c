@@ -6,6 +6,7 @@ void			ingame_spider_action(t_ingame	*ingame,
 {
   t_bunny_bitfield	*bf = ingame->water_map[ingame->current_water_map];
   int			max = 0;
+  bool			attack = false;
 
   if (BITGET(bf, unit->area.x, unit->area.y, ingame->map_size.x))
     unit->health -= 0.05;
@@ -16,25 +17,50 @@ void			ingame_spider_action(t_ingame	*ingame,
   // Dans tous les cas on mange le pixel en dessous
   if (unit->type == EATSPIDER)
     {
-      for (int j = -50; j < unit->area.h + 20; ++j)
+      // Attaque des bad spiders - prioritaire
+      for (size_t i = 0; i < ingame->last_unit; ++i)
+	if (ingame->units[i].type == BADSPIDER && ingame->units[i].health > 0 &&
+	    distance(unit->area.x, unit->area.y,
+		     ingame->units[i].area.x, ingame->units[i].area.y
+		     ) < 200 * 200)
+	  {
+	    attack = true;
+	    unit->target.x = ingame->units[i].area.x + unit->area.w / 2;
+	    unit->target.y = ingame->units[i].area.y;
+	    if (bunny_rectangular_collision(&unit->area, &ingame->units[i].area))
+	      {
+		bunny_sprite_set_animation_name(unit->sprite, "Dig");
+		ingame_get_hurt(ingame, &ingame->units[i], 0.20);
+		if (unit->area.x < ingame->units[i].area.x)
+		  ingame->units[i].inertia.x = 2;
+		if (unit->area.x > ingame->player->area.x)
+		  ingame->units[i].inertia.x = -2;
+	      }
+	  }
+
+      if (attack == false)
 	{
-	  for (int i = -20; i < unit->area.w + 20; ++i)
+	  // Bouffage de la terre
+	  for (int j = -50; j < unit->area.h + 20; ++j)
 	    {
-	      int x = i + unit->area.x;
-	      int y = j + unit->area.y;
-
-	      if (unit->health <= 0)
-		return ;
-	      if (BITGET(ingame->attack_map, x, y, ingame->map_size.x))
+	      for (int i = -20; i < unit->area.w + 20; ++i)
 		{
-		  t_bunny_position pos = {x, y};
+		  int x = i + unit->area.x;
+		  int y = j + unit->area.y;
 
-		  if ((max += 1) > 20)
+		  if (unit->health <= 0)
 		    return ;
-		  unit->health -= 0.001;
-		  bunny_sprite_set_animation_name(unit->sprite, "Dig");
-		  ingame_pixel_delete(ingame, pos, 1);
-		  break ;
+		  if (BITGET(ingame->attack_map, x, y, ingame->map_size.x))
+		    {
+		      t_bunny_position pos = {x, y};
+
+		      if ((max += 1) > 20)
+			return ;
+		      unit->health -= 0.001;
+		      bunny_sprite_set_animation_name(unit->sprite, "Dig");
+		      ingame_pixel_delete(ingame, pos, 1);
+		      break ;
+		    }
 		}
 	    }
 	}
@@ -60,6 +86,24 @@ void			ingame_spider_action(t_ingame	*ingame,
 	    if (unit->health <= 0)
 	      return ;
 	  }
+    }
+  else if (unit->type == BADSPIDER)
+    {
+      if (distance(ingame->player->area.x, ingame->player->area.y,
+		   unit->area.x, unit->area.y) < 100 * 100)
+	{
+	  unit->target.x = ingame->player->area.x + unit->area.w / 2;
+	  unit->target.y = ingame->player->area.y;
+	  if (bunny_rectangular_collision(&unit->area, &ingame->player->area))
+	    {
+	      bunny_sprite_set_animation_name(unit->sprite, "Dig");
+	      ingame_get_hurt(ingame, ingame->player, 0.05);
+	      if (unit->area.x < ingame->player->area.x)
+		ingame->player->inertia.x = 2;
+	      if (unit->area.x > ingame->player->area.x)
+		ingame->player->inertia.x = -2;
+	    }
+	}
     }
   
   // On est plus en déplacement

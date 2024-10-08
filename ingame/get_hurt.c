@@ -10,6 +10,8 @@ void			ingame_get_hurt(t_ingame		*ing,
   if (unit == ing->player) // C'est moche ca.
     ing->program->screen->color_mask.full = COLOR(255, 255, 128, 128);
 
+  bunny_sprite_set_animation_name(unit->sprite, "Hurt");
+
   if (unit->health <= 0) // Game over
     sound_play(unit->hurt[5]);
   else if (damage > 0.5)

@@ -43,10 +43,8 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
 	    }
 	}
       else
-	{
-	  ingame->units[i].action(ingame, &ingame->units[i]);
-	  manage_inertia(ingame, &ingame->units[i]);
-	}
+	ingame->units[i].action(ingame, &ingame->units[i]);
+      manage_inertia(ingame, &ingame->units[i]);
     }
 
   // Position de la caméra
