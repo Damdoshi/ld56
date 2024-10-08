@@ -25,7 +25,7 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
   assert((ingame->whitescreen = bunny_new_picture(ingame->program->screen->buffer.width, ingame->program->screen->buffer.height)));
   assert((ingame->action_screen = bunny_new_pixelarray(ingame->program->screen->buffer.width, ingame->program->screen->buffer.height)));
 
-  ingame->brush_size = 5;
+  ingame->brush_size = 10;
   ingame->health = 1;
   assert((ingame->music = bunny_load_music("./res/ingame/music.ogg")));
   bunny_sound_play(&ingame->music->sound);
