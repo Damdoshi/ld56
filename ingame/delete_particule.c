@@ -10,4 +10,5 @@ void			delete_particule(t_particule			*particule,
   particule->pos[index].y = particule->pos[particule->nb_particule].y;
   particule->spos[index].x = particule->spos[particule->nb_particule].x;
   particule->spos[index].y = particule->spos[particule->nb_particule].y;
+  particule->action[index] = particule->action[particule->nb_particule];
 }

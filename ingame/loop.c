@@ -30,6 +30,7 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
       ingame->units[i].inertia.y += 0.2;
       if (ingame->units[i].health <= 0)
 	{
+	  ingame_unselect_unit(ingame, &ingame->units[i]);
 	  bunny_sprite_set_animation_name(ingame->units[i].sprite, "Die");
 	  if (bunny_sprite_is_still(ingame->units[i].sprite) && 0)
 	    {

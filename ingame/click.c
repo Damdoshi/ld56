@@ -32,12 +32,12 @@ t_bunny_response		ingame_click(t_bunny_event_state	state,
 	  int moved = 0;
 
 	  pos.x += ingame->camera.x;
-	  pos.y += ingame->camera.x;
+	  pos.y += ingame->camera.y;
 	  for (size_t i = 0; i < ingame->last_selection && i < NBRCELL(ingame->selection); i++)
 	    {
-	      ingame->units[i].target.x = pos.x + xdiff + moved * 8;
-	      ingame->units[i].target.y = pos.y;
-	      ingame->units[i].target_action = ingame->cursor_type;
+	      ingame->selection[i]->target.x = pos.x + xdiff + moved * 8;
+	      ingame->selection[i]->target.y = pos.y;
+	      ingame->selection[i]->target_action = ingame->cursor_type;
 	      moved += 1;
 	    }
 	}

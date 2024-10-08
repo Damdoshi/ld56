@@ -15,8 +15,8 @@ t_bunny_response		ingame_wheel(int			wheel,
   (void)wheel;
 
   if (delta > 0)
-    if ((ingame->brush_size += 1) > 20)
-      ingame->brush_size = 20;
+    if ((ingame->brush_size += 1) > 10)
+      ingame->brush_size = 10;
 
   if (delta < 0)
     if ((ingame->brush_size -= 1) < 5)

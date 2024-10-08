@@ -307,7 +307,7 @@ t_bunny_response display(void		*n,
 	starty = 0;
       if ((endx = camera->x + camera->w) > p->w)
 	endx = p->w;
-      if ((endy = camera->x + camera->h) > p->h)
+      if ((endy = camera->y + camera->h) > p->h)
 	endy = p->h;
     }
   

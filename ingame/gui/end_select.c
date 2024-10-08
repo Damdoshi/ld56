@@ -46,7 +46,7 @@ void			ingame_end_select(t_ingame	*ing)
 
   // Et on rafraichit la selection
   for (i = 0; i < ing->last_unit && i < NBRCELL(ing->units); ++i)
-    if (ing->units[i].selected)
+    if (ing->units[i].selected || ing->units[i].health <= 0)
       continue ;
     else if (!bunny_rectangular_collision(&area, &ing->units[i].area))
       continue ;

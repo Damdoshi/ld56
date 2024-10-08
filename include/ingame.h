@@ -111,12 +111,18 @@ typedef enum			s_sfx
   LAST_SFX_CATEGORY
 }				t_sfx;
 
+struct				s_particule;
+typedef bool			(*t_particule_action)(struct s_ingame	*ing,
+						      struct s_particule *par,
+						      int		i);
+
 typedef struct			s_particule
 {
   double			death_time[MAX_PARTICULE];
   uint32_t			color[MAX_PARTICULE];
   t_bunny_accurate_position	pos[MAX_PARTICULE];
   t_bunny_accurate_position	spos[MAX_PARTICULE];
+  t_particule_action		action[MAX_PARTICULE];
   int32_t			nb_particule;
 }				t_particule;
 
@@ -191,6 +197,7 @@ void				ingame_load_sprite(t_ingame		*ingame,
 						   t_bunny_sprite	**sprite);
 void				ingame_free_sprite(t_ingame		*ingame,
 						   t_bunny_sprite	**sprite);
+void				ingame_display_order_areas(t_ingame	*ingame);
 void				ingame_display_health_bar(t_ingame	*ingame);
 void				ingame_display_life(t_ingame		*ingame);
 void				ingame_display_mouse(t_ingame		*ingame);
@@ -248,7 +255,8 @@ void				new_particule(t_ingame			*ing,
 					      double			death_time,
 					      t_bunny_position		pos,
 					      t_bunny_accurate_position	spos,
-					      uint32_t			color);
+					      uint32_t			color,
+					      t_particule_action	action);
 void				delete_particule(t_particule		*particule,
 						 int32_t		index);
 void				check_particule(t_ingame		*ingame);
@@ -271,6 +279,16 @@ void				ingame_attack_map(t_ingame		*ing,
 void				ingame_build_map(t_ingame		*ing,
 						 t_unit			*unit,
 						 unsigned int		rad);
+
+bool				ingame_particule_spark(t_ingame		*ingame,
+						       t_particule	*part,
+						       int		idx);
+bool				ingame_particule_debris(t_ingame	*ingame,
+							t_particule	*part,
+							int		idx);
+void				ingame_unselect_unit(t_ingame		*ing,
+						     t_unit		*unit);
+
 
 #endif	/*			__ingame_H__				*/
 

@@ -38,8 +38,8 @@ void			ingame_spider_action(t_ingame	*ingame,
     {
       if (bunny_sprite_animation_name("Idle") != bunny_sprite_get_animation(unit->sprite))
 	return ;
-      for (int j = 0; j < unit->area.h; ++j)
-	for (int i = 0; i < unit->area.w; ++i)
+      for (int j = 0; j < unit->area.h + 10; ++j)
+	for (int i = -20; i < unit->area.w + 20; ++i)
 	  {
 	    int x = i + unit->area.x;
 	    int y = j + unit->area.y;
@@ -64,6 +64,8 @@ void			ingame_spider_action(t_ingame	*ingame,
       // On se met en recherche de bouffe
       if (unit->type == EATSPIDER)
 	ingame_attack_map(ingame, unit, 200);
+      if (unit->type == WALLSPIDER)
+	ingame_build_map(ingame, unit, 200);
       return ;
     }
 

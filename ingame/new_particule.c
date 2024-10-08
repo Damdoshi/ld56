@@ -4,7 +4,8 @@ void			new_particule(t_ingame				*ing,
 				      double				death_time,
 				      t_bunny_position			pos,
 				      t_bunny_accurate_position		spos,
-				      uint32_t				color)
+				      uint32_t				color,
+				      t_particule_action		action)
 {
   t_particule		*particule = &ing->particules;
   
@@ -16,6 +17,7 @@ void			new_particule(t_ingame				*ing,
   particule->pos[particule->nb_particule].y = pos.y;
   particule->spos[particule->nb_particule].x = spos.x;
   particule->spos[particule->nb_particule].y = spos.y;
+  particule->action[particule->nb_particule] = action;
   particule->nb_particule ++;
   return ;
 }
