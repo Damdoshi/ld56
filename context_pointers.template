@@ -6,4 +6,5 @@
   data[INGAME] = &program.ingame;
   program.credit.program = &program;
   data[CREDIT] = &program.credit;
-  
+  program.sgsplash.program = &program;
+  data[SGSPLASH] = &program.sgsplash;

@@ -2,3 +2,4 @@
 #include			"cinematic.h"
 #include			"ingame.h"
 #include			"credit.h"
+#include			"sgsplash.h"

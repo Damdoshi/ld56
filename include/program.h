@@ -16,8 +16,6 @@ typedef enum			e_context
   {
     FIRST_CONTEXT,
     BUNNY_SPLASH		= FIRST_CONTEXT,
-    MENU_GAME,
-    GAME,
 # include			"context_enumeration.template"
     LAST_CONTEXT
   }				t_context;

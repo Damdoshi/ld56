@@ -2,3 +2,4 @@
   t_cinematic			cinematic;
   t_ingame			ingame;
   t_credit			credit;
+  t_sgsplash			sgsplash;

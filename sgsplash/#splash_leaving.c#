@@ -1,0 +1,15 @@
+#include			"sgsplash.h"
+
+void			*splash_leaving(t_bunny_response		resp,
+					t_splash			*spa)
+{
+  (void)resp;
+  bunny_delete_clipable(&spa->pix->clipable);
+  spa->start_time = spa->now_time = 0;
+  spa->duration = 0;
+  *spa->current_context += 1;
+  bunny_delete_clipable(spa->pic);
+  //bunny_delete_clipable(&spa->font->clipable);
+  free(spa->col);
+  free(spa->pts);
+}

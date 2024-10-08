@@ -1,0 +1,15 @@
+RessourceFile=@"./breakout_font.png"
+BoxSize=640,70
+Scale=1
+GlyphSize=64,64
+Interglyph=5,5
+'Scrolling=0,50
+VerticalAlign="Top"
+HorizontalAlign="Left"
+String="\x06SPGT\x06"
+
+Color=0xFF, 0xFF, 0xFF
+'Rotation=10
+
+OutlineSize=2
+OutlineColor=150,0,0,255
