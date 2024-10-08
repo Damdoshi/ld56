@@ -9,7 +9,8 @@ bool			ingame_load_map(t_ingame		*ing,
   t_bunny_configuration	*cnf;
   bool			tmp;
 
-  assert((cnf = bunny_open_configuration(file, NULL)));
+  if ((cnf = bunny_open_configuration(file, NULL)) == NULL)
+    return (false);
 
   assert((bunny_configuration_getf(cnf, &str, "Eatable")));
   assert((ing->color_map = bunny_load_pixelarray(str)));
@@ -31,7 +32,8 @@ bool			ingame_load_map(t_ingame		*ing,
   ing->map_size.x = ing->color_map->clipable.buffer.width;
   ing->map_size.y = ing->color_map->clipable.buffer.height;
 
-  if (bunny_configuration_getf(cnf, &tmp, "Fire") && tmp)
+  // TOUJOURS du feu
+  if (1 || (bunny_configuration_getf(cnf, &tmp, "Fire") && tmp))
     {
       assert((ing->fire = bunny_new_pixelarray(ing->map_size.x, ing->map_size.y)));
       bunny_clear(&ing->fire->clipable.buffer, 0);
@@ -53,8 +55,13 @@ bool			ingame_load_map(t_ingame		*ing,
 
   ing->attack_map = bunny_new_bitfield(size);
   ing->build_map = bunny_new_bitfield(size);
+  ing->water_map[0] = bunny_new_bitfield(size);
+  ing->water_map[1] = bunny_new_bitfield(size);
+  ing->current_water_map = 0;
   memset(ing->attack_map, 0, ceil(size / 8));
   memset(ing->build_map, 0, ceil(size / 8));
+  memset(ing->water_map[0], 0, ceil(size / 8));
+  memset(ing->water_map[1], 0, ceil(size / 8));
 
   assert((ing->physic_map = malloc(sizeof(t_element) * size)));
   t_bunny_color		color;
@@ -76,13 +83,23 @@ bool			ingame_load_map(t_ingame		*ing,
       else if (color.full == BLACK)
 	ing->physic_map[i] = ROCK;
       else if (color.full == BLUE)
-	ing->physic_map[i] = WATER;
+	{
+	  //// WATER
+	  pos.x = i % ing->map_size.x;
+	  pos.y = i / ing->map_size.x;
+	  BITSET(ing->water_map[ing->current_water_map], pos.x, pos.y, ing->map_size.x);
+	  ing->physic_map[i] = AIR;
+	}
       else if (color.full == RED)
 	ing->physic_map[i] = EXPLODE;
       else if (color.full == YELLOW)
 	ing->physic_map[i] = SAND;
       else if (color.full == PINK2)
 	ing->physic_map[i] = FIRE;
+      else if (color.full == (TO_BLUE(128) | BLACK))
+	ing->physic_map[i] = WATER_SOURCE;
+      else if (color.full == (TO_RED(128) | BLACK))
+	ing->physic_map[i] = VICTORY;
       else
 	ing->physic_map[i] = AIR;
       

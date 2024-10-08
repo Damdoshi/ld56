@@ -13,6 +13,11 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
 {
   if (state == GO_UP)
     return (GO_ON);
+  if (sym == BKS_ESCAPE)
+    {
+      ingame->program->context = CREDIT;
+      return (SWITCH_CONTEXT);
+    }
   if (sym == BKS_1 || sym == BKS_NUMPAD1)
     {
       ingame->cursor_type = SELECTION;
@@ -43,9 +48,9 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
   if (sym == BKS_Z || sym == BKS_W || sym == BKS_SPACE || sym == BKS_UP)
     ingame_jump(ingame, ingame->player);
 
-  if (sym >= BKS_F1 && sym <= BKS_F4)
+  if (sym == BKS_BACKSPACE)
     {
-      ingame_get_hurt(ingame, ingame->player, 0.1 * (sym - BKS_F1 + 1));
+      ingame_get_hurt(ingame, ingame->player, 1.0);
       return (GO_ON);
     }
   return (GO_ON);

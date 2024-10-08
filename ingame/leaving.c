@@ -11,6 +11,8 @@
 void			ingame_leaving(t_bunny_response	response,
 				       t_ingame		*ingame)
 {
+  if (ingame->program->context == CREDIT)
+    return ;
   (void)response;
   fire(NULL, false, NULL);
   bunny_delete_clipable(ingame->background);

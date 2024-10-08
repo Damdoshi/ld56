@@ -4,8 +4,12 @@
 void			ingame_spider_action(t_ingame	*ingame,
 					     t_unit	*unit)
 {
+  t_bunny_bitfield	*bf = ingame->water_map[ingame->current_water_map];
   int			max = 0;
 
+  if (BITGET(bf, unit->area.x, unit->area.y, ingame->map_size.x))
+    unit->health -= 0.05;
+  
   if (bunny_sprite_animation_name("Idle") != bunny_sprite_get_animation(unit->sprite))
     return ;
 

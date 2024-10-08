@@ -66,13 +66,15 @@ typedef enum			e_unit_type
 
 typedef enum			e_element
   {
-    AIR,			//transparent
-    ROCK,			//BLACK
-    WATER,			//BLUE
-    EARTH,			//GREEN
-    EXPLODE,			//RED
-    SAND,			//YELLOW
-    FIRE			//PINK2
+    AIR,			// 0
+    ROCK,			// BLACK
+    WATER,			// BLUE
+    WATER_SOURCE,		// DARKBLUE
+    EARTH,			// GREEN
+    EXPLODE,			// RED
+    SAND,			// YELLOW
+    FIRE,			// PINK2
+    VICTORY,			// DARKRED
   }				t_element;
 
 struct				s_ingame;
@@ -130,6 +132,7 @@ struct				s_program;
 typedef struct			s_ingame
 {
   struct s_program		*program;
+  int				current_level;
   t_bunny_sprite		*sprites[4096];
   size_t			last_sprite;
   int				frame_counter;
@@ -167,14 +170,20 @@ typedef struct			s_ingame
   t_bunny_picture		*remain_map;
   t_bunny_pixelarray		*color_map;
   t_element			*physic_map;
+
   t_bunny_picture		*foreground;
   t_bunny_picture		*whitescreen;
   t_bunny_pixelarray		*fire;
   t_bunny_position		map_size;
 
+  int				waterline;
+  
   t_bunny_pixelarray		*action_screen;
   t_bunny_bitfield		*attack_map;
   t_bunny_bitfield		*build_map;
+
+  t_bunny_bitfield		*water_map[2];
+  int				current_water_map;
 
   t_game_event			event_list[4096];
   size_t			event_len;
@@ -219,6 +228,10 @@ bool				ingame_load_map(t_ingame		*ing,
 int				ingame_get_pixel(t_ingame		*ing,
 						 int			x,
 						 int			y);
+void				ingame_set_pixel(t_ingame		*ing,
+						 int			x,
+						 int			y,
+						 int			t);
 void				ingame_pixel_delete(t_ingame		*ing,
 						    t_bunny_position	pos,
 						    double		r);
@@ -290,6 +303,11 @@ bool				ingame_particule_debris(t_ingame	*ingame,
 void				ingame_unselect_unit(t_ingame		*ing,
 						     t_unit		*unit);
 
+void				ingame_water(t_ingame			*ing);
+
+bool				ingame_traversable(t_ingame		*ing,
+						   int			x,
+						   int			y);
 
 #endif	/*			__ingame_H__				*/
 

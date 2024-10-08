@@ -14,7 +14,7 @@ bool			ingame_bottom_collision(t_ingame	*ing,
       endx += 4;
     }
   for (int i = startx; i < endx; ++i)
-    if (ingame_get_pixel(ing, i, unit->area.y + 1) != AIR)
+    if (!ingame_traversable(ing, i, unit->area.y + 1))
       {
 	if (ingame_get_pixel(ing, i, unit->area.y + 1) == FIRE)
 	  ingame_get_hurt(ing, unit, 0.01);

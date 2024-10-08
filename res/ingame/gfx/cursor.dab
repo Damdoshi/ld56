@@ -17,7 +17,7 @@ Origin = 10, 10
   ]
   [Selection
     Position = 0, 1 * [.].Clip.Size[1]
-    Frame = 7
+    Frame = 8
     Browsing = "LeftToRight"
     Loop
   ]

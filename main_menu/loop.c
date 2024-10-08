@@ -27,11 +27,13 @@ t_bunny_response	main_menu_loop(t_main_menu		*main_menu)
       }
     };
   if (main_menu->program->context != MAIN_MENU)
-    return (SWITCH_CONTEXT);
+    {
+      main_menu->program->ingame.current_level = 0;
+      return (SWITCH_CONTEXT);
+    }
   
   main_menu->text_menu[0]->color = BLACK | TO_RED(128);
   main_menu->text_menu[1]->color = BLACK | TO_RED(128);
-
 
   if (main_menu->delay < bunny_get_current_time())
     {

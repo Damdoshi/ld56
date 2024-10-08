@@ -15,35 +15,6 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
   bunny_clear(&ingame->program->screen->buffer, GRAY(64));
   bunny_clear(&ingame->whitescreen->buffer, BLACK);
 
-  if (ingame->fire)
-    {
-      t_bunny_area	cam = {
-	ingame->camera.x - ingame->camera.w,
-	ingame->camera.y - ingame->camera.h,
-	3 * ingame->program->screen->buffer.width,
-	3 * ingame->program->screen->buffer.height
-      };
-      int		startx = cam.x;
-      int		starty = cam.y;
-      int		endx = cam.w + startx;
-      int		endy = cam.h + starty;
-
-      if (startx < 0)
-	startx = 0;
-      if (starty < 0)
-	starty = 0;
-      if (endx > ingame->map_size.x)
-	endx = ingame->map_size.x;
-      if (endy > ingame->map_size.y)
-	endy = ingame->map_size.y;
-
-      fire(ingame->fire, false, &cam);
-      for (int j = starty; j < endy; ++j)
-	for (int i = startx; i < endx; ++i)
-	  if (ingame->physic_map[i + j * ingame->map_size.x] == FIRE)
-	    set_fire_pixel(i, j);
-    }
-
   if (ingame->camera.x < 0)
     {
       ingame->color_map->clipable.position.x = -ingame->camera.x;
@@ -160,6 +131,59 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	}
     }
 
+
+  if (ingame->fire)
+    {
+      t_bunny_area	cam = {
+	ingame->camera.x - ingame->camera.w / 2,
+	ingame->camera.y - ingame->camera.h / 2,
+	2 * ingame->program->screen->buffer.width,
+	2 * ingame->program->screen->buffer.height
+      };
+      int		startx = cam.x;
+      int		starty = cam.y;
+      int		endx = cam.w + startx;
+      int		endy = cam.h + starty;
+
+      if (startx < 0)
+	startx = 0;
+      if (starty < 0)
+	starty = 0;
+      if (endx > ingame->map_size.x)
+	endx = ingame->map_size.x;
+      if (endy > ingame->map_size.y)
+	endy = ingame->map_size.y;
+
+      unsigned int fcol = ALPHA(16, TO_RED(128) | TO_GREEN(64) | TO_BLUE(64));
+      fire(ingame->fire, false, &cam);
+      for (int j = starty; j < endy; ++j)
+	for (int i = startx; i < endx; ++i)
+	  {
+	    t_bunny_position fpos = {i - ingame->camera.x, j - ingame->camera.y};
+	    int tile = ingame->physic_map[i + j * ingame->map_size.x];
+	    t_bunny_position fsize = {20, 20};
+	    
+	    if (tile == FIRE)
+	      {
+		fsize.y = (fsize.x += rand() % 20) - 5;
+		bunny_set_disk(&ingame->whitescreen->buffer, fpos, fsize, fcol, 0, 0);
+		set_fire_pixel(i, j);
+	      }
+	    t_bunny_bitfield *wt = ingame->water_map[ingame->current_water_map];
+
+	    if (BITGET(wt, i, j, ingame->map_size.x))
+	      {
+		int val = rand() % 128 + 64;
+		unsigned int dcol = TO_BLUE(val);
+		
+		dcol |= TO_GREEN(64 + rand() % (val - 63));
+		bunny_set_pixel(&ingame->program->screen->buffer, fpos, ALPHA(64, dcol));
+		fpos.y += 1;
+		bunny_set_pixel(&ingame->program->screen->buffer, fpos, ALPHA(64, dcol));
+	      }
+	  }
+    }
+  
   if (ingame->fire)
     {
       bunny_clipable_copy(&ingame->fire->clipable, &ingame->color_map->clipable);

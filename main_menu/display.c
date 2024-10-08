@@ -29,16 +29,17 @@ t_bunny_response	main_menu_display(t_main_menu	*main_menu)
       else if (main_menu->title->color_mask.argb[ALPHA_CMP] < 255)
 	main_menu->title->color_mask.argb[ALPHA_CMP] += 5;
       else
-	bunny_blit(&main_menu->program->screen->buffer, &main_menu->text->clipable, NULL);
+	{
+	  bunny_blit(&main_menu->program->screen->buffer, &main_menu->text->clipable, NULL); 
+	  for (ssize_t j = 0; j < main_menu->fire->clipable.buffer.height; ++j)
+	    for (ssize_t i = 0; i < main_menu->fire->clipable.buffer.width; ++i)
+	      if (((unsigned int*)main_menu->text->pixels)[i + j * main_menu->text->clipable.buffer.width] == WHITE)
+		set_fire_pixel(i, j);
+	  main_menu->fire->clipable.color_mask.argb[ALPHA_CMP] = 255;
+	  if (main_menu->delay < now)
+	    bunny_blit(&main_menu->program->screen->buffer, &main_menu->fire->clipable, NULL);
+	}
     }
- 
-  for (ssize_t j = 0; j < main_menu->fire->clipable.buffer.height; ++j)
-    for (ssize_t i = 0; i < main_menu->fire->clipable.buffer.width; ++i)
-      if (((unsigned int*)main_menu->text->pixels)[i + j * main_menu->text->clipable.buffer.width] == WHITE)
-	set_fire_pixel(i, j);
-  
-  main_menu->fire->clipable.color_mask.argb[ALPHA_CMP] = 255;
-  bunny_blit(&main_menu->program->screen->buffer, &main_menu->fire->clipable, NULL);
 
   bunny_blit(&main_menu->program->screen->buffer, main_menu->title, NULL);
 

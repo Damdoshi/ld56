@@ -74,8 +74,8 @@ static void		check_side(t_ingame		*ingame,
   int			side_size;
   int			i;
   int			n_move;
-  int     step_height;
-  int     max_step_height;
+  int			step_height;
+  int			max_step_height;
 
   n_move = 0;
   step_height = 0;
@@ -87,7 +87,7 @@ static void		check_side(t_ingame		*ingame,
       i = 0;
       while (i < unit->area.h)
 	{
-	  if (ingame_get_pixel(ingame, x, unit->area.y - i) != AIR)
+	  if (!ingame_traversable(ingame, x, unit->area.y - i))
 	    {
 	      step_height += 1;
 	      if (step_height > max_step_height)
