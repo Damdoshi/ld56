@@ -34,8 +34,6 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
 	{
 	  ingame_unselect_unit(ingame, &ingame->units[i]);
 	  bunny_sprite_set_animation_name(ingame->units[i].sprite, "Die");
-	  if (ingame->units[i].light_radius > 0)
-	    ingame->units[i].light_radius *= 0.95;
 	  if (bunny_sprite_is_still(ingame->units[i].sprite) && 0)
 	    {
 	      ingame_delete_unit(ingame, &ingame->units[i]);

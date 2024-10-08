@@ -89,21 +89,24 @@ void			ingame_spider_action(t_ingame	*ingame,
     }
   else if (unit->type == BADSPIDER)
     {
-      if (distance(ingame->player->area.x, ingame->player->area.y,
-		   unit->area.x, unit->area.y) < 100 * 100)
-	{
-	  unit->target.x = ingame->player->area.x + unit->area.w / 2;
-	  unit->target.y = ingame->player->area.y;
-	  if (bunny_rectangular_collision(&unit->area, &ingame->player->area))
-	    {
-	      bunny_sprite_set_animation_name(unit->sprite, "Dig");
-	      ingame_get_hurt(ingame, ingame->player, 0.05);
-	      if (unit->area.x < ingame->player->area.x)
-		ingame->player->inertia.x = 2;
-	      if (unit->area.x > ingame->player->area.x)
-		ingame->player->inertia.x = -2;
-	    }
-	}
+      for (size_t i = 0; i < ingame->last_unit; ++i)
+	if (ingame->units[i].type != HERO && ingame->units[i].type != LIGHTSPIDER)
+	  continue ;
+	else if (distance(ingame->units[i].area.x, ingame->units[i].area.y,
+			  unit->area.x, unit->area.y) < 100 * 100)
+	  {
+	    unit->target.x = ingame->units[i].area.x + unit->area.w / 2;
+	    unit->target.y = ingame->units[i].area.y;
+	    if (bunny_rectangular_collision(&unit->area, &ingame->units[i].area))
+	      {
+		bunny_sprite_set_animation_name(unit->sprite, "Dig");
+		ingame_get_hurt(ingame, &ingame->units[i], 0.05);
+		if (unit->area.x < ingame->units[i].area.x)
+		  ingame->units[i].inertia.x = 2;
+		if (unit->area.x > ingame->units[i].area.x)
+		  ingame->units[i].inertia.x = -2;
+	      }
+	  }
     }
   
   // On est plus en déplacement

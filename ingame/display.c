@@ -68,6 +68,11 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	  t_bunny_position lpos = {pos.x, pos.y};
 	  size_t	i;
 
+	  if (unit->type != HERO)
+	    {
+	      siz.x *= unit->health;
+	      siz.y *= unit->health;
+	    }
 	  lpos.y -= unit->area.h  / 2;
 	  for (i = 0; i < 5; ++i)
 	    {
