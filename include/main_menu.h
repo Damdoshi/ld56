@@ -13,12 +13,16 @@ struct				s_program;
 typedef struct			s_main_menu
 {
   struct s_program		*program;
+  t_bunny_picture		*title;
   t_bunny_picture		*menu;
   t_bunny_font			*text_menu[2];
   t_bunny_area			pos_txt[2];
   t_bunny_sprite		*cursor;
   t_bunny_music			*music;
   t_bunny_effect		*click;
+  t_bunny_pixelarray		*fire;
+  t_bunny_pixelarray		*text;
+  double			delay;
   //
 }				t_main_menu;
 

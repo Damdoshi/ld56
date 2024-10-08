@@ -2,4 +2,4 @@ RessourceFile = @"wallspider.png"
 @insert @"spider.dab"
 
 
-Stair=6
+Stair=3

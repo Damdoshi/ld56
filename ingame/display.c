@@ -121,6 +121,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
       if (unit->selected)
 	{
 	  draw_rect(ingame, &area);
+	  /*
 	  t_bunny_position tline[2] = {
 	    {area.x, area.y},
 	    {unit->target.x - ingame->camera.x, unit->target.y - ingame->camera.y}
@@ -128,6 +129,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	  unsigned int tcol[2] = {RED, RED};
 
 	  bunny_set_line(&ingame->program->screen->buffer, tline, tcol);
+	  */
 	}
 
       unsigned int black[3] = {BLACK, BLACK, BLACK};
@@ -137,7 +139,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	{area.x, area.y - unit->area.h - 5},
 	{area.x + unit->area.w / 2, area.y - unit->area.h - 5}
       };
-      if (unit != ingame->player && unit->health < 1.0)
+      if (unit != ingame->player && unit->health < 1.0 && unit->health > 0)
 	{
 	  for (int i = 0; i < 6; ++i)
 	    {

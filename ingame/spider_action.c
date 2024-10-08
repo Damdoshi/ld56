@@ -5,12 +5,13 @@ void			ingame_spider_action(t_ingame	*ingame,
 					     t_unit	*unit)
 {
   int			max = 0;
-  
+
+  if (bunny_sprite_animation_name("Idle") != bunny_sprite_get_animation(unit->sprite))
+    return ;
+
   // Dans tous les cas on mange le pixel en dessous
   if (unit->type == EATSPIDER)
     {
-      if (bunny_sprite_animation_name("Idle") != bunny_sprite_get_animation(unit->sprite))
-	return ;
       for (int j = -50; j < unit->area.h + 20; ++j)
 	{
 	  for (int i = -20; i < unit->area.w + 20; ++i)
@@ -24,11 +25,11 @@ void			ingame_spider_action(t_ingame	*ingame,
 		{
 		  t_bunny_position pos = {x, y};
 
-		  if ((max += 1) > 5)
+		  if ((max += 1) > 20)
 		    return ;
 		  unit->health -= 0.001;
 		  bunny_sprite_set_animation_name(unit->sprite, "Dig");
-		  ingame_pixel_delete(ingame, pos);
+		  ingame_pixel_delete(ingame, pos, 1);
 		  break ;
 		}
 	    }
@@ -36,10 +37,8 @@ void			ingame_spider_action(t_ingame	*ingame,
     }
   else if (unit->type == WALLSPIDER)
     {
-      if (bunny_sprite_animation_name("Idle") != bunny_sprite_get_animation(unit->sprite))
-	return ;
-      for (int j = 0; j < unit->area.h + 10; ++j)
-	for (int i = -20; i < unit->area.w + 20; ++i)
+      for (int j = -20; j < unit->area.h + 20; ++j)
+	for (int i = -40; i < unit->area.w + 40; ++i)
 	  {
 	    int x = i + unit->area.x;
 	    int y = j + unit->area.y;
@@ -68,7 +67,6 @@ void			ingame_spider_action(t_ingame	*ingame,
 	ingame_build_map(ingame, unit, 200);
       return ;
     }
-
 
   // On est en déplacement
   if (unit->area.x > unit->target.x)

@@ -14,6 +14,6 @@ void		ingame_add_event(t_ingame	       *ing,
   gev->type = evt;
   gev->event_date = date;
   if (evt == KILL_PIXEL)
-    gev->pos = va_arg(lst, t_bunny_position);
+    gev->pos = *va_arg(lst, t_bunny_position*);
 }
 

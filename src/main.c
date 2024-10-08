@@ -108,7 +108,9 @@ int			main(int		argc,
     (void)_bss;
     program.context = SGSPLASH;
     program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";
-    program.cinematic.following_context = INGAME;
+    program.cinematic.following_context = MAIN_MENU;
+    // program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";
+    // program.cinematic.following_context = INGAME;
   }
   sfx_loader(&(program.ingame));
   program.bunny_splash.head.subcontext.display = subcontext_display;
@@ -116,7 +118,7 @@ int			main(int		argc,
   program.bunny_splash.head.screen = &program.hdscreen->buffer;
   data[BUNNY_SPLASH] = &program.bunny_splash;
 
-  program.ingame.life = 3;
+  program.ingame.life = 2;
 
   do
     {

@@ -17,23 +17,22 @@ int		ingame_event(t_ingame		*ing)
   size_t	i;
   
   for (i = 0; i < NBRCELL(ing->event_list) && i < ing->event_len;)
-    if (ing->event_list[i].event_date == ing->frame_counter)
+    if (ing->event_list[i].event_date <= ing->frame_counter)
       {
 	if (ing->event_list[i].type == KILL_PIXEL)
-	  ingame_pixel_delete(ing, ing->event_list[i].pos);
+	  ingame_pixel_delete(ing, ing->event_list[i].pos, 1);
 	if (ing->event_list[i].type == RETRY)
 	  {
 	    remove_event(ing, i);
 	    return (SWITCH_CONTEXT);
 	  }
-	if (ing->event_list[i].type == RETRY)
+	if (ing->event_list[i].type == GAME_OVER)
 	  {
 	    remove_event(ing, i);
 	    ing->program->context = CREDIT;
 	    return (SWITCH_CONTEXT);
 	  }
 	remove_event(ing, i);
-	break ;
       }
     else
       ++i;

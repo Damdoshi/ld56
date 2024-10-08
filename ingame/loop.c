@@ -10,7 +10,7 @@
 t_bunny_response	ingame_loop(t_ingame		*ingame)
 {
   t_bunny_bitfield	*target = NULL;
-  
+
   // Brush d'action
   if (ingame->cursor_type == ATTACK)
     target = ingame->attack_map;

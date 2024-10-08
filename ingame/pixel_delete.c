@@ -2,11 +2,12 @@
 #include	"program.h"
 
 void		ingame_pixel_delete(t_ingame		*ing,
-				    t_bunny_position	pos)
+				    t_bunny_position	pos,
+				    double		r)
 {
-  if (ingame_get_pixel(ing, pos.x, pos.y) == EXPLODE)
-    return (ingame_pixel_explosif(ing, pos, 2));
-  if (ingame_get_pixel(ing, pos.x, pos.y) != WATER)
+  int		type = ingame_get_pixel(ing, pos.x, pos.y);
+
+  if (type != WATER)
     {
       t_bunny_position p[4] = {
 	{pos.x - 1, pos.y + 0},
@@ -28,7 +29,9 @@ void		ingame_pixel_delete(t_ingame		*ing,
       
       for (size_t i = 0; i < NBRCELL(p); ++i)
 	if (ingame_is_orphan(ing, p[i].x, p[i].y))
-	  ingame_add_event(ing, ing->frame_counter + 1, KILL_PIXEL, p[i]);
+	  ingame_add_event(ing, ing->frame_counter + 1, KILL_PIXEL, &p[i]);
     }
+  if (type == EXPLODE)
+    return (ingame_pixel_explosif(ing, pos, r + 0.1));
 }
 

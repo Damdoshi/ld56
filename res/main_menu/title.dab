@@ -1,0 +1,4 @@
+
+RessourceFile = @"title.png"
+ColorMask = 255, 255, 255, 0
+

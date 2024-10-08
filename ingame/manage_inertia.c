@@ -79,8 +79,8 @@ static void		check_side(t_ingame		*ingame,
 
   n_move = 0;
   step_height = 0;
-  max_step_height = unit->area.h / 5;
-  side_size = unit->stair;
+  max_step_height = unit->stair;
+  side_size = unit->area.w / 2;
   x = unit->area.x + (side_size + 2) * side;
   while (n_move < unit->inertia.x * side)
     {

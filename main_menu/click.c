@@ -14,6 +14,8 @@ t_bunny_response		main_menu_click(t_bunny_event_state	state,
 {
   if (but != BMB_LEFT)
     return (GO_ON);
+  if (main_menu->delay > bunny_get_current_time())
+    return (GO_ON);
   if (state == GO_DOWN)
     {
       t_bunny_position pos_mou = get_real_mouse_position(main_menu->program->screen);
@@ -37,6 +39,7 @@ t_bunny_response		main_menu_click(t_bunny_event_state	state,
 	  && pos_mou.y >= area[0].y
 	  && pos_mou.y <= area[0].y + area[0].h)
 	{
+	  main_menu->program->ingame.life = 2;
 	  main_menu->text_menu[0]->clipable.color_mask.full = BLACK | TO_RED(100);
 	  main_menu->program->context = INGAME;
 	  return (GO_ON);

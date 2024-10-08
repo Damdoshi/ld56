@@ -1,5 +1,8 @@
 
-Width = 1440
-Height = 900
-Name = "LD56"
-Style = "Default"
+'Width = 1440
+'Height = 900
+Width=1920
+Height=1080
+Name = "Down in the well of souls"
+'Style = "Default"
+Style = "Fullscreen"

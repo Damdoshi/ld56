@@ -220,7 +220,8 @@ int				ingame_get_pixel(t_ingame		*ing,
 						 int			x,
 						 int			y);
 void				ingame_pixel_delete(t_ingame		*ing,
-						    t_bunny_position	pos);
+						    t_bunny_position	pos,
+						    double		r);
 void				ingame_pixel_build(t_ingame		*ing,
 						   t_bunny_position	pos);
 void				ingame_pixel_explosif(t_ingame		*ing,
