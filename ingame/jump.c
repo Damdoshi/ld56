@@ -10,6 +10,7 @@ void			ingame_jump(t_ingame		*ing,
     return ;
   if (ingame_bottom_collision(ing, unit, false))
     {
+      unit->area.y -= 1;
       unit->inertia.y += unit->speed.y;
       bunny_sound_play(&(ing->sfx[PLAYER][20])->sound);
       bunny_sound_play(&(ing->sfx[PLAYER][21 + rand()%2])->sound);

@@ -7,7 +7,7 @@ void			check_particule(t_ingame		*ingame)
 
   for (int32_t i = 0; i < particule->nb_particule; i ++)
     {
-      if (particule->death_time[i] < time && 0)
+      if (particule->death_time[i] < time)
 	{
 	  delete_particule(particule, i);
 	  i --;

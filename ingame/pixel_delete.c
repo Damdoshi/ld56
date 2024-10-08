@@ -25,7 +25,7 @@ void		ingame_pixel_delete(t_ingame		*ing,
 	3 * ((rand() % 1000) / 1000.0 - 0.5),
 	3 * ((rand() % 1000) / 1000.0 - 0.5)
       };
-      new_particule(ing, bunny_time_plus(bunny_get_delay() * 3), pos, spos, lost, ingame_particule_debris);
+      new_particule(ing, 3, pos, spos, lost, ingame_particule_debris);
       
       for (size_t i = 0; i < NBRCELL(p); ++i)
 	if (ingame_is_orphan(ing, p[i].x, p[i].y))

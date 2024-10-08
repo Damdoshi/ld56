@@ -12,7 +12,7 @@ void			new_particule(t_ingame				*ing,
   if (particule->nb_particule >= MAX_PARTICULE)
     return ;
   particule->color[particule->nb_particule] = color;
-  particule->death_time[particule->nb_particule] = death_time;
+  particule->death_time[particule->nb_particule] = death_time + bunny_get_current_time();
   particule->pos[particule->nb_particule].x = pos.x;
   particule->pos[particule->nb_particule].y = pos.y;
   particule->spos[particule->nb_particule].x = spos.x;

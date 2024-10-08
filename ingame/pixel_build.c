@@ -18,7 +18,7 @@ void			ingame_pixel_build(t_ingame		*ing,
 	cos(ang) * speed,
 	sin(ang) * speed
       };
-      new_particule(ing, bunny_time_plus(bunny_get_delay() * 0.5), pos, spos, YELLOW, ingame_particule_spark);
+      new_particule(ing, 0.5, pos, spos, YELLOW, ingame_particule_spark);
     }
 }
 

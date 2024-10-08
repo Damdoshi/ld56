@@ -9,7 +9,7 @@ void			ingame_build_map(t_ingame		*ing,
 {
   double		dist;
 
-  for (double i = 0; i < 2 * M_PI; i += (0.080 + (rand() % 20) / 1000.0))
+  for (double i = 0; i < 2 * M_PI; i += (0.1 + (rand() % 20) / 1000.0))
     for (dist = 0; dist < rad; dist += 3 + rand() % 7)
       {
 	int		x = unit->area.x + cos(i) * dist;

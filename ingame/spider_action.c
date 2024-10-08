@@ -46,6 +46,9 @@ void			ingame_spider_action(t_ingame	*ingame,
 	    if (BITGET(ingame->build_map, x, y, ingame->map_size.x))
 	      {
 		t_bunny_position pos = {x, y};
+
+		if ((max += 1) > 20)
+		  return ;
 		unit->health -= 0.001;
 		bunny_sprite_set_animation_name(unit->sprite, "Dig");
 		ingame_pixel_build(ingame, pos);
