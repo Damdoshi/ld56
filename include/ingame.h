@@ -70,10 +70,12 @@ typedef enum			e_element
     ROCK,			// BLACK
     WATER,			// BLUE
     WATER_SOURCE,		// DARKBLUE
+    WATER_WALL,			// VERY DARK BLUE
     EARTH,			// GREEN
     EXPLODE,			// RED
     SAND,			// YELLOW
     FIRE,			// PINK2
+    DEATH,			// VERY DARK GRAY
     VICTORY,			// DARKRED
   }				t_element;
 

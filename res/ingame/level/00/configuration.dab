@@ -1,5 +1,7 @@
-Background = @"background.dab"
-Eatable = @"color.png"
+Background = @"background.png"
+Eatable = @"eatable.png"
+Remain = @"remaining.png"
+Foreground = @"foreground.png"
 Physic = @"physic.png"
 
 Fire = true

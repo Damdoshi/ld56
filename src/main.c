@@ -19,6 +19,7 @@ int			main(int		argc,
   (void)argc;
   tekinit();
   srand(time(NULL));
+  bunny_consistancy();
   bunny_set_maximum_ram(1024 * 1024 * 512);
   bunny_enable_full_blit(true);
   // bunny_set_error_descriptor(2);

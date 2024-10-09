@@ -29,6 +29,14 @@ t_bunny_response	ingame_loop(t_ingame		*ingame)
   // Action des unités
   for (size_t i = 0; i < ingame->last_unit; ++i)
     {
+      if (ingame->units[i].area.x < ingame->camera.x - ingame->program->screen->buffer.width)
+	continue ;
+      if (ingame->units[i].area.y < ingame->camera.y - ingame->program->screen->buffer.height)
+	continue ;
+      if (ingame->units[i].area.x > ingame->camera.x + 2 * ingame->program->screen->buffer.width)
+	continue ;
+      if (ingame->units[i].area.y > ingame->camera.y + 2 * ingame->program->screen->buffer.height)
+	continue ;
       ingame->units[i].inertia.y += 0.2;
       if (ingame->units[i].health <= 0)
 	{

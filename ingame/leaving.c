@@ -11,6 +11,7 @@
 void			ingame_leaving(t_bunny_response	response,
 				       t_ingame		*ingame)
 {
+  bunny_sound_stop(&ingame->music->sound);
   if (ingame->program->context == CREDIT)
     return ;
   (void)response;
