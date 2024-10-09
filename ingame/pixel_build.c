@@ -4,6 +4,8 @@
 void			ingame_pixel_build(t_ingame		*ing,
 					   t_bunny_position	pos)
 {
+  if (pos.x < 0 || pos.y < 0 || pos.x >= ing->map_size.x || pos.y >= ing->map_size.y)
+    return ;
   ing->physic_map[pos.x + pos.y * ing->map_size.x] = EARTH;
   ((unsigned int*)ing->color_map->pixels)[pos.x + pos.y * ing->map_size.x] = GRAY((128 - 32) + rand() % 64);
   BITCLR(ing->build_map, pos.x, pos.y, ing->map_size.x);

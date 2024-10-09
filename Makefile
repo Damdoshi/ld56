@@ -11,7 +11,7 @@
   BIN		=	game.exe
   FLAG		=	-W -Wall -std=gnu11 -g -g3 -ggdb
 
-  INCLUDE	=	-I$(HOME)/.froot/include/ -I./ -I./include/
+  INCLUDE	=	-I$(HOME)/.froot/include/ -I$(PWD) -I$(PWD)/include/
   SRC		=	$(wildcard */*.c) $(wildcard */*/*.c)
   OBJ		=	$(SRC:.c=.o)
   LIBPATH	=	-L${HOME}/.froot/lib/

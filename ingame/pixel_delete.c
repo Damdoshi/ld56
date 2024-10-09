@@ -5,6 +5,8 @@ void		ingame_pixel_delete(t_ingame		*ing,
 				    t_bunny_position	pos,
 				    double		r)
 {
+  if (pos.x < 0 || pos.y < 0 || pos.x >= ing->map_size.x || pos.y >= ing->map_size.y)
+    return ;
   int		type = ingame_get_pixel(ing, pos.x, pos.y);
 
   if (type != WATER)
