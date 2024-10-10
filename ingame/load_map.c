@@ -94,12 +94,24 @@ bool			ingame_load_map(t_ingame		*ing,
 	ing->physic_map[i] = EXPLODE;
       else if (color.full == YELLOW)
 	ing->physic_map[i] = SAND;
+      
       else if (color.full == PINK2)
 	ing->physic_map[i] = FIRE;
+      
       else if (color.full == (TO_BLUE(128) | BLACK))
 	ing->physic_map[i] = WATER_SOURCE;
+      
+      else if (color.full == (TO_BLUE(64) | BLACK))
+	ing->physic_map[i] = WATER_WALL;
+      
+      else if (color.full == (TO_BLUE(255) | TO_RED(128) | TO_GREEN(128) | BLACK))
+	ing->physic_map[i] = WATER_DEATH;
+      
       else if (color.full == (TO_RED(128) | BLACK))
 	ing->physic_map[i] = VICTORY;
+      
+      else if (color.full == (unsigned int)GRAY(64))
+	ing->physic_map[i] = DEATH;
       else
 	ing->physic_map[i] = AIR;
       

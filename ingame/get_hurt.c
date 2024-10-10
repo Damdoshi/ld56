@@ -5,6 +5,11 @@ void			ingame_get_hurt(t_ingame		*ing,
 					t_unit			*unit,
 					double			damage)
 {
+  if (unit->health < 0)
+    {
+      unit->health = 0;
+      return ;
+    }
   unit->health -= damage;
 
   if (unit == ing->player) // C'est moche ca.

@@ -12,7 +12,7 @@
 
 t_bunny_response	ingame_display(t_ingame	*ingame)
 {
-  bunny_clear(&ingame->program->screen->buffer, GRAY(64));
+  bunny_clear(&ingame->program->screen->buffer, BLACK);
   bunny_clear(&ingame->whitescreen->buffer, BLACK);
 
   if (ingame->camera.x < 0)
@@ -77,8 +77,8 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	  for (i = 0; i < 5; ++i)
 	    {
 	      bunny_set_disk(&ingame->whitescreen->buffer, lpos, siz, unit->light_color, 0, 0);
-	      siz.x *= 0.9;
-	      siz.y *= 0.9;
+	      siz.x *= 0.8;
+	      siz.y *= 0.8;
 	    }
 	}
       
@@ -136,6 +136,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	}
     }
 
+  int wcnt = 0;
 
   if (ingame->fire)
     {
@@ -166,7 +167,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	  {
 	    t_bunny_position fpos = {i - ingame->camera.x, j - ingame->camera.y};
 	    int tile = ingame->physic_map[i + j * ingame->map_size.x];
-	    t_bunny_position fsize = {20, 20};
+	    t_bunny_position fsize = {30, 30};
 	    
 	    if (tile == FIRE)
 	      {
@@ -178,17 +179,20 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 
 	    if (BITGET(wt, i, j, ingame->map_size.x))
 	      {
-		int val = rand() % 128 + 64;
+		int val = rand() % 128 + 128;
 		unsigned int dcol = TO_BLUE(val);
 		
-		dcol |= TO_GREEN(64 + rand() % (val - 63));
-		bunny_set_pixel(&ingame->program->screen->buffer, fpos, ALPHA(64, dcol));
+		dcol |= TO_GREEN(128 + rand() % (val - 127));
+		dcol = ALPHA(128, dcol);
+		// dcol = rand() | BLACK;
+		bunny_set_pixel(&ingame->program->screen->buffer, fpos, dcol);
 		fpos.y += 1;
-		bunny_set_pixel(&ingame->program->screen->buffer, fpos, ALPHA(64, dcol));
+		bunny_set_pixel(&ingame->program->screen->buffer, fpos, dcol);
+		wcnt += 1;
 	      }
 	  }
     }
-  
+
   if (ingame->fire)
     {
       bunny_clipable_copy(&ingame->fire->clipable, &ingame->color_map->clipable);
@@ -196,7 +200,10 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
     }
 
   if (ingame->foreground)
-    bunny_blit(&ingame->program->screen->buffer, ingame->foreground, NULL);
+    {
+      bunny_clipable_copy(ingame->foreground, &ingame->color_map->clipable);
+      bunny_blit(&ingame->program->screen->buffer, ingame->foreground, NULL);
+    }
 
   check_particule(ingame);
 

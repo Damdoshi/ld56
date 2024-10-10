@@ -8,6 +8,6 @@ bool			ingame_traversable(t_ingame	*ingame,
   int			ret;
 
   ret = ingame_get_pixel(ingame, x, y);
-  return (ret == AIR || ret == WATER || ret == WATER_SOURCE || ret == VICTORY);
+  return (ret == AIR || ret == WATER || ret == WATER_SOURCE || ret == WATER_WALL || ret == WATER_DEATH || ret == VICTORY || ret == DEATH);
 }
 

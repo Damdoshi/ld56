@@ -116,9 +116,9 @@ void			ingame_spider_action(t_ingame	*ingame,
 
       // On se met en recherche de bouffe
       if (unit->type == EATSPIDER)
-	ingame_attack_map(ingame, unit, 200);
+	ingame_move_map(ingame, ingame->attack_map, unit, 200);
       if (unit->type == WALLSPIDER)
-	ingame_build_map(ingame, unit, 200);
+	ingame_move_map(ingame, ingame->build_map, unit, 200);
       return ;
     }
 

@@ -8,7 +8,7 @@ void			ingame_jump(t_ingame		*ing,
     return ;
   if (bunny_sprite_animation_name("GettingUp") == bunny_sprite_get_animation(unit->sprite))
     return ;
-  if (ingame_bottom_collision(ing, unit, false))
+  if (ingame_bottom_collision(ing, unit, true))
     {
       unit->area.y -= 1;
       unit->inertia.y += unit->speed.y;

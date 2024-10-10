@@ -1,6 +1,6 @@
 RessourceFile = @"lightspider.png"
 @insert @"spider.dab"
 
-LightRadius=100
-LightColor = 255, 255, 255, 128
+LightRadius=50
+LightColor = 255, 255, 255, 64
 

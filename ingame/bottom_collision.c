@@ -14,16 +14,16 @@ bool			ingame_bottom_collision(t_ingame	*ing,
       endx += 4;
     }
   for (int i = startx; i < endx; ++i)
-    if (!ingame_traversable(ing, i, unit->area.y + 1))
-      {
-	int bot = ingame_get_pixel(ing, i, unit->area.y + 1);
-	  
-	if (bot == FIRE)
-	  ingame_get_hurt(ing, unit, 0.01);
-	if (bot == DEATH)
-	  ingame_get_hurt(ing, unit, 1.00);
+    {
+      int bot = ingame_get_pixel(ing, i, unit->area.y + 1);
+
+      if (bot == DEATH)
+	ingame_get_hurt(ing, unit, 1.00);
+      if (bot == FIRE)
+	ingame_get_hurt(ing, unit, 0.01);
+      if (!ingame_traversable(ing, i, unit->area.y + 1))	  
 	return (true);
-      }
+    }
   return (false);
 }
 

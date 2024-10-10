@@ -8,6 +8,7 @@ void			draw_rect(t_ingame		*ing,
     COLOR(255, 64, 0, 0),
     COLOR(255, 255, 0, 0)
   };
+
   t_bunny_position	lines[5] = {
     [0] = {.x = area->x, .y = area->y},
     [1] = {.x = area->x + area->w, .y = area->y},

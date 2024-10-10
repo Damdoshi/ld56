@@ -71,6 +71,7 @@ typedef enum			e_element
     WATER,			// BLUE
     WATER_SOURCE,		// DARKBLUE
     WATER_WALL,			// VERY DARK BLUE
+    WATER_DEATH,		// LIGHTBLUE
     EARTH,			// GREEN
     EXPLODE,			// RED
     SAND,			// YELLOW
@@ -289,12 +290,10 @@ void				ingame_brush(t_ingame			*ing,
 
 double				ingame_get_slope(t_ingame		*ing,
 						 t_unit			*unit);
-void				ingame_attack_map(t_ingame		*ing,
-						  t_unit		*unit,
-						  unsigned int		rad);
-void				ingame_build_map(t_ingame		*ing,
-						 t_unit			*unit,
-						 unsigned int		rad);
+void				ingame_move_map(t_ingame		*ing,
+						t_bunny_bitfield	*bf,
+						t_unit		*unit,
+						unsigned int		rad);
 
 bool				ingame_particule_spark(t_ingame		*ingame,
 						       t_particule	*part,
