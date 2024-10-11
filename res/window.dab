@@ -1,8 +1,8 @@
 
 'Width = 1440
 'Height = 900
-Width=1920
-Height=1080
+Width=1920/2
+Height=1080/2
 Name = "Down in the well of souls"
 Style = "Default"
 'Style = "Fullscreen"

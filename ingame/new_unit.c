@@ -39,6 +39,9 @@ int			ingame_new_unit(t_ingame	*ing,
 
   unit->area.x = pos.x;
   unit->area.y = pos.y;
+  unit->spawn.x = pos.x;
+  unit->spawn.y = pos.y;
+  unit->disp = false;
 
   if (!bunny_configuration_getf(cnf, &unit->speed.x, "SpeedX"))
     unit->speed.x = 2;

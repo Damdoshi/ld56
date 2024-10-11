@@ -11,14 +11,23 @@ void			ingame_player_action(t_ingame	*ingame,
     {
       double		ang = (rand() % (int)(200000 * M_PI)) / 100000.0;
       t_bunny_position	pos = {
-	cos(ang) * 5 + unit->area.x + unit->area.w / 2,
-	sin(ang) * 5 + unit->area.y,
+	cos(ang) * 100 + unit->area.x,
+	sin(ang) * 100 + unit->area.y - unit->area.h / 2,
       };
-      
-      ingame_new_unit(ingame, SPECTER, pos);
+      int		id;
+
+      id = ingame_new_unit(ingame, SPECTER, pos);
+      double x = ingame->player->area.x - unit->spawn.x;
+      double y = (ingame->player->area.y - ingame->player->area.h / 2) - unit->spawn.y;
+
+      unit[id].ang = atan2(y, x);
+      unit[id].sprite->clipable.rotation = 180.0 * unit[id].ang / M_PI + 90;
+      ingame->units[id].target.x = cos(unit[id].ang + M_PI) * 100 + unit[id].area.x;
+      ingame->units[id].target.y = sin(unit[id].ang + M_PI) * 100 + unit[id].area.y;
+      ingame->units[id].sprite->clipable.color_mask.argb[3] = 0;
       ingame->last_enlightnment += 5;
     }
-  
+
   if (bunny_sprite_animation_name("Crashing") == bunny_sprite_get_animation(unit->sprite))
     {
       if (bunny_sprite_is_still(unit->sprite) &&

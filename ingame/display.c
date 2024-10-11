@@ -20,7 +20,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
     {
       ingame->color_map->clipable.position.x = -ingame->camera.x;
       ingame->color_map->clipable.clip_x_position = 0;
-      ingame->color_map->clipable.clip_width = ingame->program->screen->buffer.width - ingame->camera.x;
+      ingame->color_map->clipable.clip_width = ingame->program->screen->buffer.width + ingame->camera.x;
     }
   else
     {
@@ -33,7 +33,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
     {
       ingame->color_map->clipable.position.y = -ingame->camera.y;
       ingame->color_map->clipable.clip_y_position = 0;
-      ingame->color_map->clipable.clip_height = ingame->program->screen->buffer.height - ingame->camera.y;
+      ingame->color_map->clipable.clip_height = ingame->program->screen->buffer.height + ingame->camera.y;
     }
   else
     {
@@ -86,14 +86,18 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	      siz.y *= 0.8;
 	    }
 	}
-      
+
+      if (unit->type == SPECTER)
+	{
+	  unit->sprite->clipable.position.x = unit->area.x;
+	  unit->sprite->clipable.position.y = unit->area.y;
+	  bunny_blit(&ingame->specter_map->buffer, &unit->sprite->clipable, NULL);
+	}
+
       unit->sprite->clipable.position.x = pos.x;
       unit->sprite->clipable.position.y = pos.y;
 
-      if (unit->type == SPECTER)
-	bunny_blit(&ingame->specter_map->buffer, &unit->sprite->clipable, NULL);
       bunny_blit(&ingame->program->screen->buffer, &unit->sprite->clipable, NULL);
-      
       t_bunny_accurate_area area = {
 	unit->area.x - unit->area.w / 2 - ingame->camera.x,
 	unit->area.y - unit->area.h - ingame->camera.y,
@@ -226,11 +230,10 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
     }
 
   // Les spectres! Par dessus l'ombre...
-  bunny_clipable_copy(ingame->specter_map, &ingame->color_map->clipable);
-  bunny_clipable_copy(ingame->specter_mask, &ingame->color_map->clipable);
   bunny_set_multiply_blit(true);
   bunny_blit(&ingame->specter_map->buffer, ingame->specter_mask, NULL);
-  bunny_set_multiply_blit(false);  
+  bunny_set_multiply_blit(false);
+  bunny_clipable_copy(ingame->specter_map, &ingame->color_map->clipable);
   bunny_blit(&ingame->program->screen->buffer, ingame->specter_map, NULL);
 
   ///////////////// GUI /////////////////

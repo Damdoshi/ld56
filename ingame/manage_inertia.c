@@ -113,6 +113,8 @@ static void		check_side(t_ingame		*ingame,
 void			manage_inertia(t_ingame		*ingame,
 				       t_unit		*unit)
 {
+  if (unit->type == SPECTER)
+    return ;
   moderate_forces(ingame, unit);
   if (unit->inertia.y > 0)
     check_bottom(ingame, unit);

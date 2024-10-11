@@ -91,9 +91,11 @@ typedef struct			s_unit
   t_unit_type			type;
   t_unit_status			status;
   t_bunny_accurate_area		area;
+  t_bunny_accurate_area		spawn;
   t_bunny_accurate_position	inertia;
   t_bunny_sprite		*sprite;
   bool				selected;
+  bool				disp;
   t_bunny_accurate_position	speed; // Vitesse horizontale et force du saut
   t_unit_action			action;
   t_bunny_position		target;	// Ou dois je aller?
@@ -103,6 +105,7 @@ typedef struct			s_unit
   unsigned int			light_color;
   double			light_radius;
   double			health;
+  double			ang;
   t_bunny_effect		*hurt[16];
   int				stair;
 }				t_unit;
