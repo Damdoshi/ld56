@@ -74,6 +74,21 @@ LightColor = 255, 255, 255, 32
     Frame = 3
     NextAnimation = "Idle"
   ]
+  [Attack
+    Position = 5 * [.].Clip.Size[0], 2 * [.].Clip.Size[1]
+    Browsing = "LeftToRight"
+    Frame = 3
+    Frequency = 3
+    FramePlay = 1, 2, 1
+  ]
+  [Unattack
+    Position = 5 * [.].Clip.Size[0], 2 * [.].Clip.Size[1]
+    Browsing = "RightToLeft"
+    Frame = 3
+    Frequency = 3
+    FramePlay = 1, 2, 1
+    NextAnimation = "Idle"
+  ]
 ]
 
 InitialAnimation = "Idle"

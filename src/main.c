@@ -107,7 +107,7 @@ int			main(int		argc,
   {
     (void)ret;
     (void)_bss;
-    program.context = SGSPLASH;
+    program.context = INGAME;//SGSPLASH;
     program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";
     program.cinematic.following_context = MAIN_MENU;
     // program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";

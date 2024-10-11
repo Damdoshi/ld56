@@ -1,0 +1,22 @@
+RessourceFile = @"specter.png"
+
+Origin = 25, 25
+Frequency = 8
+
+ColWidth = 20
+ColHeight = 20
+
+[Clip
+  Size = 50, 50
+]
+
+[Animations
+  [Idle
+    Position = 0, 0
+    Browsing = "BackAndForth"
+    Frame = 4
+    Loop
+  ]
+]
+
+InitialAnimation = "Idle"

@@ -6,21 +6,48 @@ void			ingame_player_action(t_ingame	*ingame,
 {
   const bool		*keys = bunny_get_keyboard();
   int			x = 0;
- 
+
+  if (ingame->enlighted == false && ingame->last_enlightnment < bunny_get_current_time() - 5)
+    {
+      double		ang = (rand() % (int)(200000 * M_PI)) / 100000.0;
+      t_bunny_position	pos = {
+	cos(ang) * 5 + unit->area.x + unit->area.w / 2,
+	sin(ang) * 5 + unit->area.y,
+      };
+      
+      ingame_new_unit(ingame, SPECTER, pos);
+      ingame->last_enlightnment += 5;
+    }
+  
   if (bunny_sprite_animation_name("Crashing") == bunny_sprite_get_animation(unit->sprite))
     {
       if (bunny_sprite_is_still(unit->sprite) &&
 	  unit->health > 0 && ingame_bottom_collision(ingame, unit, false))
 	bunny_sprite_set_animation_name(unit->sprite, "GettingUp");
       return ;
-    }
+    }  
   if (bunny_sprite_animation_name("GettingUp") == bunny_sprite_get_animation(unit->sprite))
     return ;
+  if (bunny_sprite_animation_name("Unattack") == bunny_sprite_get_animation(unit->sprite))
+    return ;
+
+  if (bunny_sprite_animation_name("Attack") == bunny_sprite_get_animation(unit->sprite))
+    {
+      if (!keys[BKS_RSHIFT])
+	bunny_sprite_set_animation(unit->sprite, "Unattack");
+      return ;
+    }
+  if (keys[BKS_RSHIFT] && ingame_bottom_collision(ingame, unit, false))
+    {
+      bunny_sprite_set_animation(unit->sprite, "Attack");
+      return ;
+    }
+  
   if (keys[BKS_Q] || keys[BKS_A] || keys[BKS_LEFT])
     x = -1;
   if (keys[BKS_D] || keys[BKS_RIGHT])
     x += 1;
-  if (keys[BKS_LSHIFT] || keys[BKS_RSHIFT])
+	   if (keys[BKS_LSHIFT])
     x *= 2;
   if (x)
     ingame_go(ingame, unit, x);

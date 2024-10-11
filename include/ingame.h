@@ -61,6 +61,7 @@ typedef enum			e_unit_type
     EATSPIDER,			// PURPLE
     LIGHTSPIDER,		// WHITE
     BADSPIDER,			// DARKGREEN
+    SPECTER,
     LAST_UNIT_TYPE
   }				t_unit_type;
 
@@ -153,7 +154,9 @@ typedef struct			s_ingame
   t_bunny_sprite		*health_bar;
   t_bunny_sprite		*health_renderer;
   t_bunny_sprite		*aura;
-
+  bool				enlighted;
+  double			last_enlightnment;
+  
   //
   t_bunny_sprite		*cursor;
   size_t			cursor_type;
@@ -177,6 +180,8 @@ typedef struct			s_ingame
   t_bunny_picture		*foreground;
   t_bunny_picture		*whitescreen;
   t_bunny_pixelarray		*fire;
+  t_bunny_picture		*specter_map;
+  t_bunny_picture		*specter_mask;
   t_bunny_position		map_size;
 
   int				waterline;
@@ -282,6 +287,8 @@ void				ingame_player_action(t_ingame		*ing,
 						     t_unit		*unit);
 void				ingame_spider_action(t_ingame		*ing,
 						     t_unit		*unit);
+void				ingame_specter_action(t_ingame		*ing,
+						      t_unit		*unit);
 
 void				ingame_brush(t_ingame			*ing,
 					     t_bunny_bitfield		*field,

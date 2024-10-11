@@ -14,6 +14,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 {
   bunny_clear(&ingame->program->screen->buffer, BLACK);
   bunny_clear(&ingame->whitescreen->buffer, BLACK);
+  ingame->enlighted = false;
 
   if (ingame->camera.x < 0)
     {
@@ -53,7 +54,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
       bunny_blit(&ingame->program->screen->buffer, ingame->remain_map, NULL);
     }
   bunny_blit(&ingame->program->screen->buffer, &ingame->color_map->clipable, NULL);
-
+  
   for (size_t i = 0; i < ingame->last_unit && i < NBRCELL(ingame->units); i++)
     {
       t_unit		*unit = &ingame->units[i];
@@ -67,11 +68,15 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	  t_bunny_size	siz = {(int)unit->light_radius, (int)unit->light_radius};
 	  t_bunny_position lpos = {pos.x, pos.y};
 	  size_t	i;
-
+	  
 	  if (unit->type != HERO)
 	    {
 	      siz.x *= unit->health;
 	      siz.y *= unit->health;
+	      if (distance(unit->area.x + unit->area.w / 2, unit->area.y,
+			   ingame->player->area.x + ingame->player->area.w / 2,
+			   ingame->player->area.y) < pow(siz.x * 1.2, 2))
+		ingame->enlighted = true;
 	    }
 	  lpos.y -= unit->area.h  / 2;
 	  for (i = 0; i < 5; ++i)
@@ -85,6 +90,8 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
       unit->sprite->clipable.position.x = pos.x;
       unit->sprite->clipable.position.y = pos.y;
 
+      if (unit->type == SPECTER)
+	bunny_blit(&ingame->specter_map->buffer, &unit->sprite->clipable, NULL);
       bunny_blit(&ingame->program->screen->buffer, &unit->sprite->clipable, NULL);
       
       t_bunny_accurate_area area = {
@@ -174,6 +181,10 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 		fsize.y = (fsize.x += rand() % 20) - 5;
 		bunny_set_disk(&ingame->whitescreen->buffer, fpos, fsize, fcol, 0, 0);
 		set_fire_pixel(i, j);
+		if (distance(i, j,
+			     ingame->player->area.x + ingame->player->area.w / 2,
+			     ingame->player->area.y) < pow(fsize.x * 1.2, 2))
+		  ingame->enlighted = true;
 	      }
 	    t_bunny_bitfield *wt = ingame->water_map[ingame->current_water_map];
 
@@ -214,6 +225,14 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
       bunny_set_multiply_blit(false);
     }
 
+  // Les spectres! Par dessus l'ombre...
+  bunny_clipable_copy(ingame->specter_map, &ingame->color_map->clipable);
+  bunny_clipable_copy(ingame->specter_mask, &ingame->color_map->clipable);
+  bunny_set_multiply_blit(true);
+  bunny_blit(&ingame->specter_map->buffer, ingame->specter_mask, NULL);
+  bunny_set_multiply_blit(false);  
+  bunny_blit(&ingame->program->screen->buffer, ingame->specter_map, NULL);
+
   ///////////////// GUI /////////////////
   ingame_display_order_areas(ingame);
   ingame_display_health_bar(ingame);
@@ -241,6 +260,10 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 
   bunny_blit(&ingame->program->window->buffer, ingame->program->screen, NULL);
   bunny_display(ingame->program->window);
+
+  if (ingame->enlighted)
+    ingame->last_enlightnment = bunny_get_current_time();
+  
   return (GO_ON);
 }
 

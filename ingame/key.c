@@ -18,6 +18,12 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
       ingame->program->context = CREDIT;
       return (SWITCH_CONTEXT);
     }
+
+  if (bunny_sprite_animation_name("Attack") == bunny_sprite_get_animation(ingame->player->sprite))
+    return (GO_ON);
+  if (bunny_sprite_animation_name("Unattack") == bunny_sprite_get_animation(ingame->player->sprite))
+    return (GO_ON);
+
   if (sym == BKS_1 || sym == BKS_NUMPAD1)
     {
       ingame->cursor_type = SELECTION;
@@ -44,7 +50,7 @@ t_bunny_response		ingame_key(t_bunny_event_state	state,
   if (sym == BKS_SUBTRACT)
     if ((ingame->brush_size -= 1) < 5)
       ingame->brush_size = 5;
-  
+
   if (sym == BKS_Z || sym == BKS_W || sym == BKS_SPACE || sym == BKS_UP)
     ingame_jump(ingame, ingame->player);
 

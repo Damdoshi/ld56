@@ -6,7 +6,8 @@ const char		*gl_files[LAST_UNIT_TYPE] = {
   "./res/ingame/gfx/wallspider.dab",
   "./res/ingame/gfx/eatspider.dab",
   "./res/ingame/gfx/lightspider.dab",
-  "./res/ingame/gfx/badspider.dab"
+  "./res/ingame/gfx/badspider.dab",
+  "./res/ingame/gfx/specter.dab"
 };
 
 t_unit_action		gl_action[LAST_UNIT_TYPE] = {
@@ -15,6 +16,7 @@ t_unit_action		gl_action[LAST_UNIT_TYPE] = {
   ingame_spider_action,
   ingame_spider_action,
   ingame_spider_action,
+  ingame_specter_action
 };
 
 int			ingame_new_unit(t_ingame	*ing,

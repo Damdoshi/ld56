@@ -22,6 +22,7 @@ void			ingame_leaving(t_bunny_response	response,
   bunny_delete_clipable(&ingame->action_screen->clipable);
   bunny_delete_clipable(&ingame->color_map->clipable);
   bunny_delete_clipable(ingame->whitescreen);
+  bunny_delete_clipable(ingame->specter_map);
   free(ingame->physic_map);
   for (size_t i = 0; i < ingame->last_sprite; ++i)
     bunny_delete_clipable(&ingame->sprites[i]->clipable);

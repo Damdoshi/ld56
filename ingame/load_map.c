@@ -51,6 +51,11 @@ bool			ingame_load_map(t_ingame		*ing,
   else
     ing->foreground = NULL;
 
+  ing->specter_map = bunny_new_picture(ing->map_size.x, ing->map_size.y);
+  ing->specter_mask = bunny_new_picture(ing->map_size.x, ing->map_size.y);
+  bunny_clear(&ing->specter_map->buffer, 0);
+  bunny_clear(&ing->specter_mask->buffer, ALPHA(200, WHITE));
+  
   size_t		size = ing->map_size.x * ing->map_size.y;
 
   ing->attack_map = bunny_new_bitfield(size);
