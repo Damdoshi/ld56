@@ -13,7 +13,13 @@ ColHeight = 20
 [Animations
   [Idle
     Position = 0, 0
-    Browsing = "BackAndForth"
+    Browsing = "LeftToRight"
+    Frame = 4
+    NextAnimation = "Intro"
+  ]
+  [Attack
+    Position = 0, [.].Size[1]
+    Browsing = "LeftToRight"
     Frame = 4
     Loop
   ]
