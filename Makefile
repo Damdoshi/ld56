@@ -9,8 +9,8 @@
 
   MOD		=	game.exe
   BIN		=	game.exe
-#  FLAG		=	-W -Wall -std=gnu11 -O2 -ffast-math
-  FLAG		=	-W -Wall -std=gnu11 -g -g3 -ggdb
+  FLAG		=	-W -Wall -std=gnu11 -O2 -ffast-math
+#  FLAG		=	-W -Wall -std=gnu11 -g -g3 -ggdb
 
   INCLUDE	=	-I$(HOME)/.froot/include/ -I$(PWD) -I$(PWD)/include/
   SRC		=	$(wildcard */*.c) $(wildcard */*/*.c)

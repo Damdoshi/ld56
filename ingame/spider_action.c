@@ -9,7 +9,7 @@ void			ingame_spider_action(t_ingame	*ingame,
   bool			attack = false;
 
   if (BITGET(bf, unit->area.x, unit->area.y, ingame->map_size.x))
-    unit->health -= 0.05;
+    unit->health -= 0.001;
   
   if (bunny_sprite_animation_name("Idle") != bunny_sprite_get_animation(unit->sprite))
     return ;
@@ -24,9 +24,22 @@ void			ingame_spider_action(t_ingame	*ingame,
 		     ingame->units[i].area.x, ingame->units[i].area.y
 		     ) < 200 * 200)
 	  {
+	    int		col;
+	    
 	    attack = true;
 	    unit->target.x = ingame->units[i].area.x + unit->area.w / 2;
 	    unit->target.y = ingame->units[i].area.y;
+	    if (unit->target.x > unit->area.x)
+	      col = ingame_side_collision(ingame, unit, +1);
+	    else
+	      col = ingame_side_collision(ingame, unit, -1);
+	    if (col == -1)
+	      {
+		unit->target.x = ingame->units[i].area.x;
+		unit->target.y = ingame->units[i].area.y;
+		ingame->units[i].inertia.x = 0;
+		continue ;
+	      }
 	    if (bunny_rectangular_collision(&unit->area, &ingame->units[i].area))
 	      {
 		bunny_sprite_set_animation_name(unit->sprite, "Dig");
@@ -95,8 +108,21 @@ void			ingame_spider_action(t_ingame	*ingame,
 	else if (distance(ingame->units[i].area.x, ingame->units[i].area.y,
 			  unit->area.x, unit->area.y) < 100 * 100)
 	  {
+	    int		col;
+	    
 	    unit->target.x = ingame->units[i].area.x + unit->area.w / 2;
 	    unit->target.y = ingame->units[i].area.y;
+	    if (unit->target.x > unit->area.x)
+	      col = ingame_side_collision(ingame, unit, +1);
+	    else
+	      col = ingame_side_collision(ingame, unit, -1);
+	    if (col == -1)
+	      {
+		unit->target.x = ingame->units[i].area.x;
+		unit->target.y = ingame->units[i].area.y;
+		ingame->units[i].inertia.x = 0;
+		continue ;
+	      }
 	    if (bunny_rectangular_collision(&unit->area, &ingame->units[i].area))
 	      {
 		bunny_sprite_set_animation_name(unit->sprite, "Dig");
@@ -124,7 +150,15 @@ void			ingame_spider_action(t_ingame	*ingame,
 
   // On est en déplacement
   if (unit->area.x > unit->target.x)
-    ingame_go(ingame, unit, -1);
+    {
+      // if (!bunny_sound_is_playing(&ingame->sfx[NPC][0]->sound))
+      // bunny_sound_play(&ingame->sfx[NPC][0]->sound);
+      ingame_go(ingame, unit, -1);
+    }
   else if (unit->area.x < unit->target.x)
-    ingame_go(ingame, unit, 1);
+    {
+      // if (!bunny_sound_is_playing(&ingame->sfx[NPC][0]->sound))
+      // bunny_sound_play(&ingame->sfx[NPC][0]->sound);
+      ingame_go(ingame, unit, 1);
+    }
 }

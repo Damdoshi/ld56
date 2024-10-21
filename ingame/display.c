@@ -75,7 +75,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 	      siz.y *= unit->health;
 	      if (distance(unit->area.x + unit->area.w / 2, unit->area.y,
 			   ingame->player->area.x + ingame->player->area.w / 2,
-			   ingame->player->area.y) < pow(siz.x * 1.2, 2))
+			   ingame->player->area.y) < pow(siz.x * 2, 2))
 		ingame->enlighted = true;
 	    }
 	  lpos.y -= unit->area.h  / 2;
@@ -187,7 +187,7 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 		set_fire_pixel(i, j);
 		if (distance(i, j,
 			     ingame->player->area.x + ingame->player->area.w / 2,
-			     ingame->player->area.y) < pow(fsize.x * 1.2, 2))
+			     ingame->player->area.y) < pow(fsize.x * 2, 2))
 		  ingame->enlighted = true;
 	      }
 	    t_bunny_bitfield *wt = ingame->water_map[ingame->current_water_map];

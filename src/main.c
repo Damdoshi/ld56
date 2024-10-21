@@ -22,7 +22,7 @@ int			main(int		argc,
   bunny_consistancy();
   bunny_set_maximum_ram(1024 * 1024 * 512);
   bunny_enable_full_blit(true);
-  // bunny_set_error_descriptor(2);
+  bunny_set_error_descriptor(2);
   memset(&program, 0, sizeof(program));
   bunny_join_binary_directory(*argv);
   for (i = 0; i < argc; ++i)
@@ -107,7 +107,7 @@ int			main(int		argc,
   {
     (void)ret;
     (void)_bss;
-    program.context = INGAME;//SGSPLASH;
+    program.context = SGSPLASH;
     program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";
     program.cinematic.following_context = MAIN_MENU;
     // program.cinematic.configuration = "./res/cinematic/intro/configuration.dab";

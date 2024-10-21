@@ -44,6 +44,7 @@ t_bunny_response	ingame_entering(t_ingame		*ingame)
   ingame->waterline = ingame->map_size.y - 1;
   ingame->enlighted = true;
   ingame->last_enlightnment = bunny_get_current_time();
+
   return (GO_ON);
 }
 

@@ -14,18 +14,30 @@ void			ingame_player_action(t_ingame	*ingame,
 	cos(ang) * 100 + unit->area.x,
 	sin(ang) * 100 + unit->area.y - unit->area.h / 2,
       };
-      int		id;
+      t_unit		*specter;
+      double		x;
+      double		y;
 
-      id = ingame_new_unit(ingame, SPECTER, pos);
-      double x = ingame->player->area.x - unit->spawn.x;
-      double y = (ingame->player->area.y - ingame->player->area.h / 2) - unit->spawn.y;
+      specter = &ingame->units[ingame_new_unit(ingame, SPECTER, pos)];
+      x = unit->area.x - specter->spawn.x;
+      y = (unit->area.y - unit->area.h / 2) - specter->spawn.y;
 
-      unit[id].ang = atan2(y, x);
-      unit[id].sprite->clipable.rotation = 180.0 * unit[id].ang / M_PI + 90;
-      ingame->units[id].target.x = cos(unit[id].ang + M_PI) * 100 + unit[id].area.x;
-      ingame->units[id].target.y = sin(unit[id].ang + M_PI) * 100 + unit[id].area.y;
-      ingame->units[id].sprite->clipable.color_mask.argb[3] = 0;
+      specter->ang = atan2(y, x);
+      if (x < 0)
+	{
+	  specter->sprite->clipable.scale.x = -1;
+	  specter->sprite->clipable.rotation = 180.0 * specter->ang / M_PI - 180.0;
+	}
+      else
+	{
+	  specter->sprite->clipable.scale.x = +1;
+	  specter->sprite->clipable.rotation = 180.0 * specter->ang / M_PI;
+	}
+      specter->target.x = cos(specter->ang) * 100 + specter->area.x;
+      specter->target.y = sin(specter->ang) * 100 + specter->area.y;
+      // specter->sprite->clipable.color_mask.argb[3] = 0;
       ingame->last_enlightnment += 5;
+      bunny_sprite_set_animation_name(specter->sprite, "Idle");
     }
 
   if (bunny_sprite_animation_name("Crashing") == bunny_sprite_get_animation(unit->sprite))
@@ -68,7 +80,10 @@ void			ingame_player_action(t_ingame	*ingame,
 	  bunny_sprite_set_animation_name(unit->sprite, "Walking");
 	  if(ingame->step_frame <= ingame->frame_counter)
 	    {
-	      bunny_sound_play(&(ingame->sfx[PLAYER][11 + rand() % 5]->sound));
+	      if (ingame_get_pixel(ingame, ingame->player->area.x, ingame->player->area.y) == WATER)
+		bunny_sound_play(&(ingame->sfx[PLAYER][16]->sound));
+	      else
+		bunny_sound_play(&(ingame->sfx[PLAYER][11 + rand() % 5]->sound));
 	      ingame->step_frame = ingame->frame_counter + 20;
 	    }
 	}

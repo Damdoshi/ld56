@@ -70,40 +70,22 @@ static void		check_side(t_ingame		*ingame,
 				   int			side,
 				   t_unit		*unit)
 {
-  int			x;
-  int			side_size;
-  int			i;
   int			n_move;
   int			step_height;
-  int			max_step_height;
 
   n_move = 0;
   step_height = 0;
-  max_step_height = unit->stair;
-  side_size = unit->area.w / 2;
-  x = unit->area.x + (side_size + 2) * side;
   while (n_move < unit->inertia.x * side)
     {
-      i = 0;
-      while (i < unit->area.h)
-	{
-	  if (!ingame_traversable(ingame, x, unit->area.y - i))
-	    {
-	      step_height += 1;
-	      if (step_height > max_step_height)
-		return;
-	    }
-	  i += 1;
-	}
-      i = 0;
-      while (i < step_height)
+      if ((step_height = ingame_side_collision(ingame, unit, side)) == -1)
+	return ;
+      for (int i = 0; i < step_height; ++i)
 	{
 	  if (ingame_top_collision(ingame, unit))
 	    return;
 	  unit->area.y -= 1;
 	  unit->inertia.x *= 0.6;
 	  unit->inertia.y = 0;
-	  i += 1;
 	}
       unit->area.x += side;
       n_move += 1;

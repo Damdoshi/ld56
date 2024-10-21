@@ -1,10 +1,10 @@
 RessourceFile = @"specter.png"
 
 Origin = 25, 25
-Frequency = 8
+Frequency = 16
 
-ColWidth = 20
-ColHeight = 20
+ColWidth = 25
+ColHeight = 25
 
 [Clip
   Size = 50, 50
@@ -14,13 +14,13 @@ ColHeight = 20
   [Idle
     Position = 0, 0
     Browsing = "LeftToRight"
-    Frame = 4
-    NextAnimation = "Intro"
+    Frame = 6
+    Frequency = 6
   ]
   [Attack
-    Position = 0, [.].Size[1]
+    Position = 0, 1 * [.].Clip.Size[1]
     Browsing = "LeftToRight"
-    Frame = 4
+    Frame = 8
     Loop
   ]
 ]

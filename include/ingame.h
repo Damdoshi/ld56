@@ -264,6 +264,9 @@ bool				ingame_bottom_collision(t_ingame	*ing,
 							bool		wider);
 bool				ingame_top_collision(t_ingame		*ing,
 						     t_unit		*unit);
+int				ingame_side_collision(t_ingame		*ing,
+						      t_unit		*unit,
+						      int		side);
 
 void				ingame_go(t_ingame			*ing,
 					  t_unit			*unit,
