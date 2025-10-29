@@ -10,7 +10,6 @@
 t_bunny_response	ingame_entering(t_ingame		*ingame)
 {
   bunny_clear(&ingame->program->window[0]->buffer, BLACK);
-  bunny_clear(&ingame->program->window->buffer, BLACK);
   ingame->player = NULL;
   ingame->last_sprite = 0;
   ingame->particules.nb_particule = 0;
