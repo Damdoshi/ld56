@@ -17,7 +17,7 @@ t_bunny_response	main_menu_entering(t_main_menu		*main_menu)
   assert((main_menu->text_menu[1] = bunny_load_text("res/main_menu/exit.dab")));
   assert((main_menu->music = bunny_load_music("res/main_menu/menu.ogg")));
   assert((main_menu->click = bunny_load_effect("res/main_menu/sfx/click.ogg")));
-  bunny_clear(&main_menu->program->window->buffer, BLACK);
+  bunny_clear(&main_menu->program->window[0]->buffer, BLACK);
   assert((main_menu->fire = bunny_new_pixelarray(main_menu->program->screen->buffer.width, main_menu->program->screen->buffer.height)));
   assert((main_menu->text = bunny_new_pixelarray(main_menu->program->screen->buffer.width, main_menu->program->screen->buffer.height)));
   t_bunny_sound *son = (t_bunny_sound*)(main_menu->music);

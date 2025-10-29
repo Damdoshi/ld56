@@ -60,8 +60,9 @@ int			main(int		argc,
       fprintf(stderr, "Cannot open window.\n");
       return (EXIT_FAILURE);
     }
-  bunny_set_mouse_visibility(program.window, false);
-  bunny_set_key_repeat(program.window, false);
+  for (program.nbr_window = 0; program.window[program.nbr_window]; ++program.window);
+  bunny_set_mouse_visibility(program.window[0], false);
+  bunny_set_key_repeat(program.window[0], false);
   const char		*scale = "Stretch";
 
   bunny_configuration_getf(program.configuration, &program.keep_pixel_ratio, "KeepPixelRatio");
@@ -70,11 +71,11 @@ int			main(int		argc,
     program.scale_mode = BST_CONTAIN;
   else if (strcasecmp(scale, "cover") == 0)
     program.scale_mode = BST_COVER;
-  bunny_scale_clipable(&program.window->buffer, program.screen, program.scale_mode, program.keep_pixel_ratio);
+  bunny_scale_clipable(&program.window[0]->buffer, program.screen, program.scale_mode, program.keep_pixel_ratio);
   program.screen->origin.x = program.screen->buffer.width / 2;
   program.screen->origin.y = program.screen->buffer.height / 2;
-  program.screen->position.x = program.window->buffer.width / 2;
-  program.screen->position.y = program.window->buffer.height / 2;
+  program.screen->position.x = program.window[0]->buffer.width / 2;
+  program.screen->position.y = program.window[0]->buffer.height / 2;
 
   program.context = FIRST_CONTEXT;
   void			*data[LAST_CONTEXT];
@@ -96,9 +97,9 @@ int			main(int		argc,
 
     (void)bss;
     bunny_clipable_copy(&clipable, program.hdscreen);
-    bunny_scale_clipable(&program.window->buffer, program.hdscreen, BST_STRETCH, false);
-    bunny_blit(&program.window->buffer, program.hdscreen, NULL);
-    bunny_display(program.window);
+    bunny_scale_clipable(&program.window[0]->buffer, program.hdscreen, BST_STRETCH, false);
+    bunny_blit(&program.window[0]->buffer, program.hdscreen, NULL);
+    bunny_display(program.window[0]);
     bunny_clipable_copy(program.hdscreen, &clipable);
     return (LEAVE_EVENT);
   }
@@ -116,7 +117,7 @@ int			main(int		argc,
   sfx_loader(&(program.ingame));
   program.bunny_splash.head.subcontext.display = subcontext_display;
   program.bunny_splash.head.subcontext.leaving_context = subcontext_leaving;
-  program.bunny_splash.head.screen = &program.hdscreen->buffer;
+  program.bunny_splash.head.screens = &program.hdscreen->buffer;
   data[BUNNY_SPLASH] = &program.bunny_splash;
 
   program.ingame.life = 2;
@@ -124,13 +125,13 @@ int			main(int		argc,
   do
     {
       bunny_set_context(&gl_context[program.context]);
-      ret = bunny_loop(program.window, 50, data[program.context]);
+      ret = bunny_loop_mw(program.window, program.nbr_window, 50, data[program.context]);
     }
   while (ret == SWITCH_CONTEXT && program.context < LAST_CONTEXT);
 
   if (program.hdscreen != program.screen)
     bunny_delete_clipable(program.screen);
   bunny_delete_clipable(program.screen);
-  bunny_stop(program.window);
+  bunny_end(program.window);
   return (EXIT_SUCCESS);
 }

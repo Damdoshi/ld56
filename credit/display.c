@@ -23,8 +23,8 @@ t_bunny_response	credit_display(t_credit	*credit)
   // bunny_fill(&credit->program->screen->buffer, ALPHA(32, BLACK));
   bunny_blit(&credit->program->screen->buffer, &credit->fire->clipable, NULL);
   bunny_blit(&credit->program->screen->buffer, &credit->font->clipable, NULL);
-  bunny_blit(&credit->program->window->buffer, credit->program->screen, NULL);
-  bunny_display(credit->program->window);
+  bunny_blit(&credit->program->window[0]->buffer, credit->program->screen, NULL);
+  bunny_display(credit->program->window[0]);
   return (GO_ON);
 }
 

@@ -24,7 +24,8 @@ extern t_bunny_context		gl_context[LAST_CONTEXT];
 
 typedef struct			s_program
 {
-  t_bunny_window		*window;
+  t_bunny_window		**window;
+  int				nbr_window;
   t_bunny_configuration		*configuration;
   int				scale_mode;
   bool				keep_pixel_ratio;

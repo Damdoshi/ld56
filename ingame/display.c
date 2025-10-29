@@ -251,22 +251,21 @@ t_bunny_response	ingame_display(t_ingame	*ingame)
 
   if (fabs(ingame->player->health - ingame->health) > 0.01)
     {
-      bunny_clear(&ingame->program->window->buffer, RED);
+      bunny_clear(&ingame->program->window[0]->buffer, RED);
       ingame->program->screen->rotation = (rand() % 4000 / 1000.0) - 2;
     }
   else
     {
-      bunny_fill(&ingame->program->window->buffer, ALPHA(32, BLACK));
+      bunny_fill(&ingame->program->window[0]->buffer, ALPHA(32, BLACK));
       if (fabs(ingame->program->screen->rotation *= 0.95) < 0.01)
 	ingame->program->screen->rotation = 0;
     }
 
-  bunny_blit(&ingame->program->window->buffer, ingame->program->screen, NULL);
-  bunny_display(ingame->program->window);
+  bunny_blit(&ingame->program->window[0]->buffer, ingame->program->screen, NULL);
+  bunny_display(ingame->program->window[0]);
 
   if (ingame->enlighted)
     ingame->last_enlightnment = bunny_get_current_time();
-  
   return (GO_ON);
 }
 

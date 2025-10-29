@@ -50,6 +50,7 @@ t_bunny_response	main_menu_display(t_main_menu	*main_menu)
   bunny_blit(&main_menu->program->screen->buffer, &main_menu->cursor->clipable, NULL);
 
   bunny_blit(&main_menu->program->window->buffer, main_menu->program->screen, NULL);
+  bunny_blit(&main_menu->program->window[0]->buffer, main_menu->program->screen, NULL);
 
   if (main_menu->delay - 2 > now)
     bunny_clear(&main_menu->program->window->buffer, BLACK);
@@ -59,8 +60,7 @@ t_bunny_response	main_menu_display(t_main_menu	*main_menu)
 
       bunny_fill(&main_menu->program->window->buffer, ALPHA((int)ratio, BLACK));
     }
-  
-  bunny_display(main_menu->program->window);
+  bunny_display(main_menu->program->window[0]);
   return (GO_ON);
 }
 
