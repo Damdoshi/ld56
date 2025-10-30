@@ -17,7 +17,7 @@ t_bunny_response	sgsplash_entering(t_sgsplash		*spa)
   t_bunny_picture	*pix;
   t_bunny_pixelarray	*pixx;
 
-  spa->win = spa->program->window;
+  spa->win = spa->program->window[0];
   spa->current_context = &spa->program->context;
   if ((pic = bunny_new_picture(spa->win->buffer.width, spa->win->buffer.height)) == NULL)
     return (EXIT_ON_ERROR);
